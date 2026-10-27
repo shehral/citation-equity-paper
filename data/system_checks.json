@@ -1,0 +1,34 @@
+{
+  "_provenance": {
+    "producer": "scripts/system_checks.py",
+    "ce_commit": "96375d454558be9275c6bb539096167a609b098c",
+    "ce_tree_clean": true,
+    "machine": "arm64 26.5",
+    "node": "v24.22.1"
+  },
+  "unit_tests_passed": 1386,
+  "browser_tests": {
+    "total": 90,
+    "projects": [
+      "pages",
+      "root"
+    ]
+  },
+  "site": {
+    "total_bytes": 4141724,
+    "draft_js_files": 14,
+    "draft_js_gzip_bytes": 808634
+  },
+  "engine_analyze_median_ms": {
+    "espresso-bitterness": {
+      "words": 831,
+      "median_ms": 4.96,
+      "runs": 60
+    },
+    "rag-explained": {
+      "words": 1041,
+      "median_ms": 6.96,
+      "runs": 60
+    }
+  }
+}

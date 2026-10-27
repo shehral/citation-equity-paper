@@ -1,0 +1,203 @@
+{
+  "_provenance": {
+    "producer": "scripts/derive_loose_grades.py",
+    "note": "Strict = the tool's shipped rule (reproduced from the coded matrix and checked against the registry). Loose = only a study's own null or negative finding for the practice, or a significant harm, counts; non-significant subgroups and nulls about a nearby practice do not. Single rater coding; see data/README.md.",
+    "inputs": [
+      {
+        "path": "data/evidence_matrix.csv",
+        "repo": "citation-equity-paper",
+        "sha256": "978284d2f6d68bcee982b2eb960fbef0eed6d168a2b66fe0aa910fa3161560b1"
+      },
+      {
+        "path": "data/grades.json",
+        "repo": "citation-equity-paper",
+        "sha256": "e64f3e7f1a0e61dc24163a907c11fac9233469c8fb54697cece0d8386919895f"
+      },
+      {
+        "path": "docs/evidence.md",
+        "repo": "citation-equity",
+        "sha256": "7c960242cedcc3388f0ae64ab2c50de0ccd127702162f6a31b35efa18daa6ea9"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "id": "standalone-paragraphs",
+      "title": "Standalone paragraphs",
+      "in_foundation_design": true,
+      "shipped": "untested",
+      "strict": "untested",
+      "strict_reason": "no study tests the check or a nearby practice",
+      "loose": "untested",
+      "loose_reason": "no study tests the check or a nearby practice",
+      "changed": false
+    },
+    {
+      "id": "question-headings",
+      "title": "Question headings",
+      "in_foundation_design": true,
+      "shipped": "mixed",
+      "strict": "mixed",
+      "strict_reason": "counted null or negative: zhang-2026-citation-absorption, vishwakarma-2026-what-gets-cited",
+      "loose": "mixed",
+      "loose_reason": "counted null or negative: zhang-2026-citation-absorption",
+      "changed": false
+    },
+    {
+      "id": "lists",
+      "title": "Lists for enumerations",
+      "in_foundation_design": true,
+      "shipped": "mixed",
+      "strict": "mixed",
+      "strict_reason": "counted null or negative: vishwakarma-2026-what-gets-cited",
+      "loose": "moderate",
+      "loose_reason": "controlled gains, none counted against: yu-2026-geo-sfe",
+      "changed": true
+    },
+    {
+      "id": "statistics",
+      "title": "Statistics",
+      "in_foundation_design": true,
+      "shipped": "mixed",
+      "strict": "mixed",
+      "strict_reason": "counted null or negative: puerto-2025-cseo-bench",
+      "loose": "mixed",
+      "loose_reason": "counted null or negative: puerto-2025-cseo-bench",
+      "changed": false
+    },
+    {
+      "id": "tables",
+      "title": "Tables for comparisons",
+      "in_foundation_design": true,
+      "shipped": "untested",
+      "strict": "untested",
+      "strict_reason": "no study tests the check or a nearby practice",
+      "loose": "untested",
+      "loose_reason": "no study tests the check or a nearby practice",
+      "changed": false
+    },
+    {
+      "id": "expert-quotes",
+      "title": "Attributed expert quotes",
+      "in_foundation_design": true,
+      "shipped": "mixed",
+      "strict": "mixed",
+      "strict_reason": "counted null or negative: puerto-2025-cseo-bench",
+      "loose": "mixed",
+      "loose_reason": "counted null or negative: puerto-2025-cseo-bench",
+      "changed": false
+    },
+    {
+      "id": "cited-sources",
+      "title": "Cited sources",
+      "in_foundation_design": false,
+      "shipped": "mixed",
+      "strict": "mixed",
+      "strict_reason": "counted null or negative: puerto-2025-cseo-bench, wan-2024-conflictingqa",
+      "loose": "mixed",
+      "loose_reason": "counted null or negative: puerto-2025-cseo-bench, wan-2024-conflictingqa",
+      "changed": false
+    },
+    {
+      "id": "direct-answer-lead",
+      "title": "Direct answer first",
+      "in_foundation_design": false,
+      "shipped": "mixed",
+      "strict": "mixed",
+      "strict_reason": "counted null or negative: kim-2026-sageo-arena, puerto-2025-cseo-bench",
+      "loose": "moderate",
+      "loose_reason": "controlled gains, none counted against: kim-2026-sageo-arena, puerto-2025-cseo-bench, wan-2024-conflictingqa",
+      "changed": true
+    },
+    {
+      "id": "question-coverage",
+      "title": "Target questions answered",
+      "in_foundation_design": false,
+      "shipped": "mixed",
+      "strict": "mixed",
+      "strict_reason": "counted null or negative: vishwakarma-2026-what-gets-cited",
+      "loose": "moderate",
+      "loose_reason": "controlled gains, none counted against: wan-2024-conflictingqa, vishwakarma-2026-what-gets-cited, kim-2026-sageo-arena",
+      "changed": true
+    },
+    {
+      "id": "comparisons",
+      "title": "Explicit comparisons",
+      "in_foundation_design": false,
+      "shipped": "mixed",
+      "strict": "mixed",
+      "strict_reason": "counted null or negative: vishwakarma-2026-what-gets-cited",
+      "loose": "moderate",
+      "loose_reason": "controlled gains, none counted against: vishwakarma-2026-what-gets-cited",
+      "changed": true
+    },
+    {
+      "id": "reader-words",
+      "title": "Your reader's words up top",
+      "in_foundation_design": false,
+      "shipped": "mixed",
+      "strict": "mixed",
+      "strict_reason": "counted null or negative: aggarwal-2024-geo, vishwakarma-2026-what-gets-cited, kim-2026-sageo-arena",
+      "loose": "moderate",
+      "loose_reason": "controlled gains, none counted against: vishwakarma-2026-what-gets-cited, kim-2026-sageo-arena, wan-2024-conflictingqa",
+      "changed": true
+    }
+  ],
+  "tally": {
+    "strict": {
+      "strong": 0,
+      "moderate": 0,
+      "mixed": 9,
+      "untested": 2
+    },
+    "loose": {
+      "strong": 0,
+      "moderate": 5,
+      "mixed": 4,
+      "untested": 2
+    }
+  },
+  "readiness": [
+    {
+      "id": "byline",
+      "title": "Byline",
+      "grade": "untested"
+    },
+    {
+      "id": "dates",
+      "title": "Publication dates",
+      "grade": "mixed"
+    },
+    {
+      "id": "structured-data",
+      "title": "Structured data",
+      "grade": "mixed"
+    },
+    {
+      "id": "indexing-directives",
+      "title": "Indexing directives",
+      "grade": "strong"
+    },
+    {
+      "id": "canonical",
+      "title": "Canonical URL",
+      "grade": "untested"
+    },
+    {
+      "id": "crawler-access",
+      "title": "AI crawler access",
+      "grade": "strong"
+    },
+    {
+      "id": "renders-without-js",
+      "title": "Renders without JavaScript",
+      "grade": "moderate"
+    }
+  ],
+  "readiness_tally": {
+    "strong": 2,
+    "moderate": 1,
+    "mixed": 2,
+    "untested": 2
+  }
+}

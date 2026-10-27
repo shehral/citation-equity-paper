@@ -1,0 +1,153 @@
+=== ce-e1-edit start: Sat Oct 24 20:08:35 EDT 2026 on d4053 model=google/gemma-4-31B-it tp=1 sets=--set main extra=--arms 2,4,5,6,7,8,10 --max-attempts 3 --retry-from $CE_ROOT_PARENT/geo/data/e1/versions.jsonl ===
+node v22.11.0 at node
+NVIDIA H200, 143771 MiB
+torch 2.13.0+cu130 NVIDIA H200 (9, 0)
+{
+ "backend": "vllm",
+ "model": "google/gemma-4-31B-it",
+ "seconds": 130.8,
+ "prompts": 136,
+ "per_arm": {
+  "4": {
+   "versions": 4,
+   "valid": 4,
+   "not_applicable": 0,
+   "attempts_2": 0,
+   "attempts_3": 0
+  },
+  "P2": {
+   "versions": 11,
+   "valid": 0,
+   "not_applicable": 0,
+   "attempts_2": 0,
+   "attempts_3": 11
+  },
+  "2": {
+   "versions": 23,
+   "valid": 1,
+   "not_applicable": 0,
+   "attempts_2": 0,
+   "attempts_3": 23
+  },
+  "5": {
+   "versions": 21,
+   "valid": 0,
+   "not_applicable": 0,
+   "attempts_2": 0,
+   "attempts_3": 21
+  },
+  "P5": {
+   "versions": 7,
+   "valid": 0,
+   "not_applicable": 0,
+   "attempts_2": 0,
+   "attempts_3": 7
+  },
+  "6": {
+   "versions": 23,
+   "valid": 0,
+   "not_applicable": 0,
+   "attempts_2": 0,
+   "attempts_3": 23
+  },
+  "P6": {
+   "versions": 10,
+   "valid": 1,
+   "not_applicable": 0,
+   "attempts_2": 0,
+   "attempts_3": 10
+  },
+  "7": {
+   "versions": 8,
+   "valid": 0,
+   "not_applicable": 0,
+   "attempts_2": 0,
+   "attempts_3": 8
+  },
+  "P7": {
+   "versions": 4,
+   "valid": 0,
+   "not_applicable": 0,
+   "attempts_2": 0,
+   "attempts_3": 4
+  },
+  "8": {
+   "versions": 9,
+   "valid": 0,
+   "not_applicable": 0,
+   "attempts_2": 0,
+   "attempts_3": 9
+  },
+  "P8": {
+   "versions": 5,
+   "valid": 0,
+   "not_applicable": 0,
+   "attempts_2": 0,
+   "attempts_3": 5
+  },
+  "10": {
+   "versions": 13,
+   "valid": 0,
+   "not_applicable": 0,
+   "attempts_2": 0,
+   "attempts_3": 13
+  }
+ },
+ "retry_from": "$CE_ROOT_PARENT/geo/data/e1/versions.jsonl",
+ "retried": {
+  "2": {
+   "arm_retried": 23,
+   "placebo_retried": 10,
+   "placebo_new": 1,
+   "passed_in_e1": 17,
+   "not_retried": {}
+  },
+  "4": {
+   "arm_retried": 4,
+   "placebo_retried": 0,
+   "placebo_new": 0,
+   "passed_in_e1": 0,
+   "not_retried": {}
+  },
+  "5": {
+   "arm_retried": 21,
+   "placebo_retried": 7,
+   "placebo_new": 0,
+   "passed_in_e1": 4,
+   "not_retried": {}
+  },
+  "6": {
+   "arm_retried": 23,
+   "placebo_retried": 10,
+   "placebo_new": 0,
+   "passed_in_e1": 26,
+   "not_retried": {}
+  },
+  "7": {
+   "arm_retried": 8,
+   "placebo_retried": 4,
+   "placebo_new": 0,
+   "passed_in_e1": 25,
+   "not_retried": {
+    "not applicable in E1": 35,
+    "placebo: E1's spans could not be rebuilt from its arm version": 1
+   }
+  },
+  "8": {
+   "arm_retried": 9,
+   "placebo_retried": 5,
+   "placebo_new": 0,
+   "passed_in_e1": 20,
+   "not_retried": {}
+  },
+  "10": {
+   "arm_retried": 13,
+   "placebo_retried": 0,
+   "placebo_new": 0,
+   "passed_in_e1": 8,
+   "not_retried": {}
+  }
+ },
+ "max_attempts": 3
+}
+=== ce-e1-edit done: Sat Oct 24 20:14:02 EDT 2026 ===

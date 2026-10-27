@@ -1,0 +1,121 @@
+{
+  "_provenance": {
+    "producer": "scripts/derive_e1_design.py",
+    "note": "Design values only; E1 has no results. Each value carries its PREREG_E1.md line and quote.",
+    "inputs": [
+      {
+        "path": "experiments/PREREG_E1.md",
+        "repo": "citation-equity",
+        "sha256": "2ac93e351719faf6199472166e72af811f3053fdf831b82b40bbd9dd12987bf9"
+      }
+    ]
+  },
+  "results": null,
+  "frozen": true,
+  "freeze_status": {
+    "line": 3,
+    "quote": "**Status (changed):** FROZEN r3, 2026-10-24 (amendments 1-10 at the end), revised after three independent critiques (stats, validity, feasibility). The plan is frozen at commit `7859b07` (experiments/e1/freeze/MANIFEST.md). That commit contains:"
+  },
+  "outcome": {
+    "name": "first-citation rank score, (5 - r)/4",
+    "line": 119,
+    "quote": "- **Citation score (primary):** (5 − r) / 4. Here r is the target's position among distinct in-range sources in order of first citation, with r = 5 if the target is uncited. The score is 1 when the target is cited first, 0 when it is uncited, and higher is better. One rank position equals 0.25."
+  },
+  "delta": {
+    "value": 0.03,
+    "unit": "score units",
+    "line": 148,
+    "quote": "4. **no effect larger than δ:** the 90% CI of d lies within ±δ, with δ = 0.03 score units (0.12 rank positions)."
+  },
+  "mde": {
+    "values": [
+      {
+        "n": 60,
+        "d": 0.021
+      },
+      {
+        "n": 80,
+        "d": 0.018
+      }
+    ],
+    "line": 156,
+    "quote": "On that basis the minimum detectable d is about 0.021 at n = 60 and about 0.018 at n = 80 (0.07-0.08 rank positions). The plausible effect of one arm is 0.01-0.04. The report recomputes the MDE per arm from the realized SDs. Effects below about 0.02 cannot be ruled out, and the report says so."
+  },
+  "family_a": {
+    "arms": [
+      {
+        "arm": "2",
+        "name": "q-headings",
+        "line": 60
+      },
+      {
+        "arm": "3",
+        "name": "lists",
+        "line": 61
+      },
+      {
+        "arm": "4",
+        "name": "tables",
+        "line": 62
+      },
+      {
+        "arm": "5",
+        "name": "statistics",
+        "line": 63
+      },
+      {
+        "arm": "6",
+        "name": "quotes",
+        "line": 64
+      },
+      {
+        "arm": "7",
+        "name": "sources",
+        "line": 65
+      },
+      {
+        "arm": "8",
+        "name": "answer-lead",
+        "line": 66
+      },
+      {
+        "arm": "9",
+        "name": "q-coverage",
+        "line": 67
+      },
+      {
+        "arm": "10",
+        "name": "comparisons",
+        "line": 68
+      }
+    ],
+    "line": 50,
+    "quote": "- Arms 2-10 are the tool's checks. They form confirmatory family A."
+  },
+  "family_b": {
+    "arms": [
+      {
+        "arm": "11",
+        "name": "definitions",
+        "line": 69
+      },
+      {
+        "arm": "12",
+        "name": "query-wording",
+        "line": 70
+      },
+      {
+        "arm": "14",
+        "name": "dated",
+        "line": 72
+      }
+    ],
+    "line": 51,
+    "quote": "- Arms 11, 12 and 14 are candidate checks. They form confirmatory family B."
+  },
+  "all_arm": {
+    "arm": "ALL",
+    "name": "ALL",
+    "line": 73
+  }
+}

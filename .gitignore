@@ -1,0 +1,17 @@
+*.aux
+*.log
+*.out
+*.blg
+*.bbl
+*.fls
+*.fdb_latexmk
+__pycache__/
+.venv/
+scripts/.fontcache/
+*.synctex.gz
+figures/fig1_standalone.pdf
+comment.cut
+# local caches: cluster pulls (logs, sacct, hashes) and the cluster settings file; never committed
+.cache/
+.DS_Store
+*.pdf.tmp

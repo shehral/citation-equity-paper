@@ -1,0 +1,38 @@
+check_id,study_id,result,design,directness,sig,own_conclusion,live,source_line,note
+standalone-paragraphs,kim-2026-sageo-arena,background,background,none,na,na,yes,100,mechanism only: passage-level chunking and retrieval; not a test of the check
+standalone-paragraphs,zhang-2026-citation-absorption,background,background,none,na,na,yes,101,hypothesis only (distinct-claim paragraphs); observational study
+question-headings,zhang-2026-citation-absorption,negative,observational,direct,not_reported,yes,yes,115,pages in Q&A format 5.74% lower mean influence; the study calls it a negative case
+question-headings,vishwakarma-2026-what-gets-cited,null,controlled,near,na,yes,no,116,formatting-only edits had no consistent effect; question headings not isolated
+question-headings,martinez-2026-survey,survey_caution,survey,none,na,na,na,117,structure moderate and heterogeneous; test headings without assuming the direction
+lists,zhang-2026-citation-absorption,gain,observational,direct,not_reported,na,yes,129,list density 0.428 vs 0.048 in the top vs bottom influence quartile
+lists,vishwakarma-2026-what-gets-cited,null,controlled,near,na,yes,no,130,formatting-only edits had no consistent effect; lists not isolated
+lists,yu-2026-geo-sfe,gain,controlled,near,not_reported,na,yes,131,bundled structural rewrite raised citation rate 45.0% to 52.8%; lists not isolated; preprint
+statistics,aggarwal-2024-geo,gain,controlled,direct,not_reported,na,no,143,position-adjusted word count 19.3 to 25.2 in a fixed five-source context
+statistics,puerto-2025-cseo-bench,harm,controlled,direct,significant,yes,no,144,the statistics rewrite lowered citation rank in 19 of 24 settings
+statistics,zhang-2026-citation-absorption,gain,observational,direct,not_reported,na,yes,145,pages with numbers 61.55% higher mean influence
+statistics,martinez-2026-survey,survey_caution,survey,none,na,na,na,146,give relevant and verifiable evidence rather than more numbers
+tables,vishwakarma-2026-what-gets-cited,background,controlled,none,na,na,no,158,tests comparison content not the table format
+tables,zhang-2026-citation-absorption,background,observational,none,na,na,yes,159,comparison content only; no result for tables
+tables,martinez-2026-survey,survey_caution,survey,none,na,na,na,160,test tables without assuming the direction
+expert-quotes,aggarwal-2024-geo,gain,controlled,direct,not_reported,na,no,174,position-adjusted word count 19.3 to 27.2 (the source of the up-to-40% figure)
+expert-quotes,martinez-2026-survey,survey_caution,survey,none,na,na,na,175,the 40% figure is a relative maximum under one configuration
+expert-quotes,puerto-2025-cseo-bench,null,controlled,direct,na,yes,no,176,no significant gain from the quotes rewrite in the main experiment
+cited-sources,aggarwal-2024-geo,gain,controlled,direct,not_reported,na,no,188,position-adjusted word count 19.3 to 24.6
+cited-sources,puerto-2025-cseo-bench,null,controlled,direct,na,yes,no,189,no significant gain from the citations rewrite in the main experiment
+cited-sources,wan-2024-conflictingqa,null,controlled,direct,na,yes,no,190,adding scientific references was neutral or negative for win rate
+cited-sources,vishwakarma-2026-what-gets-cited,gain,controlled,near,significant,na,no,191,claims backed by evidence won the first citation (significant in at least 4 of 6 models)
+direct-answer-lead,kim-2026-sageo-arena,gain_part_harm,controlled,near,partly,no,yes,203,early answer raised reranking in case studies; in shopping every rewrite lowered citation
+direct-answer-lead,puerto-2025-cseo-bench,gain_part_null,controlled,near,partly,no,no,204,top-of-page summary significant in 2 product domains; none in question answering or for Haiku 3.5
+direct-answer-lead,wan-2024-conflictingqa,gain,controlled,near,not_reported,na,no,205,a question prefix raised win rate
+direct-answer-lead,wu-2025-autogeo,gain,elicited,near,na,na,no,206,conclusion-first rule elicited for three engines; preprint
+question-coverage,wan-2024-conflictingqa,gain,controlled,near,not_reported,na,no,220,relevance edits had a substantial positive effect on win rate
+question-coverage,vishwakarma-2026-what-gets-cited,gain_part_null,controlled,near,partly,no,no,221,pages missing query terms lost the first citation; significant in 4 of 6 models
+question-coverage,kim-2026-sageo-arena,gain,controlled,near,not_reported,na,yes,222,content addressing the query raised reranking in case studies
+question-coverage,martinez-2026-survey,survey_support,survey,none,na,na,na,223,query-document relevance strong in controlled settings
+comparisons,vishwakarma-2026-what-gets-cited,gain_part_null,controlled,near,partly,no,no,237,with vs without comparisons significant in 4 of 6 models; not in 2
+comparisons,zhang-2026-citation-absorption,gain,observational,near,not_reported,na,yes,238,comparison content 55.28% higher mean influence
+comparisons,martinez-2026-survey,survey_support,survey,none,na,na,na,239,comparisons moderate to strong support given truthfulness and intent
+reader-words,aggarwal-2024-geo,null,controlled,near,na,yes,no,255,Keyword Stuffing 17.7 vs 19.3 at baseline with no test reported; the authors find little to no improvement; keywords added anywhere not into the title and opening
+reader-words,vishwakarma-2026-what-gets-cited,gain_part_null,controlled,near,partly,no,no,256,pages missing query terms lost the first citation; significant in 4 of 6 models; terms anywhere on the page
+reader-words,kim-2026-sageo-arena,gain_part_harm,controlled,near,not_reported,no,yes,257,query terms without an answer did well at retrieval but lost at reranking and generation; case studies
+reader-words,wan-2024-conflictingqa,gain,controlled,near,not_reported,na,no,258,a question prefix naming the question raised win rate

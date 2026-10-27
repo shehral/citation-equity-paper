@@ -1,0 +1,521 @@
+{
+ "source": "versions.jsonl",
+ "note": "valid / invalid / not_applicable per (set, arm); reasons are validator message categories with quoted text, URLs and word lists stripped and numbers masked as N; one invalid version can carry several reasons",
+ "arms": [
+  {
+   "set": "e3",
+   "arm": "2",
+   "versions": 60,
+   "valid": 35,
+   "invalid": 25,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 26,
+    "2": 6,
+    "3": 28
+   },
+   "reasons": {
+    "The heading may use only words from the heading or its section's first paragraph (not: …).": 25
+   }
+  },
+  {
+   "set": "e3",
+   "arm": "4",
+   "versions": 9,
+   "valid": 4,
+   "invalid": 5,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 9
+   },
+   "reasons": {
+    "The tables check did not rise (N -> N).": 5
+   }
+  },
+  {
+   "set": "e3",
+   "arm": "5",
+   "versions": 33,
+   "valid": 11,
+   "invalid": 22,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 4,
+    "2": 6,
+    "3": 23
+   },
+   "reasons": {
+    "The statistics check did not rise (N -> N).": 17,
+    "Do not remove any heading of the original (removed: …).": 5,
+    "The answer must be one JSON object mapping span ids to replacements.": 3
+   }
+  },
+  {
+   "set": "e3",
+   "arm": "6",
+   "versions": 58,
+   "valid": 41,
+   "invalid": 17,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 41,
+    "3": 17
+   },
+   "reasons": {
+    "The expert-quotes check did not rise (N -> N).": 9,
+    "The quotation must be copied verbatim from the source document.": 4,
+    "Pick a passage that has no double quote marks inside it.": 2,
+    "The quotation must be N words or fewer.": 1,
+    "Do not remove any list item of the original (removed: …).": 1
+   }
+  },
+  {
+   "set": "e3",
+   "arm": "7",
+   "versions": 65,
+   "valid": 31,
+   "invalid": 7,
+   "not_applicable": 27,
+   "attempts": {
+    "1": 56,
+    "2": 2,
+    "3": 7
+   },
+   "reasons": {
+    "not applicable: the editor returned NONE": 27,
+    "Do not remove any list item of the original (removed: …).": 7
+   }
+  },
+  {
+   "set": "e3",
+   "arm": "8",
+   "versions": 37,
+   "valid": 28,
+   "invalid": 9,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 25,
+    "2": 3,
+    "3": 9
+   },
+   "reasons": {
+    "The page length went from N to N words (Nx; allowed N-Nx).": 5,
+    "The direct-answer-lead check did not rise (N -> N).": 2,
+    "The answer must be one JSON object mapping span ids to replacements.": 2,
+    "Do not remove any link of the original (removed: …).": 1
+   }
+  },
+  {
+   "set": "e3",
+   "arm": "10",
+   "versions": 23,
+   "valid": 16,
+   "invalid": 7,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 10,
+    "2": 6,
+    "3": 7
+   },
+   "reasons": {
+    "The comparisons check did not rise (N -> N).": 7
+   }
+  },
+  {
+   "set": "e3",
+   "arm": "P2",
+   "versions": 35,
+   "valid": 16,
+   "invalid": 19,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 15,
+    "2": 1,
+    "3": 19
+   },
+   "reasons": {
+    "The paraphrase changed the question-headings check (N -> N); keep the same structure, figures, quotes and links.": 11,
+    "Do not add facts that are not in the allowed sources: name '…'.": 7,
+    "The answer must be one JSON object mapping span ids to replacements.": 3,
+    "Reword the spans: the answer left every span unchanged.": 1
+   }
+  },
+  {
+   "set": "e3",
+   "arm": "P5",
+   "versions": 11,
+   "valid": 7,
+   "invalid": 4,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 7,
+    "3": 4
+   },
+   "reasons": {
+    "Reword the spans: the answer left every span unchanged.": 3,
+    "The paraphrase changed the question-headings check (N -> N); keep the same structure, figures, quotes and links.": 1
+   }
+  },
+  {
+   "set": "e3",
+   "arm": "P6",
+   "versions": 41,
+   "valid": 35,
+   "invalid": 6,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 32,
+    "2": 3,
+    "3": 6
+   },
+   "reasons": {
+    "Reword the spans: the answer left every span unchanged.": 2,
+    "The paraphrase must keep the spans' length within N% (N -> N words).": 2,
+    "Do not remove any table row of the original (removed: …).": 1,
+    "The paraphrase changed the cited-sources check (N -> N); keep the same structure, figures, quotes and links.": 1,
+    "Do not remove any list item of the original (removed: …).": 1
+   }
+  },
+  {
+   "set": "e3",
+   "arm": "P7",
+   "versions": 31,
+   "valid": 24,
+   "invalid": 7,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 24,
+    "3": 7
+   },
+   "reasons": {
+    "The paraphrase changed the cited-sources check (N -> N); keep the same structure, figures, quotes and links.": 6,
+    "The paraphrase changed the statistics check (N -> N); keep the same structure, figures, quotes and links.": 1
+   }
+  },
+  {
+   "set": "e3",
+   "arm": "P8",
+   "versions": 28,
+   "valid": 22,
+   "invalid": 6,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 18,
+    "2": 4,
+    "3": 6
+   },
+   "reasons": {
+    "The paraphrase changed the direct-answer-lead check (N -> N); keep the same structure, figures, quotes and links.": 3,
+    "The paraphrase changed the cited-sources check (N -> N); keep the same structure, figures, quotes and links.": 1,
+    "Keep exactly the query key terms the spans contain (lost: …, added: …).": 1,
+    "The answer must be one JSON object mapping span ids to replacements.": 1
+   }
+  },
+  {
+   "set": "e3",
+   "arm": "P10",
+   "versions": 16,
+   "valid": 12,
+   "invalid": 4,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 12,
+    "3": 4
+   },
+   "reasons": {
+    "Do not add facts that are not in the allowed sources: name '…'.": 2,
+    "Do not remove any table row of the original (removed: …).": 1,
+    "Reword the spans: the answer left every span unchanged.": 1,
+    "The paraphrase changed the question-headings check (N -> N); keep the same structure, figures, quotes and links.": 1
+   }
+  },
+  {
+   "set": "e3",
+   "arm": "original",
+   "versions": 72,
+   "valid": 72,
+   "invalid": 0,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 72
+   },
+   "reasons": {}
+  },
+  {
+   "set": "e3-four",
+   "arm": "2",
+   "versions": 75,
+   "valid": 41,
+   "invalid": 34,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 23,
+    "2": 16,
+    "3": 36
+   },
+   "reasons": {
+    "The heading may use only words from the heading or its section's first paragraph (not: …).": 33,
+    "The answer must be one JSON object mapping span ids to replacements.": 1
+   }
+  },
+  {
+   "set": "e3-four",
+   "arm": "4",
+   "versions": 3,
+   "valid": 3,
+   "invalid": 0,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 3
+   },
+   "reasons": {}
+  },
+  {
+   "set": "e3-four",
+   "arm": "8",
+   "versions": 55,
+   "valid": 33,
+   "invalid": 22,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 29,
+    "2": 4,
+    "3": 22
+   },
+   "reasons": {
+    "The direct-answer-lead check did not rise (N -> N).": 19,
+    "The answer must be one JSON object mapping span ids to replacements.": 2,
+    "The page length went from N to N words (Nx; allowed N-Nx).": 2,
+    "Do not add facts that are not in the allowed sources: name '…'.": 1
+   }
+  },
+  {
+   "set": "e3-four",
+   "arm": "10",
+   "versions": 23,
+   "valid": 6,
+   "invalid": 17,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 4,
+    "2": 2,
+    "3": 17
+   },
+   "reasons": {
+    "The comparisons check did not rise (N -> N).": 16,
+    "The answer must be one JSON object mapping span ids to replacements.": 1
+   }
+  },
+  {
+   "set": "e3-four",
+   "arm": "P2",
+   "versions": 41,
+   "valid": 24,
+   "invalid": 17,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 23,
+    "3": 18
+   },
+   "reasons": {
+    "Do not add facts that are not in the allowed sources: name '…'.": 11,
+    "The answer must be one JSON object mapping span ids to replacements.": 3,
+    "The paraphrase changed the question-headings check (N -> N); keep the same structure, figures, quotes and links.": 3,
+    "The paraphrase changed the tables check (N -> N); keep the same structure, figures, quotes and links.": 1,
+    "Reword the spans: the answer left every span unchanged.": 1
+   }
+  },
+  {
+   "set": "e3-four",
+   "arm": "P8",
+   "versions": 33,
+   "valid": 24,
+   "invalid": 9,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 21,
+    "2": 3,
+    "3": 9
+   },
+   "reasons": {
+    "Do not add facts that are not in the allowed sources: name '…'.": 4,
+    "The paraphrase changed the standalone-paragraphs check (N -> N); keep the same structure, figures, quotes and links.": 3,
+    "The paraphrase changed the direct-answer-lead check (N -> N); keep the same structure, figures, quotes and links.": 2,
+    "The paraphrase must keep the spans' length within N% (N -> N words).": 2
+   }
+  },
+  {
+   "set": "e3-four",
+   "arm": "P10",
+   "versions": 6,
+   "valid": 4,
+   "invalid": 2,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 3,
+    "2": 1,
+    "3": 2
+   },
+   "reasons": {
+    "Do not add facts that are not in the allowed sources: name '…'.": 1,
+    "The paraphrase changed the cited-sources check (N -> N); keep the same structure, figures, quotes and links.": 1
+   }
+  },
+  {
+   "set": "e3-four",
+   "arm": "original",
+   "versions": 108,
+   "valid": 108,
+   "invalid": 0,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 108
+   },
+   "reasons": {}
+  }
+ ],
+ "applicability_precheck": {
+  "source": "applicability.jsonl",
+  "note": "per arm, how many queries the frozen applicability table marked applicable before editing",
+  "arms": [
+   {
+    "arm": "1",
+    "applicable": 0,
+    "not_applicable": 180,
+    "reasons": {
+     "not run on four-page queries (EN: arms N, N, N and N only)": 108,
+     "not run in EN": 72
+    }
+   },
+   {
+    "arm": "2",
+    "applicable": 135,
+    "not_applicable": 45,
+    "reasons": {
+     "the question-headings check is not applicable": 41,
+     "the question-headings check scores N (N or more)": 4
+    }
+   },
+   {
+    "arm": "3",
+    "applicable": 0,
+    "not_applicable": 180,
+    "reasons": {
+     "not run on four-page queries (EN: arms N, N, N and N only)": 108,
+     "not run in EN": 72
+    }
+   },
+   {
+    "arm": "4",
+    "applicable": 12,
+    "not_applicable": 168,
+    "reasons": {
+     "the tables check is not applicable": 124,
+     "no Key: value list for the tables check to convert": 43,
+     "the tables check scores N (N or more)": 1
+    }
+   },
+   {
+    "arm": "5",
+    "applicable": 33,
+    "not_applicable": 147,
+    "reasons": {
+     "not run on four-page queries (EN: arms N, N, N and N only)": 108,
+     "the statistics check scores N (N or more)": 39
+    }
+   },
+   {
+    "arm": "6",
+    "applicable": 58,
+    "not_applicable": 122,
+    "reasons": {
+     "not run on four-page queries (EN: arms N, N, N and N only)": 108,
+     "the expert-quotes check scores N (N or more)": 12,
+     "the expert-quotes check is not applicable": 2
+    }
+   },
+   {
+    "arm": "7",
+    "applicable": 65,
+    "not_applicable": 115,
+    "reasons": {
+     "not run on four-page queries (EN: arms N, N, N and N only)": 108,
+     "the cited-sources check is not applicable": 4,
+     "the cited-sources check scores N (N or more)": 3
+    }
+   },
+   {
+    "arm": "8",
+    "applicable": 92,
+    "not_applicable": 88,
+    "reasons": {
+     "the direct-answer-lead check scores N (N or more)": 61,
+     "the direct-answer-lead check is not applicable": 27
+    }
+   },
+   {
+    "arm": "9",
+    "applicable": 0,
+    "not_applicable": 180,
+    "reasons": {
+     "not run on four-page queries (EN: arms N, N, N and N only)": 108,
+     "not run in EN": 72
+    }
+   },
+   {
+    "arm": "10",
+    "applicable": 46,
+    "not_applicable": 134,
+    "reasons": {
+     "the comparisons check scores N (N or more)": 126,
+     "the comparisons check is not applicable": 8
+    }
+   },
+   {
+    "arm": "11",
+    "applicable": 0,
+    "not_applicable": 180,
+    "reasons": {
+     "not run on four-page queries (EN: arms N, N, N and N only)": 108,
+     "not run in EN": 72
+    }
+   },
+   {
+    "arm": "12",
+    "applicable": 0,
+    "not_applicable": 180,
+    "reasons": {
+     "not run on four-page queries (EN: arms N, N, N and N only)": 108,
+     "not run in EN": 72
+    }
+   },
+   {
+    "arm": "13",
+    "applicable": 0,
+    "not_applicable": 180,
+    "reasons": {
+     "not run on four-page queries (EN: arms N, N, N and N only)": 108,
+     "not run in EN": 72
+    }
+   },
+   {
+    "arm": "14",
+    "applicable": 0,
+    "not_applicable": 180,
+    "reasons": {
+     "not run on four-page queries (EN: arms N, N, N and N only)": 108,
+     "not run in EN": 72
+    }
+   },
+   {
+    "arm": "ALL",
+    "applicable": 0,
+    "not_applicable": 180,
+    "reasons": {
+     "not run on four-page queries (EN: arms N, N, N and N only)": 108,
+     "not run in EN": 72
+    }
+   }
+  ]
+ }
+}

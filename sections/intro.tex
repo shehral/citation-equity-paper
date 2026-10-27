@@ -1,0 +1,58 @@
+% sections/intro.tex -- Citation Equity, WWW 2027 demo track (draft 2, 2026-10-24; cut to fit 4 pages, see notes/CUTS.md).
+% Structure per notes/OUTLINE.md section 1: context, gap, what we built, what the test found, contributions.
+% Every number carries a % src: comment. CE = ../citation-equity (read only);
+% LS = our internal landscape review (not public) (internal; never cited, product facts cite the product pages);
+% Rnnn = an id in our internal landscape corpus (not public).
+\section{Introduction}
+\label{sec:intro}
+
+% ---- Context
+% src: 18.8 percentage points: R77; notes/NARRATIVE.md 2.1 (checked in the full text, Section 3, 2026-10-24)
+Answer engines, systems that answer a question in prose and cite web sources, now sit between writers and readers.
+In a preregistered field experiment, a search page with only AI Mode cut click-through by 18.8 percentage points~\cite{wang2026aisearch}.
+Generative engine optimization (GEO), changing a page so that answer engines cite it, now reaches writers as advice and as products.
+
+% ---- Gap
+% src: "up to 40%", five sources, one model: R1 summary; CE/docs/evidence.md line 80 (GEO row: "Top five Google results pasted
+%      into GPT-3.5-turbo") and lines 166 to 168 ("this is where 'up to 40%' comes from"), CE c908431
+% src: 45 studies and "Rejected as a general claim": Martinez arXiv 2607.14035, Table 5 (PDF p. 12, row "GEO increases visibility by 40%"); CE/docs/evidence.md line 14
+% src: 19 of 24 settings: CE/docs/evidence.md lines 137 and 144 ("decreases rankings in 19 out of 24 evaluated settings", quoting
+%      C-SEO Bench; CE c908431)
+% src: 24 products, most selling tracking, 7 marked "Yes" for generating or rewriting content (Profound, Evertune, Scrunch,
+%      Gauge, Promptwatch, AirOps, Writesonic; Goodie "suggests actions" and Surfer "scores content" not counted):
+%      LS lines 473 to 498 (product table), pages read 2026-10-04 (LS line 471);
+%      footnote URLs re-opened 2026-10-24 (Evertune, Writesonic, Ahrefs Brand Radar).
+The advice rests on weak evidence.
+Its best-known figure, gains of up to 40\%, comes from one setup with five sources in one model's prompt~\cite{aggarwal2024geo}, and a survey of 45 studies rejects it as a general claim~\cite{martinez2026survey}; adding statistics lowered citation rank in 19 of 24 C-SEO Bench settings~\cite{puerto2025cseo}.
+Of 24 commercial products whose public pages we read on 4 October 2026, most sell brand tracking and seven also generate or rewrite content,\footnote{For example \url{https://www.evertune.ai/pricing} and \url{https://writesonic.com/pricing}, opened 24 October 2026.} yet writers feel less ownership of text an AI writes for them~\cite{draxler2024ghostwriter,dhillon2024scaffolding}.
+
+% ---- What we built
+% src: design by the PI (Prof. Bayat): CE/README.md line 103 ("Original design by Prof. Akram Bayat"); CE/docs/superpowers/specs/
+%      2026-10-23-citation-equity-design.md line 12 (local feat branch only; not on public main b10887e)
+%      (attribution moved to the checks sentence in Section 2.1; "three-module" dropped as undefined, review W8)
+% src: suggest, never rewrite on its own (optional local model proposes wording, applied on a click); drafts stay local
+%      unless the author picks a hosted model: CE/README.md line 3 ("it suggests, you decide"), line 13 ("there is no apply-all")
+%      and line 68 ("Privacy": "a hosted API you choose, which then receives the draft"); CE/docs/architecture.md line 84
+%      ("Rewrite with local AI ... only after a click"), CE c908431
+% src: footnote links: Research page https://shehral.github.io/citation-equity/research/ (HTTP 200 on 2026-10-26; plans and
+%      results of the tests, CE c908431 "docs, research page")
+% src: aiseo-audit evidence tiers: CE/docs/research/2026-10-23-oss-sweep.json lines 14 and 187 (local feat branch only; not on
+%      public main b10887e); geo-score: R238
+We present \emph{Citation Equity}, an open-source writing workspace that runs in the browser (Figure~\ref{fig:overview}).\footnote{Live demo: \url{https://shehral.github.io/citation-equity/}. Code (MIT): \url{https://github.com/shehral/citation-equity}. Data: \url{https://huggingface.co/datasets/Shehral/citation-equity-experiments}. Research page (plans, results): \url{https://shehral.github.io/citation-equity/research/}.\label{fn:links} Video: \url{https://youtu.be/kbU9t3ewVUk}.}
+It grades a draft on eleven checks with the evidence behind each, suggests anchored fixes the author applies one at a time, never rewrites on its own, and tests whether following the advice changed citation.
+Evidence tiers~\cite{aiseoaudit} and a readiness score kept apart from measured citation~\cite{geoscore} exist in open tools; what is new is the combination, in one serverless author-side tool, of graded evidence under an explicit rule for nulls, a self-test of the advice, and a check of that test's sensitivity against targets set in advance.
+
+% ---- What the test found
+% src: +29 and +26 points (40 -> 69, 42 -> 68, Standard preset, four checks unscored, reader's words scored):
+%      data/scores.json (rerun at CE c908431)
+% src: reader's words, E2/E3 outcome and the tool's rule: sections/evidence.tex src comments (CE/experiments/RESULTS_E1.md,
+%      CE/experiments/RESULTS_E2.md, CE/experiments/RESULTS_E3.md); the score now rising with that check: Figure 5
+%      (data/fig5_callouts.json)
+% Clarity pass 2026-10-26 (notes/CLARITY-PASS.md): the sensitivity test's citation share (+0.014 to +0.031, "1 to 3 points")
+% is no longer repeated here; the abstract, Figure 1 and Section 3 keep it as context. The Bajemon and Rochet src that sat
+% here belongs to Section 4 (sections/related.tex).
+Applying all the suggestions to two sample drafts raises the checklist score by 29 and 26 points, as built in.
+Tested one change at a time on real pages, only adding the reader's own words near the top clearly helped, by about 0.03 on a 0-to-1 citation score, keeping its sign with another editor and other judges; question headings, cited sources, direct answer first and lists showed no effect larger than 0.03 and attributed quotes were inconclusive, so the tool now scores what helped and marks what did not (Figure~\ref{fig:readerwords}).
+% Cut 2026-10-26 (notes/CUTS.md 71): the contributions sentence ("the system, live and open (Section 2); graded evidence for every
+% check (Section 2.1, Figure 3); and a citation test inside the tool, with tests of its advice one change at a time (Section 3,
+% Figure 4)"); the novelty sentence above states the contribution and the section heads carry the map.

@@ -1,0 +1,18 @@
+% sections/related.tex: related work. Draft 2, 2026-10-24: cut from about 275 to about 150 words (notes/CUTS.md).
+% Keys: aggarwal2024geo (R1), puerto2025cseo (R2), vishwakarma2026cited (R4), kim2026sageo (R3), wu2026autogeo (R10),
+%   bajemon2026scoring (R39, preprint, vendor-linked), aiseoaudit (CE/docs/research/2026-10-23-oss-sweep.json, local feat branch only),
+%   geoscore (R238). Rnnn = ids in our internal landscape corpus (not public).
+
+\section{Related work}\label{sec:related}
+
+% src: CE/NOTICE lines 10 to 25 (CE/packages/bench/src/prompt.ts and CE/packages/bench/src/metrics.ts adapted from GEO-optim/GEO,
+%      Apache-2.0); corpus R3 (visibility per stage);
+%      corpus R10 (automatic rewriter); corpus R39 summary and verifier_note; CE/docs/research/2026-10-23-oss-sweep.json lines 14 and 201 (aiseo-audit FACTOR_REGISTRY with
+%      evidence tiers; lists, tables and answer capsules tagged 'diagnostic'); CE/NOTICE lines 29 to 39 (code adapted from aiseo-audit 2.1.2,
+%      commit 6c888aa);
+%      corpus R238 (geo-score keeps citation tracking out of the score)
+The bench reuses GEO's prompt and word share~\cite{aggarwal2024geo} and the counterfactual style of C-SEO Bench and What Gets Cited, which edit one page and hold the rest fixed~\cite{puerto2025cseo,vishwakarma2026cited}.
+Bajemon and Rochet validate a content score against engines through falsification gates~\cite{bajemon2026scoring} (a vendor-linked preprint); we run no such validation and do not claim our score predicts citation.
+Among open tools, aiseo-audit keeps an evidence tier for every factor and already demotes lists and tables to unscored diagnostics~\cite{aiseoaudit}, and Citation Equity adapts code from it.
+% src: none of the 341 sources in our internal landscape corpus (not public) is a
+%      user study of a GEO tool (its user studies, R53 and R88 to R121, study answer engines or AI writing tools); verify-claims B8

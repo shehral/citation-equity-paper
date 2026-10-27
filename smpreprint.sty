@@ -1,0 +1,284 @@
+%% smpreprint.sty -- house style (from the stale-monitors paper), adapted for the Citation Equity paper.
+%%
+%% Engine: XeTeX through tectonic (/opt/homebrew/bin/tectonic --keep-logs <file>.tex). Every font is loaded by FILE
+%% name from the tectonic bundle (TeX Live packages xcharter, xcharter-math, lato, inconsolata), never from system
+%% font directories, so the build reproduces on a fresh machine.
+%%
+%% Options
+%%   (none)  arXiv preprint: single column on the article class; XCharter text with XCharter Math; Lato for headings,
+%%           captions, boxes and figure text; Inconsolata for code; quiet links; title block; boxes.
+%%   acm     Alias of tmlr, for the ACM acmart (sigconf) build of the WWW 2027 demo paper.
+%%   tmlr    Shared interface only, loaded after the unchanged tmlr.sty: palette and concept colors, \owner,
+%%           \figtakeaway, \panel, concept keys, the keyfindings and takeaway boxes, \codelink (a no-op there).
+%%           No font, layout, caption, list or title change, so the TMLR build keeps the template's look.
+%%
+%% Interface (documented in INTERFACE.md and paper/STYLE.md)
+%%   \figtakeaway{..}  \tabtakeaway{..}  bold opening sentence of a caption
+%%   \panel{a}                            panel reference "(a)" in captions and text
+%%   \concept{<color>}{text}              text in a concept color (caption keys)
+%%   \conceptmark{<color>}{text}          text on a light tint of a concept color
+%%   \keydot \keyring \keysquare \keydiamond \keyline \keydash {<color>}   inline legend glyphs for captions
+%%   \begin{keyfindings}[title] .. \end{keyfindings}   the key-findings box (once, after the abstract)
+%%   \begin{findings} \item .. \end{findings}      numbered findings inside the box (both builds)
+%%   \begin{takeaway}[run-in title] .. \end{takeaway}  a sparing callout
+%%   \codelink{<url>}                     title-block code link; the URL is an owner decision (leave unset until then)
+%%   \owner{..}                           owner-decision mark, blue
+%%   \smfigfont                           the figure sans (Lato from the tectonic bundle when fontspec is loaded)
+%%   colors: smBefore smAfter smAnswer smOfftopic smChance smBar smStrong smModerate smMixed smUntested,
+%%           surfaces smPaper smSunken smPaperRule smBrandSoft smMark,
+%%           smInk smInkSoft smRule smGrid smTint smAccent smLink smOwner, and the raw Okabe-Ito slots smOI*.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{smpreprint}[2026/10/24 v1.1 house preprint style, Citation Equity concept map]
+
+\newif\ifsm@tmlr \sm@tmlrfalse
+\DeclareOption{tmlr}{\sm@tmlrtrue}
+\DeclareOption{acm}{\sm@tmlrtrue}
+\DeclareOption*{\PackageWarning{smpreprint}{Unknown option `\CurrentOption'}}
+\ProcessOptions\relax
+
+% =====================================================================================================================
+% Shared part (both builds)
+% =====================================================================================================================
+\RequirePackage{xcolor}
+\RequirePackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,fit,backgrounds,shadows}% Figure 1 schematic
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+% ---- Palette: Okabe and Ito (2008), colorblind-safe. The same hexes live in paper/scripts/figstyle.py;
+%      `python -I paper/scripts/figstyle.py --check-sty paper/smpreprint.sty` fails if the two drift apart.
+\definecolor{smOIBlack}{HTML}{000000}
+\definecolor{smOIOrange}{HTML}{E69F00}
+\definecolor{smOISkyBlue}{HTML}{56B4E9}
+\definecolor{smOIGreen}{HTML}{009E73}
+\definecolor{smOIYellow}{HTML}{F0E442}
+\definecolor{smOIBlue}{HTML}{0072B2}
+\definecolor{smOIVermillion}{HTML}{D55E00}
+\definecolor{smOIPurple}{HTML}{CC79A7}
+
+% ---- Neutrals (text, rules, grids, box fills)
+\definecolor{smInk}{HTML}{1A1A1A}
+\definecolor{smInkSoft}{HTML}{5C5C5C}
+\definecolor{smRule}{HTML}{BFC5CC}
+\definecolor{smGrid}{HTML}{E6E6E6}
+\definecolor{smTint}{HTML}{F3F5F7}
+\definecolor{smAccent}{HTML}{2F3B4C}
+\definecolor{smOwner}{HTML}{0000FF}
+
+% ---- App surfaces (dashboard redesign tokens, oklch converted to sRGB; figstyle.SURFACE)
+\definecolor{smPaper}{HTML}{FBF9F5}     % the draft sheet, warm paper
+\definecolor{smSunken}{HTML}{F4F2EE}    % wells, tracks
+\definecolor{smPaperRule}{HTML}{E2DFDA} % borders on paper
+\definecolor{smBrandSoft}{HTML}{E9EDFF} % brand tint (active passage, chips)
+\definecolor{smMark}{HTML}{717ADF}      % dotted underline under flagged text
+
+% ---- Concept map: one color per concept in every figure, schematic and caption key (figstyle.CONCEPT).
+%      Chosen for prettiness (colorblind safety waived by the owner, 2026-10-21).
+\definecolor{smBefore}{HTML}{7C8799}    % before draft: soft slate
+\definecolor{smAfter}{HTML}{4A4CBA}     % after draft (suggestions applied) and the tool itself: indigo brand
+\definecolor{smAnswer}{HTML}{009B8F}    % one-sentence answer edit (registered contrast): teal
+\definecolor{smOfftopic}{HTML}{9D9EA2}  % off-topic control: grey, dashed
+\definecolor{smChance}{HTML}{1A1A1A}    % chance level: thin dotted ink
+\definecolor{smBar}{HTML}{ED7665}       % pre-registered bar: coral band
+\definecolor{smStrong}{HTML}{048149}    % evidence grade strong: deep green
+\definecolor{smModerate}{HTML}{6DBA70}  % evidence grade moderate: light green
+\definecolor{smMixed}{HTML}{AD721C}     % evidence grade mixed: amber
+\definecolor{smUntested}{HTML}{A9AAB1}  % evidence grade untested: light grey
+
+% ---- Figure sans: Lato (the font of the matplotlib figures) when fontspec is loaded (XeTeX through tectonic),
+%      so a TikZ schematic and an embedded plot share one face; otherwise the document sans.
+\AtBeginDocument{\@ifpackageloaded{fontspec}%
+  {\newfontfamily\sm@lato{Lato}[Extension=.ttf, UprightFont=*-Regular, ItalicFont=*-Italic, BoldFont=*-Bold,
+     BoldItalicFont=*-BoldItalic, FontFace={sb}{n}{*-Semibold}, Ligatures=TeX]%
+   \providecommand{\smfigfont}{\sm@lato}}%
+  {\providecommand{\smfigfont}{\sffamily}}}
+
+% ---- Owner-decision mark (blue). main.tex may redefine it identically; it must stay blue and visible.
+\DeclareRobustCommand{\owner}[1]{{\color{smOwner}\textbf{[OWNER:} #1\textbf{]}}}
+
+% ---- Captions: open with a bold takeaway sentence, then say how to read the figure.
+%      \caption{\figtakeaway{Drift does not rank the regressed units.} Each point is ...}
+\DeclareRobustCommand{\figtakeaway}[1]{\textbf{#1}}
+\DeclareRobustCommand{\tabtakeaway}[1]{\textbf{#1}}
+\DeclareRobustCommand{\panel}[1]{\textbf{(#1)}}
+
+% ---- Concept text and inline legend glyphs (use in captions instead of a legend box).
+\DeclareRobustCommand{\concept}[2]{\textcolor{#1}{#2}}
+\DeclareRobustCommand{\conceptmark}[2]{{\setlength{\fboxsep}{0.9pt}\colorbox{#1!16}{\vphantom{Ag}#2}}}
+\newcommand{\sm@key}[1]{\tikz[baseline=-0.6ex,sharp corners,solid]{#1}}% reset styles inherited inside TikZ nodes
+\DeclareRobustCommand{\keydot}[1]{\sm@key{\fill[#1] (0,0) circle (0.30em);}}
+\DeclareRobustCommand{\keyring}[1]{\sm@key{\draw[#1,line width=0.85pt] (0,0) circle (0.25em);}}
+\DeclareRobustCommand{\keysquare}[1]{\sm@key{\fill[#1] (-0.26em,-0.26em) rectangle (0.26em,0.26em);}}
+\DeclareRobustCommand{\keydiamond}[1]{\sm@key{\fill[#1] (0,-0.34em) -- (0.34em,0) -- (0,0.34em) -- (-0.34em,0) -- cycle;}}
+\DeclareRobustCommand{\keyline}[1]{\sm@key{\draw[#1,line width=1.4pt] (0,0) -- (1.1em,0);}}
+\DeclareRobustCommand{\keydash}[1]{\sm@key{\draw[#1,line width=1.2pt,dash pattern=on 2.2pt off 1.6pt] (0,0) -- (1.2em,0);}}
+
+% ---- Title-block code link. The URL is an owner decision: leave \codelink unset until the owner names it.
+\def\sm@codelink{}
+\newcommand{\codelink}[1]{\def\sm@codelink{#1}}
+
+% ---- Box fonts (letter-spaced small capitals in the preprint; plain in TMLR)
+\ifsm@tmlr
+  \newcommand{\sm@boxtitlefont}{\sffamily\bfseries\footnotesize}
+  \newcommand{\sm@spaced}[1]{#1}
+\else
+  \newcommand{\sm@boxtitlefont}{\sffamily\bfseries\footnotesize}
+  \newcommand{\sm@spaced}[1]{{\addfontfeatures{LetterSpace=9}#1}}
+\fi
+
+% ---- Key-findings box: once, right after the abstract. 3 to 5 numbered findings, each with its tier.
+\newtcolorbox{keyfindings}[1][Key findings]{%
+  enhanced, breakable, colback=smTint, colframe=smTint, boxrule=0pt, arc=1.5pt, outer arc=1.5pt,
+  borderline west={2.2pt}{0pt}{smAccent},
+  left=11pt, right=11pt, top=7pt, bottom=8pt, before skip=10pt plus 2pt, after skip=14pt plus 2pt,
+  detach title, before upper={{\sm@boxtitlefont\color{smAccent}\sm@spaced{\MakeUppercase{#1}}\par}\vspace{3pt}},
+  fontupper=\normalsize}
+
+% ---- Numbered findings for the key-findings box (plain LaTeX list, so it behaves the same in both builds):
+%      \begin{findings} \item \textbf{Claim.} Evidence, tier. \end{findings}
+\newcounter{smfinding}
+\newenvironment{findings}%
+  {\begin{list}{{\sffamily\bfseries\color{smAccent}\arabic{smfinding}}}%
+    {\usecounter{smfinding}\setlength{\leftmargin}{1.25em}\setlength{\labelwidth}{0.9em}%
+     \setlength{\labelsep}{0.35em}\setlength{\itemsep}{3pt}\setlength{\parsep}{0pt}%
+     \setlength{\topsep}{1pt}\setlength{\partopsep}{0pt}\setlength{\rightmargin}{0pt}}}%
+  {\end{list}}
+
+% ---- Takeaway callout: sparing (at most one per section); an optional run-in title.
+\newcommand{\sm@runin}[1]{\if\relax\detokenize{#1}\relax\else{\sffamily\bfseries\color{smAccent}#1}\enspace\fi}
+\newtcolorbox{takeaway}[1][]{%
+  enhanced, breakable, colback=white, colframe=white, boxrule=0pt, arc=0pt, outer arc=0pt,
+  borderline west={1.6pt}{0pt}{smRule},
+  left=9pt, right=0pt, top=1pt, bottom=1pt, before skip=8pt plus 2pt, after skip=8pt plus 2pt,
+  before upper={\sm@runin{#1}}}
+
+\ifsm@tmlr
+  % TMLR keeps its own fonts, layout, captions and title block. Links keep the v8.3 colour.
+  \colorlet{smLink}{blue!50!black}
+\fi
+\ifsm@tmlr\expandafter\endinput\fi
+
+% =====================================================================================================================
+% arXiv preprint part
+% =====================================================================================================================
+\definecolor{smLink}{HTML}{2B4F7A}
+
+% ---- Page: US letter, a 6.1 in measure (about 95 to 100 characters a line, as in the exemplars), ragged bottom.
+\RequirePackage[letterpaper,textwidth=6.1in,top=1in,bottom=1.05in,footskip=0.45in,heightrounded]{geometry}
+
+% ---- Fonts (all from the tectonic bundle, loaded by file name). amsmath, amssymb and mathtools must precede
+%      unicode-math; main.tex's later \usepackage of them is then a no-op.
+\RequirePackage{amsmath,amssymb,mathtools}
+\RequirePackage{fontspec}
+\RequirePackage[warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
+\setmainfont{XCharter}[Extension=.otf, UprightFont=*-Roman, ItalicFont=*-Italic, BoldFont=*-Bold,
+  BoldItalicFont=*-BoldItalic, SlantedFont=*-Slanted, Ligatures=TeX]
+\setsansfont{Lato}[Extension=.ttf, UprightFont=*-Regular, ItalicFont=*-Italic, BoldFont=*-Bold,
+  BoldItalicFont=*-BoldItalic, FontFace={sb}{n}{*-Semibold}, FontFace={sb}{it}{*-SemiboldItalic},
+  Scale=MatchLowercase, Ligatures=TeX]
+\setmonofont{Inconsolatazi4}[Extension=.otf, UprightFont=*-Regular, BoldFont=*-Bold, Scale=MatchLowercase]
+\setmathfont{XCharter-Math.otf}
+\linespread{1.08}
+
+% ---- Paragraphs: block paragraphs, as in the TMLR text the prose was written for.
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6.5pt plus 2pt minus 1pt}
+\raggedbottom
+\widowpenalty=10000 \clubpenalty=10000 \displaywidowpenalty=10000
+% Line breaking: moderately tolerant (TMLR uses \sloppy); a few dense appendix paragraphs need it.
+\tolerance=1000 \emergencystretch=3em
+
+% ---- Citations: natbib author-year, the same settings as tmlr.sty, so both builds cite identically.
+\RequirePackage{natbib}
+\setcitestyle{authoryear,round,citesep={;},aysep={,},yysep={;}}
+\def\bibfont{\small\raggedright}% long URLs and model ids otherwise stretch justified reference lines
+\setlength{\bibsep}{2.5pt plus 1pt}
+
+% ---- Captions: sans, small; label in bold; the text opens with \figtakeaway{...}.
+\RequirePackage{caption}
+\captionsetup{font={small,sf}, labelfont={bf,sf}, labelsep=period, justification=justified,
+  singlelinecheck=false, skip=7pt, margin=0pt}
+\captionsetup[table]{position=top, skip=5pt}
+
+% ---- Tables: data surfaces (figures, captions, tables) are set in the sans; prose stays in the serif.
+%      Tabular lining figures align columns of numbers; a slightly tighter column gap fits the generated tables,
+%      which were laid out for TMLR's 6.5 in measure, into this 6.1 in measure.
+\RequirePackage{etoolbox}
+\newcommand{\sm@tablefont}{\sffamily\addfontfeatures{Numbers={Lining,Monospaced}}}
+% LaTeX resets the font inside every float box (\@floatboxreset), so the table font is added there; a table that
+% sets its own \tabcolsep after \begin{table} still wins. Longtables keep their own sizes and gaps.
+\def\sm@tabletype{table}
+\g@addto@macro\@floatboxreset{\ifx\@captype\sm@tabletype\sm@tablefont\setlength{\tabcolsep}{4.5pt}\fi}
+\AtBeginEnvironment{longtable}{\sm@tablefont}
+% Text cells of tabularx X columns are set ragged right: justified narrow cells stretch their word spaces.
+\AtBeginDocument{\@ifpackageloaded{tabularx}{\renewcommand{\tabularxcolumn}[1]{>{\raggedright\arraybackslash}p{#1}}}{}}
+
+% ---- Lists
+\RequirePackage{enumitem}
+\setlist{topsep=2pt plus 1pt, itemsep=2pt plus 1pt, parsep=0pt, partopsep=0pt}
+
+% ---- Floats: room for figures without crowding the text.
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.6}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.8}
+\setcounter{topnumber}{3}
+\setcounter{totalnumber}{4}
+\setlength{\textfloatsep}{16pt plus 4pt minus 3pt}
+\setlength{\floatsep}{14pt plus 3pt minus 2pt}
+\setlength{\intextsep}{12pt plus 3pt minus 2pt}
+
+% ---- Headings: sans, numbers in a soft ink.
+\renewcommand{\@seccntformat}[1]{{\color{smInkSoft}\csname the#1\endcsname}\hspace{0.7em}}
+% \sm@keepwithprev: these styles run in vertical mode, where \color (and a \label just above) leaves a whatsit that
+% makes the next glue a legal page break; when this heading directly follows another, forbid that break.
+\newcommand{\sm@keepwithprev}{\if@nobreak\nobreak\fi}
+\renewcommand{\section}{\@startsection{section}{1}{\z@}%
+  {-17pt plus -4pt minus -2pt}{6pt plus 1pt}%
+  {\sffamily\bfseries\fontsize{13}{16}\selectfont\raggedright\color{smInk}\sm@keepwithprev}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{\z@}%
+  {-12pt plus -3pt minus -2pt}{3pt plus 1pt}%
+  {\sffamily\bfseries\fontsize{11}{14}\selectfont\raggedright\color{smInk}\sm@keepwithprev}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{\z@}%
+  {-9pt plus -2pt minus -1pt}{2pt plus 1pt}%
+  {\sffamily\fontseries{sb}\selectfont\normalsize\raggedright\color{smInk}\sm@keepwithprev}}
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{\z@}%
+  {3pt plus 1pt minus 1pt}{-0.55em plus -0.25em minus -0.1em}%
+  {\normalfont\normalsize\bfseries}}
+
+% ---- Page style: a page number in the footer, nothing else.
+\def\ps@plain{\let\@mkboth\@gobbletwo
+  \def\@oddhead{}\def\@evenhead{}%
+  \def\@oddfoot{\hfil{\sffamily\footnotesize\color{smInkSoft}\thepage}\hfil}\let\@evenfoot\@oddfoot}
+\pagestyle{plain}
+
+% ---- Title block. main.tex keeps the TMLR author syntax: \author{\name .. \email .. \\ \addr ..}.
+\def\name{\sffamily\fontseries{sb}\selectfont\fontsize{11.5}{14}\selectfont\color{smInk}}
+\def\email{\hfill\mdseries\ttfamily\small\color{smInkSoft}}
+\def\addr{\sffamily\small\color{smInkSoft}}
+\def\AND{\par\vskip 8pt\relax}
+\date{\today}
+\renewcommand{\maketitle}{\par
+  \begingroup
+    \thispagestyle{plain}%
+    \raggedright
+    {\sffamily\bfseries\fontsize{19}{23.5}\selectfont\color{smInk}\@title\par}%
+    \vskip 15pt
+    {\@author\par}%
+    \vskip 7pt
+    {\sffamily\footnotesize\color{smInkSoft}\@date
+      \ifx\sm@codelink\@empty\else\quad\textbullet\quad Code:\ \url{\sm@codelink}\fi\par}%
+    \vskip 12pt
+    {\color{smRule}\hrule height 0.6pt}%
+    \vskip 13pt
+  \endgroup
+  \setcounter{footnote}{0}%
+  \global\let\maketitle\relax \global\let\@maketitle\relax
+  \gdef\@author{}\gdef\@title{}\global\let\thanks\relax}
+
+% ---- Abstract: a letter-spaced sans label, the text at full measure.
+\renewenvironment{abstract}%
+  {\par\noindent{\sm@boxtitlefont\color{smAccent}\sm@spaced{ABSTRACT}}\par\vspace{1pt}}%
+  {\par\vspace{4pt}}
+
+\endinput

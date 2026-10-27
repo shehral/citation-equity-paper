@@ -1,0 +1,699 @@
+{
+  "_provenance": {
+    "producer": "scripts/derive_sensitivity.py",
+    "note": "Derived from the tool repo's sensitivity results (model outputs' text not copied). Means over the 8 questions; per-question values are means over 8 seeds of valid answers. Intervals are 95% t intervals over questions; mde_post_hoc is a paired t approximation (two-sided alpha 0.05, power 0.8, n = 8), post hoc.",
+    "inputs": [
+      {
+        "path": "experiments/results/sensitivity/sensitivity_Qwen__Qwen3.5-9B.json",
+        "repo": "citation-equity",
+        "sha256": "c807307504ca8584cb13891340247132069a2f69105caf96bd2125ca08af2de9"
+      },
+      {
+        "path": "experiments/results/sensitivity/sensitivity_google__gemma-4-12B-it.json",
+        "repo": "citation-equity",
+        "sha256": "5c95ab45ad57f0f7ab32bef6293d4907ae8188479f8214ea29e9553698e40024"
+      },
+      {
+        "path": "experiments/results/sensitivity/sensitivity_Qwen__Qwen3.8-27B.json",
+        "repo": "citation-equity",
+        "sha256": "fb140c702d8315a07065a80db64eb8143965e175a21b33efbdb4ad3b93b8be1c"
+      },
+      {
+        "path": "experiments/results/sensitivity/sensitivity_google__gemma-4-31B-it.json",
+        "repo": "citation-equity",
+        "sha256": "2f50a4cdc2374e3ffd1a60bbf75ef8ca80b1258a33126045a49edf7ed9417fec"
+      },
+      {
+        "path": "experiments/explorer/sensitivity.py",
+        "repo": "citation-equity",
+        "sha256": "e6b1f8d8e6cc5d5bca0cfc04eea1ad5353bc6ccaff54d75ffcce13f5d1f8945a"
+      }
+    ]
+  },
+  "thresholds": {
+    "h1_offtopic_max": {
+      "value": 0.05,
+      "line": 171,
+      "text": "h1 = mean[\"offtopic\"] <= 0.05",
+      "source": "experiments/explorer/sensitivity.py"
+    },
+    "h2_min_gain": {
+      "value": 0.1,
+      "line": 173,
+      "text": "h2 = (mean[\"answer_first\"] - mean[\"before\"] >= 0.10) and p_af <= 0.05",
+      "source": "experiments/explorer/sensitivity.py"
+    },
+    "h2_max_p": {
+      "value": 0.05,
+      "line": 173,
+      "text": "h2 = (mean[\"answer_first\"] - mean[\"before\"] >= 0.10) and p_af <= 0.05",
+      "source": "experiments/explorer/sensitivity.py"
+    },
+    "usable_min_valid_rate": {
+      "value": 0.9,
+      "line": 188,
+      "text": "\"usable_for_E2\": valid_rate >= 0.90 and h1 and h2,",
+      "source": "experiments/explorer/sensitivity.py"
+    }
+  },
+  "models": [
+    {
+      "model": "Qwen/Qwen3.5-9B",
+      "label": "Qwen3.5-9B",
+      "source": "experiments/results/sensitivity/sensitivity_Qwen__Qwen3.5-9B.json",
+      "valid_rate": 1.0,
+      "chance_share": 0.125,
+      "mean_sources_cited": 6.2,
+      "target_cited_rate": {
+        "offtopic": 0.0469,
+        "before": 0.8594,
+        "after": 0.875,
+        "answer_first": 0.9688
+      },
+      "mean_target_share": {
+        "offtopic": 0.0031,
+        "before": 0.164,
+        "after": 0.1776,
+        "answer_first": 0.1975
+      },
+      "relative_change_after": 0.08292682926829276,
+      "relative_change_answer_first": 0.2042682926829269,
+      "registered": {
+        "H1_floor": true,
+        "H2_sensitivity": false,
+        "usable_for_E2": false
+      },
+      "questions": [
+        "espresso-bitterness/q1",
+        "espresso-bitterness/q2",
+        "espresso-bitterness/q3",
+        "espresso-bitterness/q4",
+        "rag-explained/q1",
+        "rag-explained/q2",
+        "rag-explained/q3",
+        "rag-explained/q4"
+      ],
+      "per_question": {
+        "offtopic": [
+          0.0,
+          0.018229166666666664,
+          0.0,
+          0.0,
+          0.0,
+          0.00625,
+          0.0,
+          0.0
+        ],
+        "before": [
+          0.19145961269123035,
+          0.17284668600121555,
+          0.04503205128205128,
+          0.10115578865578866,
+          0.26323832417582416,
+          0.30000942684766213,
+          0.12622863247863247,
+          0.1117938074352548
+        ],
+        "after": [
+          0.22698863636363636,
+          0.2538283248081841,
+          0.11162973539618276,
+          0.053791520979020985,
+          0.19816849816849816,
+          0.337783744033744,
+          0.1827423373195432,
+          0.056197274947274944
+        ],
+        "answer_first": [
+          0.2354876160990712,
+          0.20793544690603513,
+          0.13324738986503692,
+          0.1579471182412359,
+          0.23463495246583482,
+          0.30436507936507934,
+          0.19989533492822967,
+          0.10683515830574654
+        ]
+      },
+      "diff_after_minus_before": [
+        0.03552902367240601,
+        0.08098163880696857,
+        0.06659768411413147,
+        -0.04736426767676767,
+        -0.065069826007326,
+        0.037774317186081874,
+        0.05651370484091073,
+        -0.055596532487979855
+      ],
+      "diff_answer_first_minus_before": [
+        0.044028003407840854,
+        0.03508876090481958,
+        0.08821533858298564,
+        0.056791329585447234,
+        -0.028603371709989334,
+        0.004355652517417208,
+        0.0736667024495972,
+        -0.004958649129508261
+      ],
+      "after_minus_before": {
+        "n_questions": 8,
+        "mean": 0.013670717806053142,
+        "sd": 0.05970117141859579,
+        "ci95_t": [
+          -0.03624071054569468,
+          0.06358214615780096
+        ],
+        "n_up": 5,
+        "n_down": 3,
+        "max": 0.08098163880696857,
+        "min": -0.065069826007326,
+        "p_sign_flip": 0.515625,
+        "mde_post_hoc": 0.06882442028401115,
+        "tier": "exploratory, uncorrected"
+      },
+      "answer_first_minus_before": {
+        "n_questions": 8,
+        "mean": 0.033572970826076264,
+        "sd": 0.040440835401186384,
+        "ci95_t": [
+          -0.00023641365749902526,
+          0.06738235530965156
+        ],
+        "n_up": 6,
+        "n_down": 2,
+        "max": 0.08821533858298564,
+        "min": -0.028603371709989334,
+        "p_sign_flip": 0.0546875,
+        "mde_post_hoc": 0.04662081138697418,
+        "tier": "registered contrast (H2); interval and MDE post hoc"
+      },
+      "per_sample": {
+        "espresso-bitterness": {
+          "label": "espresso",
+          "offtopic_mean": 0.004557291666666666,
+          "before_mean": 0.12762353465757145,
+          "after_mean": 0.16155955438675607,
+          "answer_first_mean": 0.1836543927778448,
+          "after_minus_before": 0.03393601972918461
+        },
+        "rag-explained": {
+          "label": "RAG",
+          "offtopic_mean": 0.0015625,
+          "before_mean": 0.2003175477343434,
+          "after_mean": 0.19372296361726507,
+          "answer_first_mean": 0.21143263126622258,
+          "after_minus_before": -0.006594584117078334
+        }
+      }
+    },
+    {
+      "model": "google/gemma-4-12B-it",
+      "label": "Gemma-4-12B-it",
+      "source": "experiments/results/sensitivity/sensitivity_google__gemma-4-12B-it.json",
+      "valid_rate": 1.0,
+      "chance_share": 0.125,
+      "mean_sources_cited": 6.95,
+      "target_cited_rate": {
+        "offtopic": 0.0312,
+        "before": 0.9688,
+        "after": 0.9844,
+        "answer_first": 1.0
+      },
+      "mean_target_share": {
+        "offtopic": 0.0012,
+        "before": 0.1784,
+        "after": 0.2011,
+        "answer_first": 0.2047
+      },
+      "relative_change_after": 0.1272421524663676,
+      "relative_change_answer_first": 0.14742152466367697,
+      "registered": {
+        "H1_floor": true,
+        "H2_sensitivity": false,
+        "usable_for_E2": false
+      },
+      "questions": [
+        "espresso-bitterness/q1",
+        "espresso-bitterness/q2",
+        "espresso-bitterness/q3",
+        "espresso-bitterness/q4",
+        "rag-explained/q1",
+        "rag-explained/q2",
+        "rag-explained/q3",
+        "rag-explained/q4"
+      ],
+      "per_question": {
+        "offtopic": [
+          0.005,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.004807692307692308,
+          0.0,
+          0.0
+        ],
+        "before": [
+          0.24954419521873789,
+          0.24028058762199117,
+          0.083760175010175,
+          0.10644057128462951,
+          0.2531884137771518,
+          0.25259704996773963,
+          0.14727805270652755,
+          0.09432914445188977
+        ],
+        "after": [
+          0.2656549225628173,
+          0.24759625180838274,
+          0.14293836260066098,
+          0.11178142257089625,
+          0.2749076354679803,
+          0.27446275946275944,
+          0.1946354742870088,
+          0.09667212263751165
+        ],
+        "answer_first": [
+          0.26319736227824464,
+          0.24150336916294363,
+          0.13493799678582288,
+          0.12035854829762152,
+          0.2588602452166134,
+          0.25875502234710873,
+          0.2180288394687539,
+          0.14193276532779575
+        ]
+      },
+      "diff_after_minus_before": [
+        0.016110727344079423,
+        0.007315664186391568,
+        0.05917818759048597,
+        0.00534085128626674,
+        0.021719221690828516,
+        0.021865709495019814,
+        0.04735742158048126,
+        0.0023429781856218884
+      ],
+      "diff_answer_first_minus_before": [
+        0.013653167059506754,
+        0.0012227815409524556,
+        0.05117782177564788,
+        0.013917977012992008,
+        0.005671831439461594,
+        0.006157972379369103,
+        0.07075078676222635,
+        0.047603620875905986
+      ],
+      "after_minus_before": {
+        "n_questions": 8,
+        "mean": 0.022653845169896897,
+        "sd": 0.02048041649008872,
+        "ci95_t": [
+          0.005531788500492591,
+          0.0397759018393012
+        ],
+        "n_up": 8,
+        "n_down": 0,
+        "max": 0.05917818759048597,
+        "min": 0.0023429781856218884,
+        "p_sign_flip": 0.0078125,
+        "mde_post_hoc": 0.023610136260515807,
+        "tier": "exploratory, uncorrected"
+      },
+      "answer_first_minus_before": {
+        "n_questions": 8,
+        "mean": 0.026269494855757768,
+        "sd": 0.02624598378839848,
+        "ci95_t": [
+          0.004327303299902413,
+          0.04821168641161312
+        ],
+        "n_up": 8,
+        "n_down": 0,
+        "max": 0.07075078676222635,
+        "min": 0.0012227815409524556,
+        "p_sign_flip": 0.0078125,
+        "mde_post_hoc": 0.030256770111841243,
+        "tier": "registered contrast (H2); interval and MDE post hoc"
+      },
+      "per_sample": {
+        "espresso-bitterness": {
+          "label": "espresso",
+          "offtopic_mean": 0.00125,
+          "before_mean": 0.1700063822838834,
+          "after_mean": 0.19199273988568932,
+          "answer_first_mean": 0.18999931913115817,
+          "after_minus_before": 0.021986357601805923
+        },
+        "rag-explained": {
+          "label": "RAG",
+          "offtopic_mean": 0.001201923076923077,
+          "before_mean": 0.18684816522582717,
+          "after_mean": 0.21016949796381507,
+          "answer_first_mean": 0.21939421809006793,
+          "after_minus_before": 0.023321332737987893
+        }
+      }
+    },
+    {
+      "model": "Qwen/Qwen3.8-27B",
+      "label": "Qwen3.8-27B",
+      "source": "experiments/results/sensitivity/sensitivity_Qwen__Qwen3.8-27B.json",
+      "valid_rate": 1.0,
+      "chance_share": 0.125,
+      "mean_sources_cited": 6.25,
+      "target_cited_rate": {
+        "offtopic": 0.0,
+        "before": 0.8906,
+        "after": 0.9688,
+        "answer_first": 0.9531
+      },
+      "mean_target_share": {
+        "offtopic": 0.0,
+        "before": 0.1538,
+        "after": 0.1801,
+        "answer_first": 0.1784
+      },
+      "relative_change_after": 0.17100130039011718,
+      "relative_change_answer_first": 0.15994798439531865,
+      "registered": {
+        "H1_floor": true,
+        "H2_sensitivity": false,
+        "usable_for_E2": false
+      },
+      "questions": [
+        "espresso-bitterness/q1",
+        "espresso-bitterness/q2",
+        "espresso-bitterness/q3",
+        "espresso-bitterness/q4",
+        "rag-explained/q1",
+        "rag-explained/q2",
+        "rag-explained/q3",
+        "rag-explained/q4"
+      ],
+      "per_question": {
+        "offtopic": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "before": [
+          0.2398359681254418,
+          0.18614635472520868,
+          0.04684523809523809,
+          0.09768856818089554,
+          0.23829301789828106,
+          0.26913819875776396,
+          0.10274714052287581,
+          0.04967617349970291
+        ],
+        "after": [
+          0.28511054632533966,
+          0.24393924641769468,
+          0.07406711222500696,
+          0.11067461949814891,
+          0.25040178571428573,
+          0.27596082676901645,
+          0.1394292456685191,
+          0.06104113317714576
+        ],
+        "answer_first": [
+          0.2566477131192355,
+          0.20851162726162725,
+          0.09943943244152971,
+          0.14176065162907267,
+          0.2553771113146113,
+          0.29558270405126386,
+          0.1040628978864273,
+          0.06563125635948629
+        ]
+      },
+      "diff_after_minus_before": [
+        0.04527457819989786,
+        0.057792891692486,
+        0.02722187412976887,
+        0.012986051317253375,
+        0.012108767816004673,
+        0.006822628011252496,
+        0.036682105145643296,
+        0.011364959677442853
+      ],
+      "diff_answer_first_minus_before": [
+        0.016811744993793704,
+        0.022365272536418568,
+        0.05259419434629162,
+        0.04407208344817713,
+        0.01708409341633027,
+        0.026444505293499898,
+        0.0013157573635514813,
+        0.01595508285978338
+      ],
+      "after_minus_before": {
+        "n_questions": 8,
+        "mean": 0.026281731998718676,
+        "sd": 0.018675988724552884,
+        "ci95_t": [
+          0.010668214692871882,
+          0.04189524930456547
+        ],
+        "n_up": 8,
+        "n_down": 0,
+        "max": 0.057792891692486,
+        "min": 0.006822628011252496,
+        "p_sign_flip": 0.0078125,
+        "mde_post_hoc": 0.02152996443211689,
+        "tier": "exploratory, uncorrected"
+      },
+      "answer_first_minus_before": {
+        "n_questions": 8,
+        "mean": 0.024580341782230758,
+        "sd": 0.016497906279677312,
+        "ci95_t": [
+          0.010787746969334332,
+          0.03837293659512718
+        ],
+        "n_up": 8,
+        "n_down": 0,
+        "max": 0.05259419434629162,
+        "min": 0.0013157573635514813,
+        "p_sign_flip": 0.0078125,
+        "mde_post_hoc": 0.01901903779471007,
+        "tier": "registered contrast (H2); interval and MDE post hoc"
+      },
+      "per_sample": {
+        "espresso-bitterness": {
+          "label": "espresso",
+          "offtopic_mean": 0.0,
+          "before_mean": 0.14262903228169604,
+          "after_mean": 0.17844788111654755,
+          "answer_first_mean": 0.1765898561128663,
+          "after_minus_before": 0.03581884883485151
+        },
+        "rag-explained": {
+          "label": "RAG",
+          "offtopic_mean": 0.0,
+          "before_mean": 0.16496363266965594,
+          "after_mean": 0.18170824783224176,
+          "answer_first_mean": 0.18016349240294718,
+          "after_minus_before": 0.016744615162585824
+        }
+      }
+    },
+    {
+      "model": "google/gemma-4-31B-it",
+      "label": "Gemma-4-31B-it",
+      "source": "experiments/results/sensitivity/sensitivity_google__gemma-4-31B-it.json",
+      "valid_rate": 1.0,
+      "chance_share": 0.125,
+      "mean_sources_cited": 6.65,
+      "target_cited_rate": {
+        "offtopic": 0.0,
+        "before": 0.9062,
+        "after": 0.9531,
+        "answer_first": 1.0
+      },
+      "mean_target_share": {
+        "offtopic": 0.0,
+        "before": 0.18,
+        "after": 0.2107,
+        "answer_first": 0.1866
+      },
+      "relative_change_after": 0.17055555555555557,
+      "relative_change_answer_first": 0.036666666666666625,
+      "registered": {
+        "H1_floor": true,
+        "H2_sensitivity": false,
+        "usable_for_E2": false
+      },
+      "questions": [
+        "espresso-bitterness/q1",
+        "espresso-bitterness/q2",
+        "espresso-bitterness/q3",
+        "espresso-bitterness/q4",
+        "rag-explained/q1",
+        "rag-explained/q2",
+        "rag-explained/q3",
+        "rag-explained/q4"
+      ],
+      "per_question": {
+        "offtopic": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "before": [
+          0.22754806661056662,
+          0.28233021834730454,
+          0.021145361662603043,
+          0.12054717853741623,
+          0.24713748143673386,
+          0.3041443439516462,
+          0.15274721269977437,
+          0.08437603117790138
+        ],
+        "after": [
+          0.22269848427936664,
+          0.30333683820525925,
+          0.05899273237281653,
+          0.13310084764182312,
+          0.26857638674971457,
+          0.3317021550640502,
+          0.29398405758699875,
+          0.07335438346132596
+        ],
+        "answer_first": [
+          0.21669615946329657,
+          0.2890014256047007,
+          0.08289794496691048,
+          0.1123277287857084,
+          0.23650411313950867,
+          0.28412510620080433,
+          0.18471990813835326,
+          0.08677948280175514
+        ]
+      },
+      "diff_after_minus_before": [
+        -0.004849582331199975,
+        0.02100661985795471,
+        0.037847370710213483,
+        0.01255366910440689,
+        0.021438905312980705,
+        0.027557811112404018,
+        0.14123684488722438,
+        -0.01102164771657542
+      ],
+      "diff_answer_first_minus_before": [
+        -0.010851907147270051,
+        0.006671207257396172,
+        0.06175258330430744,
+        -0.008219449751707825,
+        -0.010633368297225193,
+        -0.020019237750841856,
+        0.03197269543857889,
+        0.002403451623853761
+      ],
+      "after_minus_before": {
+        "n_questions": 8,
+        "mean": 0.030721248867176098,
+        "sd": 0.04749862589748297,
+        "ci95_t": [
+          -0.008988596131782479,
+          0.07043109386613468
+        ],
+        "n_up": 6,
+        "n_down": 2,
+        "max": 0.14123684488722438,
+        "min": -0.01102164771657542,
+        "p_sign_flip": 0.0390625,
+        "mde_post_hoc": 0.05475713983500049,
+        "tier": "exploratory, uncorrected"
+      },
+      "answer_first_minus_before": {
+        "n_questions": 8,
+        "mean": 0.006634496834636417,
+        "sd": 0.027341610472933726,
+        "ci95_t": [
+          -0.0162236615517862,
+          0.029492655221059032
+        ],
+        "n_up": 4,
+        "n_down": 4,
+        "max": 0.06175258330430744,
+        "min": -0.020019237750841856,
+        "p_sign_flip": 0.578125,
+        "mde_post_hoc": 0.03151982525161601,
+        "tier": "registered contrast (H2); interval and MDE post hoc"
+      },
+      "per_sample": {
+        "espresso-bitterness": {
+          "label": "espresso",
+          "offtopic_mean": 0.0,
+          "before_mean": 0.1628927062894726,
+          "after_mean": 0.17953222562481638,
+          "answer_first_mean": 0.17523081470515403,
+          "after_minus_before": 0.016639519335343772
+        },
+        "rag-explained": {
+          "label": "RAG",
+          "offtopic_mean": 0.0,
+          "before_mean": 0.19710126731651395,
+          "after_mean": 0.24190424571552238,
+          "answer_first_mean": 0.19803215257010534,
+          "after_minus_before": 0.04480297839900843
+        }
+      }
+    }
+  ],
+  "ranges": {
+    "after_minus_before_mean": [
+      0.013670717806053142,
+      0.030721248867176098
+    ],
+    "answer_first_minus_before_mean": [
+      0.006634496834636417,
+      0.033572970826076264
+    ],
+    "mde_post_hoc_after": [
+      0.02152996443211689,
+      0.06882442028401115
+    ],
+    "mde_post_hoc_answer_first": [
+      0.01901903779471007,
+      0.04662081138697418
+    ],
+    "sd_after": [
+      0.018675988724552884,
+      0.05970117141859579
+    ],
+    "sd_answer_first": [
+      0.016497906279677312,
+      0.040440835401186384
+    ],
+    "offtopic_share": [
+      0.0,
+      0.0031
+    ],
+    "mean_sources_cited": [
+      6.2,
+      6.95
+    ],
+    "target_cited_rate_before": [
+      0.8594,
+      0.9688
+    ],
+    "relative_change_after": [
+      0.08292682926829276,
+      0.17100130039011718
+    ]
+  }
+}

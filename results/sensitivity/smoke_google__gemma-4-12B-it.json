@@ -1,0 +1,120 @@
+{
+ "summary": {
+  "model": "google/gemma-4-12B-it",
+  "load_seconds": 1109.3,
+  "generate_seconds": 13.2,
+  "valid_answers": "8/8",
+  "planted_cited": "8/8",
+  "mean_planted_share_of_citations": 0.9688,
+  "chance_share": 0.125,
+  "mean_sources_cited": 1.12,
+  "pass": true
+ },
+ "rows": [
+  {
+   "seed": 1,
+   "sentences": 3,
+   "sentences_with_citation": 3,
+   "cited_sources": [
+    5
+   ],
+   "valid": true,
+   "planted_cited": true,
+   "planted_share_of_citations": 1.0,
+   "answer_sha256": "7ef333893cadff7fde14614f57a5fa7ca5ef579d6d70031d474029568475f6cc",
+   "answer_chars": 389
+  },
+  {
+   "seed": 2,
+   "sentences": 3,
+   "sentences_with_citation": 3,
+   "cited_sources": [
+    5
+   ],
+   "valid": true,
+   "planted_cited": true,
+   "planted_share_of_citations": 1.0,
+   "answer_sha256": "d6e368c63d9dce3f3364e3643919be2dba37017373f27529875965fa4f373346",
+   "answer_chars": 388
+  },
+  {
+   "seed": 3,
+   "sentences": 3,
+   "sentences_with_citation": 3,
+   "cited_sources": [
+    5
+   ],
+   "valid": true,
+   "planted_cited": true,
+   "planted_share_of_citations": 1.0,
+   "answer_sha256": "3fef9f616efa6ac27f9cf9e2901dc316c4f76c80d4788c6fd5915339b5d69c13",
+   "answer_chars": 396
+  },
+  {
+   "seed": 4,
+   "sentences": 3,
+   "sentences_with_citation": 3,
+   "cited_sources": [
+    5
+   ],
+   "valid": true,
+   "planted_cited": true,
+   "planted_share_of_citations": 1.0,
+   "answer_sha256": "74c85629fd682e02201bda769f671cfaf73625be84f94169044834f25156e961",
+   "answer_chars": 385
+  },
+  {
+   "seed": 5,
+   "sentences": 3,
+   "sentences_with_citation": 3,
+   "cited_sources": [
+    5
+   ],
+   "valid": true,
+   "planted_cited": true,
+   "planted_share_of_citations": 1.0,
+   "answer_sha256": "82158a1385ca8e1ebc3b13c811cf15dec86e4834ca240f0d83b6bddfc9ed2d8b",
+   "answer_chars": 365
+  },
+  {
+   "seed": 6,
+   "sentences": 3,
+   "sentences_with_citation": 3,
+   "cited_sources": [
+    5
+   ],
+   "valid": true,
+   "planted_cited": true,
+   "planted_share_of_citations": 1.0,
+   "answer_sha256": "dd91bf65e4bc362bde5b5ce238b079a35a604d5d5ff35f34222cc4c6a001674e",
+   "answer_chars": 398
+  },
+  {
+   "seed": 7,
+   "sentences": 4,
+   "sentences_with_citation": 4,
+   "cited_sources": [
+    2,
+    5
+   ],
+   "valid": true,
+   "planted_cited": true,
+   "planted_share_of_citations": 0.75,
+   "answer_sha256": "5696c51df37d818c2c2f475bb32c5ed4dd99590d7d327f9e4c21bf5b601cb8d2",
+   "answer_chars": 538
+  },
+  {
+   "seed": 8,
+   "sentences": 3,
+   "sentences_with_citation": 3,
+   "cited_sources": [
+    5
+   ],
+   "valid": true,
+   "planted_cited": true,
+   "planted_share_of_citations": 1.0,
+   "answer_sha256": "c966db09904eac7050f8ca8b71b17158cadf13e9828c77be3100d7c469908296",
+   "answer_chars": 386
+  }
+ ]
+}

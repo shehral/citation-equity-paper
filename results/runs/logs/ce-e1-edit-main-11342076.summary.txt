@@ -1,0 +1,163 @@
+=== ce-e1-edit start: Sat Oct 24 04:34:29 EDT 2026 on d4055 model=google/gemma-4-31B-it tp=1 sets=--set main extra= ===
+node v22.11.0 at node
+NVIDIA H200, 143771 MiB
+torch 2.13.0+cu130 NVIDIA H200 (9, 0)
+{
+ "backend": "vllm",
+ "model": "google/gemma-4-31B-it",
+ "seconds": 1225.8,
+ "prompts": 1397,
+ "per_arm": {
+  "original": {
+   "versions": 80,
+   "valid": 80,
+   "not_applicable": 0,
+   "attempts_2": 0
+  },
+  "4": {
+   "versions": 4,
+   "valid": 0,
+   "not_applicable": 0,
+   "attempts_2": 0
+  },
+  "9": {
+   "versions": 55,
+   "valid": 54,
+   "not_applicable": 0,
+   "attempts_2": 0
+  },
+  "11": {
+   "versions": 30,
+   "valid": 30,
+   "not_applicable": 0,
+   "attempts_2": 0
+  },
+  "13": {
+   "versions": 43,
+   "valid": 42,
+   "not_applicable": 0,
+   "attempts_2": 0
+  },
+  "14": {
+   "versions": 7,
+   "valid": 7,
+   "not_applicable": 0,
+   "attempts_2": 0
+  },
+  "1": {
+   "versions": 25,
+   "valid": 24,
+   "not_applicable": 0,
+   "attempts_2": 1
+  },
+  "2": {
+   "versions": 50,
+   "valid": 27,
+   "not_applicable": 0,
+   "attempts_2": 29
+  },
+  "3": {
+   "versions": 46,
+   "valid": 39,
+   "not_applicable": 0,
+   "attempts_2": 8
+  },
+  "5": {
+   "versions": 32,
+   "valid": 11,
+   "not_applicable": 0,
+   "attempts_2": 23
+  },
+  "6": {
+   "versions": 59,
+   "valid": 36,
+   "not_applicable": 0,
+   "attempts_2": 24
+  },
+  "7": {
+   "versions": 73,
+   "valid": 30,
+   "not_applicable": 35,
+   "attempts_2": 9
+  },
+  "8": {
+   "versions": 34,
+   "valid": 25,
+   "not_applicable": 0,
+   "attempts_2": 10
+  },
+  "10": {
+   "versions": 21,
+   "valid": 8,
+   "not_applicable": 0,
+   "attempts_2": 18
+  },
+  "12": {
+   "versions": 63,
+   "valid": 50,
+   "not_applicable": 0,
+   "attempts_2": 19
+  },
+  "P2": {
+   "versions": 27,
+   "valid": 17,
+   "not_applicable": 0,
+   "attempts_2": 10
+  },
+  "P3": {
+   "versions": 39,
+   "valid": 33,
+   "not_applicable": 0,
+   "attempts_2": 10
+  },
+  "P5": {
+   "versions": 11,
+   "valid": 4,
+   "not_applicable": 0,
+   "attempts_2": 7
+  },
+  "P6": {
+   "versions": 36,
+   "valid": 26,
+   "not_applicable": 0,
+   "attempts_2": 10
+  },
+  "P7": {
+   "versions": 30,
+   "valid": 25,
+   "not_applicable": 0,
+   "attempts_2": 8
+  },
+  "P8": {
+   "versions": 25,
+   "valid": 20,
+   "not_applicable": 0,
+   "attempts_2": 6
+  },
+  "P10": {
+   "versions": 8,
+   "valid": 8,
+   "not_applicable": 0,
+   "attempts_2": 0
+  },
+  "P12": {
+   "versions": 50,
+   "valid": 33,
+   "not_applicable": 0,
+   "attempts_2": 20
+  },
+  "ALL": {
+   "versions": 79,
+   "valid": 78,
+   "not_applicable": 0,
+   "attempts_2": 68
+  },
+  "P_ALL": {
+   "versions": 75,
+   "valid": 53,
+   "not_applicable": 0,
+   "attempts_2": 27
+  }
+ }
+}
+=== ce-e1-edit done: Sat Oct 24 05:01:07 EDT 2026 ===

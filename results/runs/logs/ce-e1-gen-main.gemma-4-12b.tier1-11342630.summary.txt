@@ -1,0 +1,14 @@
+=== ce-e1-gen start: Sat Oct 24 05:28:08 EDT 2026 on d1028 judge=gemma-4-12b model=google/gemma-4-12B-it prompts=$CE_ROOT_PARENT/geo/e1/batches/main.gemma-4-12b.tier1.prompts.jsonl out=$CE_ROOT_PARENT/geo/e1/answers/main.gemma-4-12b.tier1.jsonl tp=1 ===
+settings ok
+NVIDIA A100-SXM4-80GB, 81920 MiB
+torch 2.13.0+cu130 NVIDIA A100-SXM4-80GB (8, 0)
+{
+ "model": "google/gemma-4-12B-it",
+ "prompts": 3176,
+ "max_model_len": 32768,
+ "answers_cut_at_max_tokens": 0,
+ "load_seconds": 221.0,
+ "generate_seconds": 3394.2,
+ "out": "$CE_ROOT_PARENT/geo/e1/answers/main.gemma-4-12b.tier1.jsonl"
+}
+=== ce-e1-gen done: Sat Oct 24 06:28:42 EDT 2026 ===

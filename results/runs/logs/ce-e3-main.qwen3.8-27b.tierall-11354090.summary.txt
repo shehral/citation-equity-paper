@@ -1,0 +1,14 @@
+=== ce-e1-gen start: Sat Oct 24 21:17:59 EDT 2026 on d4053 judge=qwen3.8-27b model=Qwen/Qwen3.8-27B prompts=$CE_ROOT_PARENT/geo/e3/retry/batches/main.qwen3.8-27b.tierall.prompts.jsonl out=$CE_ROOT_PARENT/geo/e3/retry/answers/main.qwen3.8-27b.tierall.jsonl tp=1 ===
+settings ok
+NVIDIA H200, 143771 MiB
+torch 2.13.0+cu130 NVIDIA H200 (9, 0)
+{
+ "model": "Qwen/Qwen3.8-27B",
+ "prompts": 48,
+ "max_model_len": 32768,
+ "answers_cut_at_max_tokens": 0,
+ "load_seconds": 96.9,
+ "generate_seconds": 67.0,
+ "out": "$CE_ROOT_PARENT/geo/e3/retry/answers/main.qwen3.8-27b.tierall.jsonl"
+}
+=== ce-e1-gen done: Sat Oct 24 21:20:55 EDT 2026 ===

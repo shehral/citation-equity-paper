@@ -1,0 +1,85 @@
+{
+ "tool_head": "edb6354",
+ "plans": [
+  {
+   "file": "PREREG_sensitivity.md",
+   "source": "experiments/PREREG_sensitivity.md",
+   "first": "3c86c02",
+   "last": "3c86c02",
+   "commits": [
+    "3c86c02"
+   ]
+  },
+  {
+   "file": "PREREG_E1.md",
+   "source": "experiments/PREREG_E1.md",
+   "first": "2266c09",
+   "last": "4ec7417",
+   "commits": [
+    "4ec7417",
+    "a2322d7",
+    "f70e830",
+    "d04667a",
+    "f38d34e",
+    "4bedd35",
+    "db21c71",
+    "28ace41",
+    "2266c09"
+   ]
+  },
+  {
+   "file": "PREREG_E1_revisions.md",
+   "source": "experiments/PREREG_E1_revisions.md",
+   "first": "28ace41",
+   "last": "28ace41",
+   "commits": [
+    "28ace41"
+   ]
+  },
+  {
+   "file": "PLAN_E2.md",
+   "source": "experiments/PLAN_E2.md",
+   "first": "cf2f9a1",
+   "last": "d90fc84",
+   "commits": [
+    "d90fc84",
+    "b257365",
+    "cf2f9a1"
+   ]
+  },
+  {
+   "file": "PLAN_E3.md",
+   "source": "experiments/PLAN_E3.md",
+   "first": "571e8fc",
+   "last": "248a2ec",
+   "commits": [
+    "248a2ec",
+    "571e8fc"
+   ]
+  },
+  {
+   "file": "E1_freeze_MANIFEST.md",
+   "source": "experiments/e1/freeze/MANIFEST.md",
+   "first": "7859b07",
+   "last": "7859b07",
+   "commits": [
+    "7859b07"
+   ]
+  }
+ ],
+ "manifest_counts": {
+  "files": 382,
+  "local": 66,
+  "cluster": 316
+ },
+ "gpu_hours": {
+  "smoke": 0.44,
+  "sensitivity": 0.86,
+  "e1": 7.6,
+  "e2a": 1.92,
+  "e2b": 1.89,
+  "e3": 4.16
+ },
+ "gpu_hours_overall": 16.87,
+ "built": "2026-10-24T20:17:37-07:00"
+}

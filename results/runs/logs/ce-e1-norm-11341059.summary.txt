@@ -1,0 +1,10 @@
+=== ce-e1-norm start: Sat Oct 24 02:19:10 EDT 2026 on c0219 ===
+{
+ "records": 4259,
+ "pages": 3455,
+ "usable": 2657,
+ "cut": 854,
+ "wayback_needed": 14,
+ "tokens": "google/gemma-4-12B-it,Qwen/Qwen3.8-27B"
+}
+=== ce-e1-norm done: Sat Oct 24 02:23:53 EDT 2026 ===

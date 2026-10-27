@@ -1,0 +1,22 @@
+% sections/demo.tex: Section 5, the demonstration at the venue (required by the WWW 2027 demo call).
+% Draft 2, 2026-10-24: cut from about 275 to about 190 words (notes/CUTS.md).
+% CE = ../citation-equity (the tool repo, read only). Every number carries a "% src:" comment.
+
+\section{Demonstration at the venue}\label{sec:demo}
+
+% src: CE/samples/README.md line 82 (Apple M4 Pro, 24 GB, Ollama 0.40.9); CE/README.md lines 40 to 47 (Ollama setup), CE c908431
+One laptop serves the static build and runs Ollama (\texttt{llama3.2:3b}), so the core demonstration needs no venue network.
+A second screen shows the hosted demo, and a poster carries Figures~\ref{fig:overview} and~\ref{fig:e1}.
+
+% src (Station 1, CE c908431): Start here on the example = the reader-question advice, the reader's-words advice and the
+%      example's only ready edit, the heading "?" (an unscored note, kept by "Start here always keeps one ready edit":
+%      CE/packages/engine/src/rank.ts lines 69 to 95, CE commit 5e7ac43; CE/README.md line 20). Rechecked 2026-10-26 with the
+%      engine source (analyze with the four pack questions as questions and authorQuestions, rankFixes, startHereFixes):
+%      score 37; the "?" edit leaves 37; working the questions' words into the opening raises it (reader's words weight 0.5).
+%      Figure 2 shows the same three fixes.
+% src: CE/samples/README.md lines 81 and 83 (64 answers = 2 drafts x 4 questions x 8 runs; espresso 18:37 to 18:52 PDT)
+\emph{Station 1, the 90-second loop.} The visitor loads the espresso example, follows the reader's-words advice and watches the score change (Figure~\ref{fig:readerwords}), applies a ready edit through Preview (a heading's question mark, an unscored note, so the score holds), opens the studies behind one mixed check and the recorded citation test beside its chance line.
+A live run (64 answers, 15 minutes) starts each session and fills in while visitors watch.
+\emph{Station 2, bring your own text (offline).} Visitors paste their own paragraph and see checks, suggestions and grades; the text never leaves the laptop.
+% src: CE/README.md line 59 (ce site); CE/docs/evidence.md line 262 (five items in the browser, two need a fetch: ce site), CE c908431
+\emph{Station 3, can engines reach your site? (online).} The command-line \texttt{ce site} runs the seven readiness items on the visitor's URL over a phone hotspot; offline, pasted HTML runs five of them in the browser.

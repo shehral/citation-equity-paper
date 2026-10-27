@@ -1,0 +1,221 @@
+{
+  "_provenance": {
+    "producer": "scripts/dump_grades.mjs",
+    "note": "Grades as shipped in the tool engine registry; regenerate after any change to evidence.ts or readiness.ts.",
+    "inputs": [
+      {
+        "path": "packages/engine/dist/index.js",
+        "repo": "citation-equity",
+        "sha256": "d3a5232eae88d6ab1b3b97a1cda68b24297d2d8e1a01a0054e2114a0dbf8dd56"
+      },
+      {
+        "path": "packages/engine/src/evidence.ts",
+        "repo": "citation-equity",
+        "sha256": "d0bb18f47d84e7e472b699f77f2f30aeffbc2be3f0faa18c6e05a9f71093ae11"
+      },
+      {
+        "path": "packages/engine/src/readiness.ts",
+        "repo": "citation-equity",
+        "sha256": "acbb4cd5a9fe7ee750cb81001b2ba6c8e306c0181dd1e8e105648f8c68ffb41b"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "id": "standalone-paragraphs",
+      "title": "Standalone paragraphs",
+      "in_foundation_design": true,
+      "grade": "untested",
+      "sources": [
+        "kim-2026-sageo-arena",
+        "zhang-2026-citation-absorption"
+      ]
+    },
+    {
+      "id": "question-headings",
+      "title": "Question headings",
+      "in_foundation_design": true,
+      "grade": "mixed",
+      "sources": [
+        "zhang-2026-citation-absorption",
+        "vishwakarma-2026-what-gets-cited",
+        "martinez-2026-survey"
+      ]
+    },
+    {
+      "id": "lists",
+      "title": "Lists for enumerations",
+      "in_foundation_design": true,
+      "grade": "mixed",
+      "sources": [
+        "zhang-2026-citation-absorption",
+        "vishwakarma-2026-what-gets-cited",
+        "yu-2026-geo-sfe"
+      ]
+    },
+    {
+      "id": "statistics",
+      "title": "Statistics",
+      "in_foundation_design": true,
+      "grade": "mixed",
+      "sources": [
+        "aggarwal-2024-geo",
+        "puerto-2025-cseo-bench",
+        "zhang-2026-citation-absorption",
+        "martinez-2026-survey"
+      ]
+    },
+    {
+      "id": "tables",
+      "title": "Tables for comparisons",
+      "in_foundation_design": true,
+      "grade": "untested",
+      "sources": [
+        "vishwakarma-2026-what-gets-cited",
+        "zhang-2026-citation-absorption",
+        "martinez-2026-survey"
+      ]
+    },
+    {
+      "id": "expert-quotes",
+      "title": "Attributed expert quotes",
+      "in_foundation_design": true,
+      "grade": "mixed",
+      "sources": [
+        "aggarwal-2024-geo",
+        "martinez-2026-survey",
+        "puerto-2025-cseo-bench"
+      ]
+    },
+    {
+      "id": "cited-sources",
+      "title": "Cited sources",
+      "in_foundation_design": false,
+      "grade": "mixed",
+      "sources": [
+        "aggarwal-2024-geo",
+        "puerto-2025-cseo-bench",
+        "wan-2024-conflictingqa",
+        "vishwakarma-2026-what-gets-cited"
+      ]
+    },
+    {
+      "id": "direct-answer-lead",
+      "title": "Direct answer first",
+      "in_foundation_design": false,
+      "grade": "mixed",
+      "sources": [
+        "kim-2026-sageo-arena",
+        "puerto-2025-cseo-bench",
+        "wan-2024-conflictingqa",
+        "wu-2025-autogeo"
+      ]
+    },
+    {
+      "id": "question-coverage",
+      "title": "Target questions answered",
+      "in_foundation_design": false,
+      "grade": "mixed",
+      "sources": [
+        "wan-2024-conflictingqa",
+        "vishwakarma-2026-what-gets-cited",
+        "kim-2026-sageo-arena",
+        "martinez-2026-survey"
+      ]
+    },
+    {
+      "id": "comparisons",
+      "title": "Explicit comparisons",
+      "in_foundation_design": false,
+      "grade": "mixed",
+      "sources": [
+        "vishwakarma-2026-what-gets-cited",
+        "zhang-2026-citation-absorption",
+        "martinez-2026-survey"
+      ]
+    },
+    {
+      "id": "reader-words",
+      "title": "Your reader's words up top",
+      "in_foundation_design": false,
+      "grade": "mixed",
+      "sources": [
+        "aggarwal-2024-geo",
+        "vishwakarma-2026-what-gets-cited",
+        "kim-2026-sageo-arena",
+        "wan-2024-conflictingqa"
+      ]
+    }
+  ],
+  "readiness": [
+    {
+      "id": "byline",
+      "title": "Byline",
+      "grade": "untested"
+    },
+    {
+      "id": "dates",
+      "title": "Publication dates",
+      "grade": "mixed"
+    },
+    {
+      "id": "structured-data",
+      "title": "Structured data",
+      "grade": "mixed"
+    },
+    {
+      "id": "indexing-directives",
+      "title": "Indexing directives",
+      "grade": "strong"
+    },
+    {
+      "id": "canonical",
+      "title": "Canonical URL",
+      "grade": "untested"
+    },
+    {
+      "id": "crawler-access",
+      "title": "AI crawler access",
+      "grade": "strong"
+    },
+    {
+      "id": "renders-without-js",
+      "title": "Renders without JavaScript",
+      "grade": "moderate"
+    }
+  ],
+  "preset_weights": {
+    "foundation": {
+      "standalone-paragraphs": 1,
+      "question-headings": 0,
+      "lists": 0,
+      "statistics": 1,
+      "tables": 1,
+      "expert-quotes": 1,
+      "cited-sources": 0,
+      "direct-answer-lead": 0,
+      "question-coverage": 0.5,
+      "comparisons": 0.5,
+      "reader-words": 0.5
+    },
+    "evidence": {
+      "standalone-paragraphs": 0.15,
+      "question-headings": 0,
+      "lists": 0,
+      "statistics": 0.25,
+      "tables": 0.15,
+      "expert-quotes": 0.25,
+      "cited-sources": 0,
+      "direct-answer-lead": 0,
+      "question-coverage": 0.25,
+      "comparisons": 0.25,
+      "reader-words": 0.25
+    }
+  },
+  "grade_weights": {
+    "strong": 1,
+    "moderate": 0.7,
+    "mixed": 0.25,
+    "untested": 0.15
+  }
+}

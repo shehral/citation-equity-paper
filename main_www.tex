@@ -1,0 +1,119 @@
+% main_www.tex -- Citation Equity, The Web Conference 2027 (WWW '27) demo track submission build.
+% WORKING DRAFT, 2026-10-24. Owner decisions are marked \owner{...} (blue) and stay visible until he clears them.
+%
+% Call (https://www2027.thewebconf.org/demos/, re-read 2026-10-24; notes/VENUE.md):
+%   - at most 4 pages INCLUDING references, double column, English;
+%   - ACM template, recommended \documentclass[sigconf, screen, review]{acmart};
+%   - NOT anonymous (single-blind): names and affiliations are listed;
+%   - required: a section on the ethical use of data (sec:ethics, "Ethics and use of data");
+%   - required: how the demonstration is instantiated at the venue (sec:demo);
+%   - external material (code, video, live system) encouraged.
+% Build:  bash build.sh         (figures from data, then /opt/homebrew/bin/tectonic --keep-logs main_www.tex)
+% Cuts made to fit 4 pages are logged in notes/CUTS.md (cut, never shrink fonts or margins).
+% CE = ../citation-equity (the tool repo, read only). Every number in the sections carries a "% src:" comment.
+\documentclass[sigconf,screen,review]{acmart}
+
+\usepackage[acm]{smpreprint}% shared interface only (palette, \owner, \figtakeaway, \panel, keys); no layout change
+\usepackage{booktabs}
+\graphicspath{{figures/}{./}}
+% Narrow sigconf columns plus unbreakable numeric citations: allow extra interword stretch instead of overfull lines.
+\setlength{\emergencystretch}{2.5em}
+
+% ---- Front matter for the review copy. The conference block is the review default; the camera-ready rights
+%      data come from ACM after acceptance.
+\setcopyright{none}
+\settopmatter{printacmref=false}
+% Dates and place from https://www2027.thewebconf.org/ (read 2026-10-24): main conference 12 to 14 May 2027, Dublin, Ireland.
+\acmConference[WWW '27]{The ACM Web Conference 2027}{May 12--14, 2027}{Dublin, Ireland}
+\acmYear{2027}
+\acmISBN{}\acmDOI{}\acmPrice{}% no placeholder ISBN, DOI or price on the review copy
+
+\begin{document}
+
+% Title: the owner picks one of three (notes/OUTLINE.md "Title"); this is the PC critique's suggestion.
+\title{Citation Equity: A Writing Tool for AI Search That Tests Its Own Advice}
+
+% Byline: five authors in the owner's order (owner update 2026-10-26). Pegah Zargarian is a Northeastern alumna, so her
+% block names the university and country only (no college, no city), as the owner asked.
+\author{Mohammad Ali Shehral}
+\email{shehral.m@northeastern.edu}
+\affiliation{%
+  \institution{Northeastern University, Khoury College of Computer Sciences}
+  \city{San Jose}
+  \state{CA}
+  \country{USA}}
+
+\author{Ishan Gupta}
+\affiliation{%
+  \institution{Northeastern University, Khoury College of Computer Sciences}
+  \city{San Jose}
+  \state{CA}
+  \country{USA}}
+
+\author{Akshay Prajapati}
+\email{prajapati.aksh@northeastern.edu}
+\affiliation{%
+  \institution{Northeastern University, Khoury College of Computer Sciences}
+  \city{San Jose}
+  \state{CA}
+  \country{USA}}
+
+\author{Pegah Zargarian}
+\email{zargarian.p@northeastern.edu}
+\affiliation{%
+  \institution{Northeastern University}
+  \country{USA}}
+
+\author{Akram Bayat}
+\affiliation{%
+  \institution{Northeastern University, Khoury College of Computer Sciences}
+  \city{San Jose}
+  \state{CA}
+  \country{USA}}
+
+\renewcommand{\shortauthors}{Shehral et al.}
+
+\input{sections/abstract}
+
+% CCS concepts (ACM CCS 2012) and keywords.
+\begin{CCSXML}
+<ccs2012>
+<concept><concept_id>10002951.10003260.10003261</concept_id>
+<concept_desc>Information systems~Web searching and information discovery</concept_desc>
+<concept_significance>500</concept_significance></concept>
+<concept><concept_id>10003120.10003121.10003129</concept_id>
+<concept_desc>Human-centered computing~Interactive systems and tools</concept_desc>
+<concept_significance>300</concept_significance></concept>
+</ccs2012>
+\end{CCSXML}
+\ccsdesc[500]{Information systems~Web searching and information discovery}
+\ccsdesc[300]{Human-centered computing~Interactive systems and tools}
+\keywords{generative engine optimization, answer engines, citation, writing tools, evidence grading, null results}
+
+% ---- Figure 1: the schematic plus the headline, as the page-1 teaser (sigconf cannot float a figure* onto page 1).
+% src (caption): checklist score 40 -> 69 (+29) and 42 -> 68 (+26), Standard ("foundation") preset: data/scores.json
+%      (scripts/collect_scores.py, rerun at CE c908431; CE/samples/README.md line 100); citation share +8% to +17% and +0.014 to +0.031:
+%      CE/experiments/results/sensitivity/sensitivity_*.json summary.after_minus_before_exploratory and
+%      summary.mean_target_share.before; off-topic share <= 0.0031 (max, Qwen3.5-9B): same files, summary.mean_target_share.offtopic.
+\begin{teaserfigure}
+  \centering
+  \input{figures/fig1_overview}
+  \caption{\figtakeaway{On two sample drafts, following the tool's suggestions raised its checklist score by 26 to 29 points but moved mean citation share on four open models by only 1 to 3 points.}
+    \panel{a} Checklist score (the rise is built in). \panel{b} Citation share in the sensitivity test.}
+  \Description{Left, a flow diagram: a draft passes through three stages, Check (a 0 to 100 score from eleven checks, labelled a writing checklist, not a forecast, each with an evidence-grade pip, all mixed or untested), Suggest never rewrite (a card proposing to end a heading with a question mark, with Apply, Undo and Skip buttons and a struck-through Apply all), and Test the advice (the draft and competitor pages, BM25 retrieval of the top 8, an open model, eight seeded runs, then retrieved, cited and share against chance). A strip below shows site readiness and who gets cited, which never change the score. Right, two slope charts: the checklist score rises from 40 to 69 and from 42 to 68; mean citation share on four open models rises by 8 to 17 percent from about 0.15 to 0.18, near the 0.125 chance line.}
+  \label{fig:overview}
+\end{teaserfigure}
+
+\maketitle
+
+\input{sections/intro}
+\input{sections/system}
+\input{sections/evidence}
+\input{sections/related}
+\input{sections/demo}
+\input{sections/conclusion}
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{references}
+
+\end{document}

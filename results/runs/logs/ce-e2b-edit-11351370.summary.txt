@@ -1,0 +1,43 @@
+=== ce-e1-edit start: Sat Oct 24 18:15:17 EDT 2026 on d4054 model=Qwen/Qwen3.8-27B tp=1 sets=--set main extra=--arms 12 ===
+node v22.11.0 at node
+NVIDIA H200, 143771 MiB
+torch 2.13.0+cu130 NVIDIA H200 (9, 0)
+{
+ "backend": "vllm",
+ "model": "Qwen/Qwen3.8-27B",
+ "seconds": 742.2,
+ "prompts": 762,
+ "per_arm": {
+  "original": {
+   "versions": 80,
+   "valid": 80,
+   "not_applicable": 0,
+   "attempts_2": 0
+  },
+  "12": {
+   "versions": 63,
+   "valid": 49,
+   "not_applicable": 0,
+   "attempts_2": 51
+  },
+  "P12": {
+   "versions": 49,
+   "valid": 29,
+   "not_applicable": 0,
+   "attempts_2": 23
+  },
+  "ALL": {
+   "versions": 79,
+   "valid": 77,
+   "not_applicable": 0,
+   "attempts_2": 74
+  },
+  "P_ALL": {
+   "versions": 71,
+   "valid": 44,
+   "not_applicable": 0,
+   "attempts_2": 35
+  }
+ }
+}
+=== ce-e1-edit done: Sat Oct 24 18:40:38 EDT 2026 ===

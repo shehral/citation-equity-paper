@@ -1,0 +1,14 @@
+=== ce-e1-gen start: Sat Oct 24 19:45:42 EDT 2026 on d1029 judge=qwen3.5-9b model=Qwen/Qwen3.5-9B prompts=$CE_ROOT_PARENT/geo/e2/b/batches/main.qwen3.5-9b.tier2.prompts.jsonl out=$CE_ROOT_PARENT/geo/e2/b/answers/main.qwen3.5-9b.tier2.jsonl tp=1 ===
+settings ok
+NVIDIA A100-SXM4-80GB, 81920 MiB
+torch 2.13.0+cu130 NVIDIA A100-SXM4-80GB (8, 0)
+{
+ "model": "Qwen/Qwen3.5-9B",
+ "prompts": 624,
+ "max_model_len": 32768,
+ "answers_cut_at_max_tokens": 0,
+ "load_seconds": 294.1,
+ "generate_seconds": 472.6,
+ "out": "$CE_ROOT_PARENT/geo/e2/b/answers/main.qwen3.5-9b.tier2.jsonl"
+}
+=== ce-e1-gen done: Sat Oct 24 19:58:59 EDT 2026 ===

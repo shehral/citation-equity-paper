@@ -1,0 +1,44 @@
+% sections/conclusion.tex: Ethics and use of data as its own section (required by the WWW 2027 demo call, notes/VENUE.md), limitations, future work,
+% acknowledgments and the AI-use statement placeholder.
+% Draft 2, 2026-10-24: cut from about 375 to about 210 words (notes/CUTS.md). CE = ../citation-equity (read only).
+
+\section{Ethics and use of data}\label{sec:ethics}
+
+% src: CE/README.md line 68 ("The web app has no server"); CE/docs/cli.md line 89 ("Drafts stay on your disk unless you point
+%      `ce bench` at a hosted server"), CE c908431
+% src: CE/samples/README.md lines 27 to 31 (packs and pages synthetic, people fictional); CE/NOTICE lines 133 to 145 (C-SEO Bench
+%      "Data used at run time (not redistributed)"); CE/docs/cli.md line 22 (`ce pack from-urls` "respects robots.txt")
+% src: CE/docs/evidence.md lines 456 and 492 (FTC review rule and Endorsement Guides; line numbers at CE c908431)
+No human participants took part and no user data was collected.
+Sample drafts and competitor pages are invented; C-SEO Bench is downloaded at run time, never redistributed; building competitor pages from URLs respects robots.txt.
+% src: CE/README.md line 3 ("it suggests, you decide"); CE/docs/architecture.md line 84 (Rewrite with local AI only after a
+%      click) and CE/apps/workspace/components/draft/draft-view.tsx lines 683 to 686 ("Nothing is applied here.")
+On dual use, it generates no page text on its own, asks for real and checkable material, and states the FTC's endorsement rules; the bench could test a manipulative edit, but the tool offers none.
+% src: CE/experiments/PREREG_E1.md line 18 (GEO-bench source URLs: research use only, never redistributed; only aggregates
+%      and hashes committed). Owner item (notes/STATUS.md): Prof. Akram confirms this research use before submission.
+% Owner decision 2026-10-24: page text released through a gated, research-only dataset (Shehral/citation-equity-experiments-pages).
+The tests use the public pages GEO-bench lists~\cite{aggarwal2024geo}; their text, and everything built from it, is shared only through a gated dataset for non-commercial research.
+A future user study will go through IRB review.
+
+% src: CE/experiments/PREREG_sensitivity.md lines 11 to 20; CE/samples/README.md lines 9 to 12, 27 and 55 ("Write in English");
+%      Martinez Table 5
+% src: 320 queries = 260 GEO-bench (E3 pooled, CE/experiments/RESULTS_E3.md) + 60 C-SEO Bench (CE/experiments/RESULTS_E1.md);
+%      Gemma-4-31B-it edits all but E2b's (Qwen3.8-27B, 80 queries, CE/experiments/RESULTS_E2.md)
+% src: CE/experiments/PREREG_E1.md line 114 (the byte-identity check against --export-prompts is planned for E1 only; the check
+%      is CE/experiments/e1/check_prompt_twin.ts, in the freeze manifest CE/experiments/e1/freeze/MANIFEST.md line 39; no
+%      recorded run of it is in the tool repo, so this sentence stays until the owner runs it)
+% src: smoke test CE/experiments/results/smoke_google__gemma-4-12B-it.json (commit 20e2b3f, 20:09 PDT, before the
+%      pre-registration 3c86c02): planted page cited in 8/8 valid answers, mean share 0.9688; one model, outside the design
+\section{Limitations and future work}\label{sec:conclusion}
+Every measurement uses open models over fixed sources, not live engines, which differ and drift~\cite{martinez2026survey}; the sensitivity test covers two synthetic topics and 8 questions, the one-change tests 320 English queries, nearly all edited by one model family, with no positive control in the sensitivity design.
+% Owner item (notes/STATUS.md): run the 10-prompt --export-prompts byte comparison and drop this sentence, or keep it.
+The harness prompt has not been byte-checked against the bench's.
+Next are a comparison with live engines and a study with writers.
+
+\begin{acks}
+This work was done in Northeastern University's SPARK research program in San Jose; the experiments ran on Northeastern Research Computing's Explorer cluster.
+
+% AI-use statement: drafted at the owner's request on 2026-10-24, kept broad at his request. WWW 2027 CFP: LLMs cannot be
+% authors; authors are solely responsible for the text. ACM Policy on Authorship: disclose generative-AI use (acknowledgments).
+\emph{Use of generative AI.} We used Claude (Anthropic) as an assistant for software development, experiment and analysis code, and writing and editing. The authors designed the study, checked the results and take full responsibility for the paper.
+\end{acks}

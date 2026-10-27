@@ -1,0 +1,13 @@
+% fig1_standalone.tex -- compile Figure 1 on its own, at its true size, to check it.
+%   cd figures && /opt/homebrew/bin/tectonic -Z search-path=.. fig1_standalone.tex
+% The page mimics the acmart (sigconf) environment the figure lands in: Linux Libertine / Biolinum through the
+% libertine package (which loads fontspec under XeTeX), and the shared interface of smpreprint.sty (option acm).
+% The figure text itself is Lato (\smfigfont), the face of the matplotlib panel it embeds.
+\documentclass[border=3pt]{standalone}
+\usepackage{libertine}
+\usepackage{graphicx}
+\usepackage[acm]{smpreprint}
+\graphicspath{{./}{figures/}}
+\begin{document}
+\input{fig1_overview.tex}
+\end{document}

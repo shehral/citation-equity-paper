@@ -1,0 +1,16 @@
+=== ce-smoke start: Fri Oct 23 22:41:29 EDT 2026 on d1028 model=google/gemma-4-12B-it extra= ===
+NVIDIA A100-SXM4-80GB, 81920 MiB
+torch 2.13.0+cu130 NVIDIA A100-SXM4-80GB (8, 0)
+{
+ "model": "google/gemma-4-12B-it",
+ "load_seconds": 1109.3,
+ "generate_seconds": 13.2,
+ "valid_answers": "8/8",
+ "planted_cited": "8/8",
+ "mean_planted_share_of_citations": 0.9688,
+ "chance_share": 0.125,
+ "mean_sources_cited": 1.12,
+ "pass": true
+}
+--- first answer --- [raw model answer withheld]
+=== ce-smoke done: Fri Oct 23 23:00:43 EDT 2026 ===

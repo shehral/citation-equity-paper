@@ -1,0 +1,84 @@
+# results/VERIFY.txt: output of verify_numbers.py
+# command: .venv/bin/python -I results/verify_numbers.py --claims results/CLAIMS.md
+# run: 2026-10-26 16:43:27 PDT, paper repo at f8cb669 plus this commit's files (clarity pass), numpy 2.5.4
+verify_numbers: E1, E2 and E3 headline contrasts recomputed from results/*/cells.jsonl
+d = mean over queries of the per-query mean over two judges of (arm score - reference score)
+E3 pool: e1 cells 634, e1 cells displaced by a retry 0, retry cells 12, new cells 1194, retry pairs 6, sets ['e3', 'e3-four', 'main']
+
+contrast               what                                       n   d (cells)  analysis e1_results  label (analysis)
+----------------------------------------------------------------------------------------------------------------------
+E1.main.9-original     question-headed section                   54   +0.026620     match      match  helps, possibly through length or query-term overlap
+E1.main.12-P12         question words in title and lead          33   +0.035376     match      match  helps, possibly through length or query-term overlap
+E1.main.ALL-P_ALL      all fixes vs paraphrase                   53   +0.071050     match      match  helps, possibly through length or query-term overlap
+E1.main.ALL-original   all fixes vs original                     78   +0.048878     match      match  helps, possibly through length or query-term overlap
+E1.main.3-P3           lists                                     33   -0.006629     match      match  no effect larger than δ
+E1.rep.9-original      question-headed section                   52   +0.036358     match      match  helps, possibly through length or query-term overlap
+E1.rep.ALL-P_ALL       all fixes vs paraphrase                   32   +0.044434     match      match  helps, possibly through length or query-term overlap
+E2a.main.9-9W          heading vs same text plain                54   +0.003472     match      match  no effect larger than δ
+E2a.main.9-9P          heading vs heading without query words    54   +0.017072     match      match  inconclusive
+E2a.main.9W-original   plain question vs original                54   +0.023148     match      match  reported without a verdict
+E2a.rep.9-9W           heading vs same text plain                52   -0.000901     match      match  no effect larger than δ
+E2a.rep.9-9P           heading vs heading without query words    52   +0.048377     match      match  helps
+E2a.rep.9W-original    plain question vs original                52   +0.037260     match      match  reported without a verdict
+E2b.12-P12             question words in title and lead          29   +0.028941     match      match  stands
+E2b.ALL-P_ALL          all fixes vs paraphrase                   44   +0.069247     match      match  stands
+E3.2-P2                question headings                         57   -0.015899     match      match  no effect larger than δ
+E3.6-P6                attributed quotes                         62   +0.025958     match      match  inconclusive
+E3.7-P7                cited sources                             49   -0.009885     match      match  no effect larger than δ
+E3.8-P8                direct-answer lead                        66   +0.011837     match      match  no effect larger than δ
+E3.4-original          tables (too few)                          11   -0.026989     match      match  insufficient n
+E3.5-P5                statistics (too few)                      11   -0.007102     match      match  insufficient n
+E3.10-P10              comparisons (too few)                     24   +0.002604     match      match  insufficient n
+
+queries with at least one cell: e1.main 80, e1.replication 60, e3.new 180, e3.pooled 260, all 320  (analysis JSONs: 80, 60, 180, 260, 320)
+
+Paper numbers for these contrasts (sections/*.tex, rendered text):
+file:line                  contrast                                       field     paper expected  source of expected
+----------------------------------------------------------------------------------------------------------------------
+sections/evidence.tex:52   E1.main.9-original                             d        +0.027   +0.027  recomputed from cells
+sections/evidence.tex:52   E1.main.9-original                             lo       +0.010   +0.010  analysis JSON ci95
+sections/evidence.tex:52   E1.main.9-original                             hi       +0.043   +0.043  analysis JSON ci95
+sections/evidence.tex:52   E1.main.9-original                             holm      0.006    0.006  analysis JSON p_holm
+sections/evidence.tex:52   E1.rep.9-original                              d        +0.036   +0.036  recomputed from cells
+sections/evidence.tex:52   E1.main.12-P12                                 d        +0.035   +0.035  recomputed from cells
+sections/evidence.tex:58   E2a.main.9-9W                                  d        +0.003   +0.003  recomputed from cells
+sections/evidence.tex:58   E2a.rep.9-9W                                   d        -0.001   -0.001  recomputed from cells
+sections/evidence.tex:58   E2a.main.9W-original                           d        +0.023   +0.023  recomputed from cells
+sections/evidence.tex:58   E2a.rep.9W-original                            d        +0.037   +0.037  recomputed from cells
+sections/evidence.tex:61   E2b.12-P12                                     d        +0.029   +0.029  recomputed from cells
+sections/evidence.tex:61   E2b.12-P12                                     n            29       29  recomputed from cells
+sections/evidence.tex:61   E2b.ALL-P_ALL                                  d        +0.069   +0.069  recomputed from cells
+sections/evidence.tex:61   E2b.ALL-P_ALL                                  n            44       44  recomputed from cells
+sections/evidence.tex:67   q:e3.new                                       n           180      180  query count (cells)
+sections/evidence.tex:67   q:e3.pooled                                    n           260      260  query count (cells)
+sections/evidence.tex:45   q:e1.main                                      n            80       80  query count (cells)
+sections/evidence.tex:45   q:e1.replication                               n            60       60  query count (cells)
+sections/conclusion.tex:33 q:all                                          n           320      320  query count (cells)
+sections/abstract.tex:23   about: E1.main.9-original, E1.main.12-P12, E2a.main.9W-original approx     0.03    ~0.03  within 0.01 of +0.027, +0.035, +0.023
+sections/intro.tex:55      about: E1.main.9-original, E1.main.12-P12, E2a.main.9W-original approx     0.03    ~0.03  within 0.01 of +0.027, +0.035, +0.023
+sections/abstract.tex:23   labels: E3.2-P2, E3.7-P7, E3.8-P8, E1.main.3-P3 label  (words)  analysis labels: E3.2-P2 'no effect larger than δ'; E3.7-P7 'no effect larger than δ'; E3.8-P8 'no effect larger than δ'; E1.main.3-P3 'no effect larger than δ'
+sections/abstract.tex:23   labels: E3.6-P6                                label  (words)  analysis labels: E3.6-P6 'inconclusive'
+sections/abstract.tex:23   labels: E2b.12-P12, E2b.ALL-P_ALL              label  (words)  analysis labels: E2b.12-P12 'stands'; E2b.ALL-P_ALL 'stands'
+sections/intro.tex:55      labels: E3.2-P2, E3.7-P7, E3.8-P8, E1.main.3-P3, E3.6-P6 label  (words)  analysis labels: E3.2-P2 'no effect larger than δ'; E3.7-P7 'no effect larger than δ'; E3.8-P8 'no effect larger than δ'; E1.main.3-P3 'no effect larger than δ'; E3.6-P6 'inconclusive'
+sections/evidence.tex:61   labels: E2b.12-P12, E2b.ALL-P_ALL              label  (words)  analysis labels: E2b.12-P12 'stands'; E2b.ALL-P_ALL 'stands'
+sections/evidence.tex:52   labels: E1.main.9-original, E1.main.12-P12     label  (words)  analysis labels: E1.main.9-original 'helps, possibly through length or query-term overlap'; E1.main.12-P12 'helps, possibly through length or query-term overlap'
+sections/evidence.tex:58   labels: E2a.main.9-9W, E2a.rep.9-9W            label  (words)  analysis labels: E2a.main.9-9W 'no effect larger than δ'; E2a.rep.9-9W 'no effect larger than δ'
+sections/evidence.tex:67   labels: E3.2-P2, E3.7-P7, E3.8-P8, E3.6-P6, E3.4-original, E3.5-P5, E3.10-P10 label  (words)  analysis labels: E3.2-P2 'no effect larger than δ'; E3.7-P7 'no effect larger than δ'; E3.8-P8 'no effect larger than δ'; E3.6-P6 'inconclusive'; E3.4-original 'insufficient n'; E3.5-P5 'insufficient n'; E3.10-P10 'insufficient n'
+sections/evidence.tex:99   labels: E2a.main.9-9W, E2a.rep.9-9W, E3.7-P7, E3.8-P8, E3.6-P6 label  (words)  analysis labels: E2a.main.9-9W 'no effect larger than δ'; E2a.rep.9-9W 'no effect larger than δ'; E3.7-P7 'no effect larger than δ'; E3.8-P8 'no effect larger than δ'; E3.6-P6 'inconclusive'
+sections/abstract.tex:23   setting: delta                                 set        0.03     same  settings.delta in the e1, e2, e3 analysis JSONs
+sections/evidence.tex:67   setting: delta                                 set        0.03     same  settings.delta in the e1, e2, e3 analysis JSONs
+sections/evidence.tex:99   setting: delta                                 set        0.03     same  settings.delta in the e1, e2, e3 analysis JSONs
+sections/evidence.tex:100  setting: delta                                 set        0.03     same  settings.delta in the e1, e2, e3 analysis JSONs
+sections/evidence.tex:100  setting: min_n                                 set          30     same  settings.min_n in the e1, e2, e3 analysis JSONs
+sections/intro.tex:55      setting: delta                                 set        0.03     same  settings.delta in the e1, e2, e3 analysis JSONs
+
+Signed numbers in sections/*.tex prose not tied to an E1-E3 contrast (not checked here):
+  sections/evidence.tex:33 +0.007
+  sections/evidence.tex:33 +0.034
+  sections/evidence.tex:33 +0.10
+  sections/evidence.tex:33 +0.014
+  sections/evidence.tex:33 +0.031
+
+wrote results/CLAIMS.md (37 lines with numbers)
+
+All recomputed contrasts match the analysis JSONs (1e-9) and data/e1_results.json, and every paper number for them matches.

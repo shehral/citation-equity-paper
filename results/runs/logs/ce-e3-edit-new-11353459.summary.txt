@@ -1,0 +1,112 @@
+=== ce-e1-edit start: Sat Oct 24 20:01:10 EDT 2026 on d4054 model=google/gemma-4-31B-it tp=1 sets=--set e3 --set e3-four extra=--arms 2,4,5,6,7,8,10 --no-all --max-attempts 3 ===
+node v22.11.0 at node
+NVIDIA H200, 143771 MiB
+torch 2.13.0+cu130 NVIDIA H200 (9, 0)
+{
+ "backend": "vllm",
+ "model": "google/gemma-4-31B-it",
+ "seconds": 652.0,
+ "prompts": 1210,
+ "per_arm": {
+  "original": {
+   "versions": 180,
+   "valid": 180,
+   "not_applicable": 0,
+   "attempts_2": 0,
+   "attempts_3": 0
+  },
+  "4": {
+   "versions": 12,
+   "valid": 7,
+   "not_applicable": 0,
+   "attempts_2": 0,
+   "attempts_3": 0
+  },
+  "2": {
+   "versions": 135,
+   "valid": 76,
+   "not_applicable": 0,
+   "attempts_2": 22,
+   "attempts_3": 64
+  },
+  "5": {
+   "versions": 33,
+   "valid": 11,
+   "not_applicable": 0,
+   "attempts_2": 6,
+   "attempts_3": 23
+  },
+  "6": {
+   "versions": 58,
+   "valid": 41,
+   "not_applicable": 0,
+   "attempts_2": 0,
+   "attempts_3": 17
+  },
+  "7": {
+   "versions": 65,
+   "valid": 31,
+   "not_applicable": 27,
+   "attempts_2": 2,
+   "attempts_3": 7
+  },
+  "8": {
+   "versions": 92,
+   "valid": 61,
+   "not_applicable": 0,
+   "attempts_2": 7,
+   "attempts_3": 31
+  },
+  "10": {
+   "versions": 46,
+   "valid": 22,
+   "not_applicable": 0,
+   "attempts_2": 8,
+   "attempts_3": 24
+  },
+  "P2": {
+   "versions": 76,
+   "valid": 40,
+   "not_applicable": 0,
+   "attempts_2": 1,
+   "attempts_3": 37
+  },
+  "P5": {
+   "versions": 11,
+   "valid": 7,
+   "not_applicable": 0,
+   "attempts_2": 0,
+   "attempts_3": 4
+  },
+  "P6": {
+   "versions": 41,
+   "valid": 35,
+   "not_applicable": 0,
+   "attempts_2": 3,
+   "attempts_3": 6
+  },
+  "P7": {
+   "versions": 31,
+   "valid": 24,
+   "not_applicable": 0,
+   "attempts_2": 0,
+   "attempts_3": 7
+  },
+  "P8": {
+   "versions": 61,
+   "valid": 46,
+   "not_applicable": 0,
+   "attempts_2": 7,
+   "attempts_3": 15
+  },
+  "P10": {
+   "versions": 22,
+   "valid": 16,
+   "not_applicable": 0,
+   "attempts_2": 1,
+   "attempts_3": 6
+  }
+ },
+ "max_attempts": 3
+}
+=== ce-e1-edit done: Sat Oct 24 20:31:48 EDT 2026 ===

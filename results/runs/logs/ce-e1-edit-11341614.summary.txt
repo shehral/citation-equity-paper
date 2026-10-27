@@ -1,0 +1,103 @@
+=== ce-e1-edit start: Sat Oct 24 03:48:57 EDT 2026 on d4052 model=google/gemma-4-31B-it tp=1 sets=--set timing extra= ===
+node v22.11.0 at node
+NVIDIA H200, 143771 MiB
+torch 2.13.0+cu130 NVIDIA H200 (9, 0)
+{
+ "backend": "vllm",
+ "model": "google/gemma-4-31B-it",
+ "seconds": 120.2,
+ "prompts": 20,
+ "per_arm": {
+  "original": {
+   "versions": 1,
+   "valid": 1,
+   "not_applicable": 0,
+   "attempts_2": 0
+  },
+  "9": {
+   "versions": 1,
+   "valid": 1,
+   "not_applicable": 0,
+   "attempts_2": 0
+  },
+  "1": {
+   "versions": 1,
+   "valid": 1,
+   "not_applicable": 0,
+   "attempts_2": 0
+  },
+  "2": {
+   "versions": 1,
+   "valid": 1,
+   "not_applicable": 0,
+   "attempts_2": 0
+  },
+  "3": {
+   "versions": 1,
+   "valid": 1,
+   "not_applicable": 0,
+   "attempts_2": 0
+  },
+  "6": {
+   "versions": 1,
+   "valid": 1,
+   "not_applicable": 0,
+   "attempts_2": 0
+  },
+  "7": {
+   "versions": 1,
+   "valid": 1,
+   "not_applicable": 0,
+   "attempts_2": 0
+  },
+  "8": {
+   "versions": 1,
+   "valid": 1,
+   "not_applicable": 0,
+   "attempts_2": 0
+  },
+  "P2": {
+   "versions": 1,
+   "valid": 0,
+   "not_applicable": 0,
+   "attempts_2": 1
+  },
+  "P3": {
+   "versions": 1,
+   "valid": 1,
+   "not_applicable": 0,
+   "attempts_2": 0
+  },
+  "P6": {
+   "versions": 1,
+   "valid": 1,
+   "not_applicable": 0,
+   "attempts_2": 0
+  },
+  "P7": {
+   "versions": 1,
+   "valid": 1,
+   "not_applicable": 0,
+   "attempts_2": 0
+  },
+  "P8": {
+   "versions": 1,
+   "valid": 1,
+   "not_applicable": 0,
+   "attempts_2": 0
+  },
+  "ALL": {
+   "versions": 1,
+   "valid": 1,
+   "not_applicable": 0,
+   "attempts_2": 0
+  },
+  "P_ALL": {
+   "versions": 1,
+   "valid": 0,
+   "not_applicable": 0,
+   "attempts_2": 1
+  }
+ }
+}
+=== ce-e1-edit done: Sat Oct 24 04:02:16 EDT 2026 ===

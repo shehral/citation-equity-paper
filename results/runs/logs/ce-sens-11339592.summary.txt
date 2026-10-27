@@ -1,0 +1,38 @@
+=== ce-sens start: Fri Oct 23 23:18:41 EDT 2026 on d1029 model=google/gemma-4-12B-it extra=--no-thinking ===
+NVIDIA A100-SXM4-80GB, 81920 MiB
+torch 2.13.0+cu130 NVIDIA A100-SXM4-80GB (8, 0)
+{
+ "model": "google/gemma-4-12B-it",
+ "answers": 256,
+ "load_seconds": 477.2,
+ "generate_seconds": 218.0,
+ "valid_rate": 1.0,
+ "mean_target_share": {
+  "offtopic": 0.0012,
+  "before": 0.1784,
+  "after": 0.2011,
+  "answer_first": 0.2047
+ },
+ "chance_share": 0.125,
+ "target_cited_rate": {
+  "offtopic": 0.0312,
+  "before": 0.9688,
+  "after": 0.9844,
+  "answer_first": 1.0
+ },
+ "mean_sources_cited": 6.95,
+ "answer_first_minus_before": {
+  "mean": 0.0263,
+  "p_sign_flip": 0.0078125,
+  "n_questions": 8
+ },
+ "after_minus_before_exploratory": {
+  "mean": 0.0227,
+  "p_sign_flip": 0.0078125,
+  "n_questions": 8
+ },
+ "H1_floor": true,
+ "H2_sensitivity": false,
+ "usable_for_E2": false
+}
+=== ce-sens done: Fri Oct 23 23:32:13 EDT 2026 ===

@@ -1,0 +1,39 @@
+=== ce-sens start: Fri Oct 23 23:18:41 EDT 2026 on d1026 model=Qwen/Qwen3.5-9B extra=--no-thinking ===
+NVIDIA A100-SXM4-40GB, 40960 MiB
+NVIDIA A100-SXM4-40GB, 40960 MiB
+torch 2.13.0+cu130 NVIDIA A100-SXM4-40GB (8, 0)
+{
+ "model": "Qwen/Qwen3.5-9B",
+ "answers": 256,
+ "load_seconds": 1103.4,
+ "generate_seconds": 186.0,
+ "valid_rate": 1.0,
+ "mean_target_share": {
+  "offtopic": 0.0031,
+  "before": 0.164,
+  "after": 0.1776,
+  "answer_first": 0.1975
+ },
+ "chance_share": 0.125,
+ "target_cited_rate": {
+  "offtopic": 0.0469,
+  "before": 0.8594,
+  "after": 0.875,
+  "answer_first": 0.9688
+ },
+ "mean_sources_cited": 6.2,
+ "answer_first_minus_before": {
+  "mean": 0.0336,
+  "p_sign_flip": 0.0546875,
+  "n_questions": 8
+ },
+ "after_minus_before_exploratory": {
+  "mean": 0.0137,
+  "p_sign_flip": 0.515625,
+  "n_questions": 8
+ },
+ "H1_floor": true,
+ "H2_sensitivity": false,
+ "usable_for_E2": false
+}
+=== ce-sens done: Fri Oct 23 23:42:17 EDT 2026 ===

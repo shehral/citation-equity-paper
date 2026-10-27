@@ -1,0 +1,54 @@
+{
+ "source": "versions.jsonl",
+ "note": "valid / invalid / not_applicable per (set, arm); reasons are validator message categories with quoted text, URLs and word lists stripped and numbers masked as N; one invalid version can carry several reasons",
+ "arms": [
+  {
+   "set": "main",
+   "arm": "9P",
+   "versions": 54,
+   "valid": 54,
+   "invalid": 0,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 54
+   },
+   "reasons": {}
+  },
+  {
+   "set": "main",
+   "arm": "9W",
+   "versions": 54,
+   "valid": 54,
+   "invalid": 0,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 54
+   },
+   "reasons": {}
+  },
+  {
+   "set": "replication",
+   "arm": "9P",
+   "versions": 52,
+   "valid": 52,
+   "invalid": 0,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 52
+   },
+   "reasons": {}
+  },
+  {
+   "set": "replication",
+   "arm": "9W",
+   "versions": 52,
+   "valid": 52,
+   "invalid": 0,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 52
+   },
+   "reasons": {}
+  }
+ ]
+}

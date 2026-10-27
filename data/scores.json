@@ -1,0 +1,42 @@
+{
+  "ce_commit": "c908431d09b543278a12298bdca0cb17525583e3",
+  "ce_tree_clean": true,
+  "engine_version": "0.0.0",
+  "samples": {
+    "espresso-bitterness": {
+      "after": {
+        "draft": "samples/espresso-bitterness/after.md",
+        "draft_sha256": "a7d59817740258387e06db3ae739a916d284d1cf38d0dd1c59923cb22806ae93",
+        "evidence": 72,
+        "foundation": 69,
+        "word_count": 897
+      },
+      "before": {
+        "draft": "samples/espresso-bitterness/before.md",
+        "draft_sha256": "180aa52dd65d0bc1417c127067909280c6014a202b8b0267f8d7764309f84d26",
+        "evidence": 47,
+        "foundation": 40,
+        "word_count": 823
+      },
+      "label": "espresso"
+    },
+    "rag-explained": {
+      "after": {
+        "draft": "samples/rag-explained/after.md",
+        "draft_sha256": "10c18957e28f79d29c4667f2bbdd810c5c0e7c2664bfe8d442ec845953d11c32",
+        "evidence": 67,
+        "foundation": 68,
+        "word_count": 1240
+      },
+      "before": {
+        "draft": "samples/rag-explained/before.md",
+        "draft_sha256": "f5ba3462facc6785214280a47af1648f35fff1cfd2a61bab1459edafec53f9c2",
+        "evidence": 52,
+        "foundation": 42,
+        "word_count": 1045
+      },
+      "label": "RAG"
+    }
+  },
+  "source": "ce analyze <draft> --json (no --questions)"
+}

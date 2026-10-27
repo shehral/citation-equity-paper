@@ -1,0 +1,71 @@
+{
+  "_provenance": {
+    "producer": "hand-written from notes/OUTLINE.md (Figure 2) and the dashboard design; UI strings quoted with their file and line",
+    "note": "ui_string values were read from the deployed build by scripts/capture_screens.mjs (captured.strings); xy anchors are measured from element boxes in the same run."
+  },
+  "status": "captured",
+  "screenshot": "data/screens/draft_view.png",
+  "capture_plan": "scripts/capture_screens.mjs (Playwright, 1440x900 at 2x, light, the espresso example loaded, 'Show me' on the second Start-here fix, against https://shehral.github.io/citation-equity/)",
+  "callouts": [
+    {
+      "n": 1,
+      "what": "AI-ready score",
+      "ui_string": "A writing checklist, not a forecast.",
+      "xy": [
+        0.6832,
+        0.1578
+      ]
+    },
+    {
+      "n": 2,
+      "what": "The ready edit: Preview first, Apply only inside the preview",
+      "ui_string": null,
+      "xy": [
+        0.8222,
+        0.8544
+      ]
+    },
+    {
+      "n": 3,
+      "what": "The selected fix's passage, marked in the draft",
+      "ui_string": null,
+      "xy": [
+        0.4788,
+        0.2572
+      ]
+    },
+    {
+      "n": 4,
+      "what": "A check's tag from our tests",
+      "ui_string": "Helps",
+      "xy": [
+        0.9634,
+        0.9256
+      ]
+    },
+    {
+      "n": 5,
+      "what": "Privacy chip",
+      "ui_string": "Stays in your browser",
+      "xy": [
+        0.7323,
+        0.0311
+      ]
+    }
+  ],
+  "captured": {
+    "url": "https://shehral.github.io/citation-equity/draft/",
+    "viewport": "1440x900 CSS px at 2x, light",
+    "crop": {
+      "x": 95,
+      "y": 0,
+      "w": 1250,
+      "h": 900
+    },
+    "strings": {
+      "caption": "A writing checklist, not a forecast. Why?",
+      "chip": "Stays in your browser",
+      "tag": "Helps"
+    }
+  }
+}

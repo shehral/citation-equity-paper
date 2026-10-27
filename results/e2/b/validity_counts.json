@@ -1,0 +1,240 @@
+{
+ "source": "versions.jsonl",
+ "note": "valid / invalid / not_applicable per (set, arm); reasons are validator message categories with quoted text, URLs and word lists stripped and numbers masked as N; one invalid version can carry several reasons",
+ "arms": [
+  {
+   "set": "main",
+   "arm": "12",
+   "versions": 63,
+   "valid": 49,
+   "invalid": 14,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 12,
+    "2": 51
+   },
+   "reasons": {
+    "Unknown span id '…'; use only the ids given (…).": 5,
+    "Add only the query's key terms and function words (not: …).": 5,
+    "Do not add facts that are not in the allowed sources: name '…'.": 3,
+    "Work the missing query key terms into the title, the first heading or the first paragraph.": 1
+   }
+  },
+  {
+   "set": "main",
+   "arm": "P12",
+   "versions": 49,
+   "valid": 29,
+   "invalid": 20,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 26,
+    "2": 23
+   },
+   "reasons": {
+    "The paraphrase must keep the spans' length within N% (N -> N words).": 8,
+    "Unknown span id '…'; use only the ids given (…).": 6,
+    "Do not add facts that are not in the allowed sources: name '…'.": 5,
+    "Reword the spans: the answer left every span unchanged.": 3,
+    "The paraphrase changed the standalone-paragraphs check (N -> N); keep the same structure, figures, quotes and links.": 2,
+    "Keep exactly the query key terms the spans contain (lost: …, added: …).": 1,
+    "The paraphrase changed the question-headings check (N -> N); keep the same structure, figures, quotes and links.": 1
+   }
+  },
+  {
+   "set": "main",
+   "arm": "ALL",
+   "versions": 79,
+   "valid": 77,
+   "invalid": 2,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 5,
+    "2": 74
+   },
+   "reasons": {
+    "every step failed": 2
+   }
+  },
+  {
+   "set": "main",
+   "arm": "P_ALL",
+   "versions": 71,
+   "valid": 44,
+   "invalid": 27,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 36,
+    "2": 35
+   },
+   "reasons": {
+    "Do not add facts that are not in the allowed sources: name '…'.": 12,
+    "The paraphrase must keep the spans' length within N% (N -> N words).": 8,
+    "The paraphrase changed the standalone-paragraphs check (N -> N); keep the same structure, figures, quotes and links.": 3,
+    "The paraphrase changed the cited-sources check (N -> N); keep the same structure, figures, quotes and links.": 3,
+    "The paraphrase changed the question-headings check (N -> N); keep the same structure, figures, quotes and links.": 2,
+    "The paraphrase changed the statistics check (N -> N); keep the same structure, figures, quotes and links.": 1,
+    "The paraphrase changed the comparisons check (N -> N); keep the same structure, figures, quotes and links.": 1,
+    "Do not remove any link of the original (removed: …).": 1,
+    "Reword the spans: the answer left every span unchanged.": 1,
+    "The paraphrase changed the direct-answer-lead check (N -> N); keep the same structure, figures, quotes and links.": 1
+   }
+  },
+  {
+   "set": "main",
+   "arm": "original",
+   "versions": 80,
+   "valid": 80,
+   "invalid": 0,
+   "not_applicable": 0,
+   "attempts": {
+    "1": 80
+   },
+   "reasons": {}
+  }
+ ],
+ "applicability_precheck": {
+  "source": "applicability.jsonl",
+  "note": "per arm, how many queries the frozen applicability table marked applicable before editing",
+  "arms": [
+   {
+    "arm": "1",
+    "applicable": 26,
+    "not_applicable": 115,
+    "reasons": {
+     "not run on the replication set": 60,
+     "no paragraph opens with a pointer to earlier text": 52,
+     "the standalone-paragraphs check scores N (N or more)": 3
+    }
+   },
+   {
+    "arm": "2",
+    "applicable": 51,
+    "not_applicable": 90,
+    "reasons": {
+     "not run on the replication set": 60,
+     "the question-headings check is not applicable": 28,
+     "the question-headings check scores N (N or more)": 2
+    }
+   },
+   {
+    "arm": "3",
+    "applicable": 47,
+    "not_applicable": 94,
+    "reasons": {
+     "not run on the replication set": 60,
+     "the lists check scores N (N or more)": 28,
+     "the lists check is not applicable": 6
+    }
+   },
+   {
+    "arm": "4",
+    "applicable": 4,
+    "not_applicable": 137,
+    "reasons": {
+     "the tables check is not applicable": 61,
+     "not run on the replication set": 60,
+     "no Key: value list for the tables check to convert": 16
+    }
+   },
+   {
+    "arm": "5",
+    "applicable": 53,
+    "not_applicable": 88,
+    "reasons": {
+     "the statistics check scores N (N or more)": 87,
+     "the statistics check is not applicable": 1
+    }
+   },
+   {
+    "arm": "6",
+    "applicable": 114,
+    "not_applicable": 27,
+    "reasons": {
+     "the expert-quotes check scores N (N or more)": 19,
+     "the expert-quotes check is not applicable": 8
+    }
+   },
+   {
+    "arm": "7",
+    "applicable": 127,
+    "not_applicable": 14,
+    "reasons": {
+     "the cited-sources check is not applicable": 10,
+     "the cited-sources check scores N (N or more)": 4
+    }
+   },
+   {
+    "arm": "8",
+    "applicable": 35,
+    "not_applicable": 106,
+    "reasons": {
+     "not run on the replication set": 60,
+     "the direct-answer-lead check scores N (N or more)": 28,
+     "the direct-answer-lead check is not applicable": 18
+    }
+   },
+   {
+    "arm": "9",
+    "applicable": 109,
+    "not_applicable": 32,
+    "reasons": {
+     "the question-coverage check scores N (N or more)": 32
+    }
+   },
+   {
+    "arm": "10",
+    "applicable": 21,
+    "not_applicable": 120,
+    "reasons": {
+     "not run on the replication set": 60,
+     "the comparisons check scores N (N or more)": 54,
+     "the comparisons check is not applicable": 6
+    }
+   },
+   {
+    "arm": "11",
+    "applicable": 48,
+    "not_applicable": 93,
+    "reasons": {
+     "no sentence of the form '<key term> is/are'": 90,
+     "feature already present: the page opens with a definition": 3
+    }
+   },
+   {
+    "arm": "12",
+    "applicable": 91,
+    "not_applicable": 50,
+    "reasons": {
+     "feature already present: every key term is in the title, first heading or first paragraph": 50
+    }
+   },
+   {
+    "arm": "13",
+    "applicable": 43,
+    "not_applicable": 98,
+    "reasons": {
+     "not run on the replication set": 60,
+     "feature already present: no section over N words": 38
+    }
+   },
+   {
+    "arm": "14",
+    "applicable": 7,
+    "not_applicable": 134,
+    "reasons": {
+     "no publication or update date found": 124,
+     "feature already present: the date is under the title": 10
+    }
+   },
+   {
+    "arm": "ALL",
+    "applicable": 140,
+    "not_applicable": 1,
+    "reasons": {
+     "no applicable step": 1
+    }
+   }
+  ]
+ }
+}

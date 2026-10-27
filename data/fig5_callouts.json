@@ -1,0 +1,126 @@
+{
+  "_provenance": {
+    "producer": "scripts/capture_reader_words.mjs",
+    "note": "strings read from the deployed build in the same run; xy anchors measured from element and text boxes; engine = the tool repo engine on the sample draft before and after the same two edits",
+    "ce_commit_for_engine": "b7c839a"
+  },
+  "status": "captured",
+  "screenshot": "data/screens/reader_words.png",
+  "edits": {
+    "title_added": ", and how do I fix it",
+    "opening_added": "How long the shot runs and the water temperature are the first things to check."
+  },
+  "callouts": [
+    {
+      "n": 1,
+      "what": "The word the first tip named (“fix”), typed into the title",
+      "xy": [
+        0.2298,
+        0.4785
+      ]
+    },
+    {
+      "n": 2,
+      "what": "A new opening sentence with the words of the other two questions",
+      "xy": [
+        0.0321,
+        0.5894
+      ]
+    },
+    {
+      "n": 3,
+      "what": "Score 37 to 40; rerun on the same edits, the engine moves only the reader's-words check",
+      "xy": [
+        0.8786,
+        0.187
+      ]
+    }
+  ],
+  "captured": {
+    "url": "https://shehral.github.io/citation-equity/draft/",
+    "viewport": "1100x800 CSS px at 2x, light",
+    "crop": {
+      "x": 19,
+      "y": 79,
+      "w": 1059,
+      "h": 401
+    },
+    "strings": {
+      "score_before": "AI-ready score: 37 out of 100",
+      "tips": [
+        "2 Use the words of \"How do I fix bitter espresso?\" Why does my espresso taste bitter? Add \"fix\" to your title or opening if it fits. Never force words in. Show me",
+        "2 Use the words of \"How long should an espresso shot take?\" Why does my espresso taste bitter, and how do I fix it? Add \"long\" to your title or opening if it fits. Never force words in. Show me",
+        null
+      ],
+      "score_after": "AI-ready score: 40 out of 100",
+      "chip": "+3 since you started",
+      "title": "Why does my espresso taste bitter, and how do I fix it?",
+      "all_fixes": "ALL FIXES Your questions answered 4 Helps Real numbers 1 Comparison tables 1 Quotes say who said them 1 Paragraphs make sense alone 4 Headings ask questions 7 Not scored Lists, not long sentences 6 Not scored Answer first 1 Not scored Claims link a source 1 Not scored"
+    },
+    "questions": [
+      "Why does my espresso taste bitter?",
+      "How do I fix bitter espresso?",
+      "What water temperature should I use for espresso?",
+      "How long should an espresso shot take?"
+    ]
+  },
+  "engine": {
+    "standard": [
+      37,
+      40
+    ],
+    "evidence": [
+      42,
+      47
+    ],
+    "checks": {
+      "standalone-paragraphs": [
+        0.6923076923076923,
+        0.6923076923076923
+      ],
+      "question-headings": [
+        0.14285714285714285,
+        0.14285714285714285
+      ],
+      "lists": [
+        0.5,
+        0.5
+      ],
+      "statistics": [
+        0,
+        0
+      ],
+      "tables": [
+        0,
+        0
+      ],
+      "expert-quotes": [
+        0.5,
+        0.5
+      ],
+      "cited-sources": [
+        0,
+        0
+      ],
+      "direct-answer-lead": [
+        0.8571428571428571,
+        0.8571428571428571
+      ],
+      "question-coverage": [
+        0,
+        0
+      ],
+      "comparisons": [
+        1,
+        1
+      ],
+      "reader-words": [
+        0.6666666666666666,
+        1
+      ]
+    },
+    "changed": [
+      "reader-words"
+    ]
+  }
+}

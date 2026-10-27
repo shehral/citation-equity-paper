@@ -1,0 +1,28 @@
+% sections/abstract.tex -- Citation Equity, WWW 2027 demo track (draft 2, 2026-10-24; cut to fit 4 pages, notes/CUTS.md)
+% Structure per notes/OUTLINE.md "Abstract": context, gap, contribution, rubric outcome, numbers, standard of evidence.
+% E1 results exist (CE/experiments/RESULTS_E1.md), so the abstract reports them (notes/OUTLINE.md, notes/NARRATIVE.md "E1").
+% Every number carries a % src: comment. CE = ../citation-equity (read only).
+\begin{abstract}
+AI answer engines now choose which pages a reader sees cited, yet writers get optimization advice with thin evidence, from tools that track brands or rewrite their text.
+We present Citation Equity, an open-source writing workspace that runs in the browser.
+It shows the graded evidence behind each of its eleven checks, suggests fixes anchored to exact passages that the author applies one at a time, and includes a citation test that separates being retrieved from being cited.
+% src (CE c908431): CE/docs/evidence.md line 3 ("scores a draft on eleven checks") and line 34 ("No check is graded strong or moderate today. Nine are mixed and two are untested.")
+% src: label text: CE/apps/workspace/components/draft/score-card.tsx line 112 ("A writing checklist, not a forecast.") and CE/README.md
+%      line 32 ("so the score is a writing checklist, not a forecast"), CE c908431 (CE/apps/workspace/lib/presets.ts lines 11 to 12
+%      keep "not a prediction of citations" in the stance sentence; the paper uses the score card's word everywhere)
+Because any null finding counts against a check, none is strongly supported, and the tool calls its score a writing checklist, not a forecast.
+% src: scores 40 -> 69 and 42 -> 68 (Standard preset = "foundation" in data/scores.json, four checks unscored, reader's words
+%      scored; ce analyze without --questions): data/scores.json (rerun at CE c908431); same figures in CE/samples/README.md
+%      line 100 ("foundation score 40 to 69 for espresso, 42 to 68 for RAG")
+% src: after_minus_before_exploratory.mean 0.0137, 0.0227, 0.0263, 0.0307 over before 0.164, 0.1784, 0.1538, 0.18 (8% to 17%)
+%      in "summary" of CE/experiments/results/sensitivity/sensitivity_{Qwen__Qwen3.5-9B,google__gemma-4-12B-it,Qwen__Qwen3.8-27B,google__gemma-4-31B-it}.json
+% src: H2 bar +0.10: CE/experiments/PREREG_sensitivity.md line 30 ("Criteria (fixed before running)", H2); answer_first_minus_before.mean 0.0336, 0.0263, 0.0246, 0.0066, H2 false on all four
+On our two sample drafts, following its suggestions raised that score from 40 to 69 and from 42 to 68 but moved mean citation share on four open models by only 1 to 3 points.
+% src: E1 (80 queries), E2 (editor Qwen3.8-27B, other judges) and E3 (260 queries pooled): data/e1_results.json;
+%      CE/experiments/RESULTS_E1.md, CE/experiments/RESULTS_E2.md, CE/experiments/RESULTS_E3.md; "about 0.03": arm 9 +0.027, arm 12 +0.035, 9W vs original +0.023
+Tested one change at a time on real web pages, only adding the reader's own words near the top clearly raised citation, by about 0.03 on a 0-to-1 scale, and kept its sign with another editor and other judges; question headings, cited sources, direct answer first and lists showed no effect larger than 0.03, and attributed quotes were inconclusive.
+The tool now scores what helped and marks the rest as unscored notes.
+All tests use open models given fixed sources, not live engines.
+% src: demo stations: sections/demo.tex (one laptop with Ollama, no venue network for stations 1 and 2)
+At the venue, visitors run the loop on an example or their own text on one offline laptop.
+\end{abstract}
