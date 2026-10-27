@@ -1,8 +1,8 @@
 # Citation Equity: redesign, E5 plan and schedule to Nov 16
 
-Written 2026-10-27 for our own reference. This is the work for weeks 9 and 10 (Nov 2 to 15), and the likely new framing of the paper. Nothing here is built or run yet. Prof. Akram sees the one-page summary (Part 1) before the build starts.
+Written 2026-10-27 for our own reference. This is the work for weeks 9 and 10 (Nov 2 to 15) and the new framing of the paper. Nothing here is built or run yet.
 
-The current draft (commit 93e151f, 4 pages, numbers check passing) stays complete and submittable. If the redesign is not approved, or slips past its check date, we submit that draft.
+The current draft (commit 93e151f, 4 pages, numbers check passing) stays complete and submittable as a fallback if the build or E5 slips.
 
 ---
 
@@ -115,15 +115,14 @@ No change to E1 to E3 results. No new arms. Any choice made after the answers ex
 
 ## Part 3. Schedule to Nov 16
 
-Week 8 (Oct 26 to Nov 1) is finished: the paper draft (93e151f), the video (https://youtu.be/kbU9t3ewVUk) and the live links.
+Week 8 (Oct 26 to 27) is finished: the paper draft (93e151f), the video (https://youtu.be/kbU9t3ewVUk) and the live links.
 
-### Week 9 (Mon Nov 2 to Sun Nov 8): decide, build, run
+### Week 9 (Mon Nov 2 to Sun Nov 8): build and run
 
 | Day | Work | Who |
 |---|---|---|
-| Mon 2 | Send Part 1 and the current draft to Prof. Akram; share links with the team | Ali |
+| Mon 2 | Share links with the team; redesign screens and copy | Ali |
 | Mon 2 to Tue 3 | Finalize the E5 plan; commit PLAN_E5.md to the tool repo before any run; smoke test on Explorer | Ali (+ agents) |
-| **Wed 4** | **Check date: Prof. Akram's go or no-go on the redesign.** No go: keep the current draft and spend W9 to W10 on polish only (the plan already in the weekly report). | Prof. Akram, Ali |
 | Wed 4 to Fri 6 | Build the redesign: question-first home, questions-covered count, collapsed notes, blockers, score removed from engine, CLI and docs, tests updated; publish to public main after the privacy scan | agents, Ali reviews |
 | Wed 4 to Thu 5 | E5 runs (edit job, then judging) | cluster |
 | Fri 6 | Second-rater sheet back (about 2.5 to 3 h) | Ishan |
@@ -147,7 +146,6 @@ Final read, page-limit and format checks, submission form, upload the paper and 
 
 ### Risks
 
-- **Prof. Akram does not approve, or answers late:** submit the current draft. It is complete.
 - **E5 slips or fails:** the redesign does not depend on E5's verdict. The paper reports E5 as inconclusive or leaves it out.
 - **Build slips past Fri Nov 6:** cut the "Can engines reach it?" restyle first. The score removal and the question-first home are the core.
 - **Video:** keep the current upload until the new one is checked.
