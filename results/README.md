@@ -1,6 +1,6 @@
 # results/: the evidence behind the paper's numbers
 
-The withheld files listed in `manifests/` (pages, versions, prompts, answers) are now available for research through the gated Hugging Face dataset [Shehral/citation-equity-experiments-pages](https://huggingface.co/datasets/Shehral/citation-equity-experiments-pages); every result here is also in the public [Shehral/citation-equity-experiments](https://huggingface.co/datasets/Shehral/citation-equity-experiments).
+The withheld files listed in `manifests/` (pages, versions, prompts, answers) are not shared, since the pages belong to their publishers; every result here is also in the public [Shehral/citation-equity-experiments](https://huggingface.co/datasets/Shehral/citation-equity-experiments).
 
 This folder holds every result the paper reports, in the form the experiments produced it, plus what you need to check or rerun them: the plans as written before each run, the cluster jobs and their compute, the software and model versions, and the sha256 of every input we cannot share.
 

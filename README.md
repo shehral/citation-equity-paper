@@ -42,6 +42,7 @@ The experiments edit real web pages from GEO-bench and C-SEO Bench. Those pages 
 ## Data on Hugging Face
 
 - [Shehral/citation-equity-experiments](https://huggingface.co/datasets/Shehral/citation-equity-experiments): every result and score, page metadata and hashes, and the plans (public, no page text).
-- [Shehral/citation-equity-experiments-pages](https://huggingface.co/datasets/Shehral/citation-equity-experiments-pages): the fetched pages, edited versions, judge prompts and answers (gated, non-commercial research only).
+
+The fetched pages, edited versions, judge prompts and answers are not shared, since the pages belong to their publishers.
 
 `results/` in this repo is the same evidence in the form the paper's checks read (`results/verify_numbers.py`).
