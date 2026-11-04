@@ -17,7 +17,11 @@ else
   "$PY" -I -B scripts/fig_all.py
 fi
 
-"$TECTONIC" --keep-logs main_www.tex
+# tectonic 0.17 writes main_www.log only with --keep-intermediates as well as --keep-logs (with --keep-logs alone it
+# writes the .blg and skips the log). Delete the old log first, so the checks below can never read a stale one.
+rm -f main_www.log
+"$TECTONIC" --keep-logs --keep-intermediates main_www.tex
+[[ -s main_www.log ]] || { echo "build.sh: main_www.log not written; the overfull and undefined checks cannot run" >&2; exit 1; }
 
 if grep -qE "undefined|Citation .* undefined" main_www.log; then
   echo "build.sh: undefined references or citations:" >&2
