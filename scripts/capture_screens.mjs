@@ -7,7 +7,9 @@
 //   edit's Preview are both in view (callout 2 is dropped when they cannot be).
 // Writes data/screens/draft_view.png and data/fig2_callouts.json: the callout anchors (fractions from the image's
 // top-left), measured from element boxes, never placed by hand; the UI strings, read from the page; and the
-// hand-written fields (_provenance, capture_plan, each callout's `what`), all from this script.
+// hand-written fields (_provenance, capture_plan, each callout's `what`), all from this script. Callouts 1 and 2 also
+// carry `text`, the line the figure's list prints, built here from strings read in the same run (the count, the card's
+// line, the Quick edit's chip).
 // Usage: [CE_URL=<site>/] [CE=<tool repo>] node scripts/capture_screens.mjs [--explore]
 //   CE_URL  the site, ending in a slash (default: the live site); CE  the tool repo Playwright is loaded from
 //   (default: ../citation-equity next to this repo). Headless Chromium. Against the local Pages build, from the
@@ -50,6 +52,9 @@ const EDITS = [
 const START = 'Questions covered: 0 of 4';
 const TARGET = 'Questions covered: 2 of 4';
 const CHIP = 'Helped in our test';
+// The Quick edit's chip on the example: the question-heading "?" edit, a check our tests found no effect for
+// (packages/engine/test/rank.test.ts; spec section 7.3).
+const QUICK_CHIP = 'No effect in our test';
 const PRIVACY = 'Stays in your browser';
 // The card's line under the heading (spec section 7.3, row "Line"; apps/workspace/components/draft/questions-card.tsx).
 const LINE = 'Each needs its key words up top and a section that answers it.';
@@ -186,15 +191,18 @@ try {
   const marked = { x: left, y: top, width: right - left, height: bottom - top };
 
   const cardChip = card.locator('[data-card-chips] [data-label-chip]');
+  const quickChip = start.getByRole('region', { name: 'Quick edit' }).locator('[data-label-chip]');
   const privacy = page.getByRole('banner').getByText(PRIVACY, { exact: true });
   const strings = {
     heading: await heading.first().innerText(),
     line: await card.locator(':scope > p:not(.sr-only)').first().innerText(),
     chip: (await cardChip.allInnerTexts()).join(' | '),
+    quick_chip: (await quickChip.allInnerTexts()).join(' | '),
     privacy: await privacy.first().innerText(),
   };
   if (strings.chip !== CHIP) throw new Error(`the card's chip reads "${strings.chip}", not "${CHIP}"`);
   if (strings.line !== LINE) throw new Error(`the card's line reads "${strings.line}", not "${LINE}"`);
+  if (strings.quick_chip !== QUICK_CHIP) throw new Error(`the Quick edit's chip reads "${strings.quick_chip}", not "${QUICK_CHIP}"`);
   const xy = {
     1: await anchor(heading, 0, 0.5, -24, 0),
     2: fits ? await anchor(preview, 1, 0.5, 28, 0) : null,
@@ -209,8 +217,13 @@ try {
   if (explore) console.log(JSON.stringify({ xy, strings, showName, passage, rail: r, heading: h1, preview: p1, need, fits, marked }, null, 1));
 
   const CALLOUTS = [
-    { n: 1, what: 'Questions covered', ui_string: strings.line },
-    { n: 2, what: 'The Quick edit: Preview first, Apply only inside the preview', ui_string: null },
+    { n: 1, what: 'Questions covered', ui_string: strings.line, text: `${strings.heading}. ${strings.line}` },
+    {
+      n: 2,
+      what: 'The Quick edit: Preview first, Apply only inside the preview',
+      ui_string: strings.quick_chip,
+      text: `The Quick edit, chip \u201c${strings.quick_chip}\u201d: Preview first, Apply only inside the preview`,
+    },
     { n: 3, what: 'The passage marked by Show on the first open line', ui_string: null },
     { n: 4, what: "The card's label from our own tests", ui_string: strings.chip },
     { n: 5, what: 'Privacy chip', ui_string: strings.privacy },
@@ -218,7 +231,7 @@ try {
   const co = {
     _provenance: {
       producer: 'scripts/capture_screens.mjs (Figure 2 per spec section 14 of the tool repo, docs/superpowers/specs/2026-11-03-question-first-design.md, local feat branch only); `what` and capture_plan are written in the script',
-      note: 'ui_string values were read from the build in the same run (captured.strings); xy anchors are measured from element boxes in that run; captured.edits are the two typed edits and draft_sha256 hashes the draft after them; captured.local_build (local URLs only) is the tool commit the build was made from.',
+      note: 'ui_string values were read from the build in the same run (captured.strings), and so were the strings in callouts 1 and 2 `text` (the line the figure prints); xy anchors are measured from element boxes in that run; captured.edits are the two typed edits and draft_sha256 hashes the draft after them; captured.local_build (local URLs only) is the tool commit the build was made from.',
     },
     status: 'captured',
     screenshot: 'data/screens/draft_view.png',

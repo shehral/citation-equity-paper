@@ -10,7 +10,9 @@ Two modes, chosen by what exists in data/:
   * otherwise: a marked PLACEHOLDER frame, a wireframe of the planned capture with the numbered callouts where they
     will sit, and the callout list. Nothing in the wireframe is data; it shows layout only.
 
-Input: data/fig2_callouts.json and the two screenshots.
+Input: data/fig2_callouts.json and the two screenshots. Both images are drawn with interpolation "none", so the PDF
+embeds the capture's own 2500 x 1800 pixels (and the crop's) instead of a resampled copy; the UI text prints small at
+the column width, so the callout list repeats the strings a reader needs (the count, the Quick edit's chip).
 
 Usage: .venv/bin/python -I -B scripts/fig_workspace.py [--out figures] [--png <dir>]
 """
@@ -97,7 +99,7 @@ def inset_before(ax, img_w_in, img_h_in):
     box(ax, left - pad_x, bottom - pad_x * img_w_in / img_h_in, width + 2 * pad_x,
         height + pad_top + pad_x * img_w_in / img_h_in, "white", N["ink_soft"], lw=0.7, r=0.01, z=6)
     ax.imshow(crop, extent=(left, left + width, bottom, bottom + height), aspect="auto", zorder=7,
-              interpolation="lanczos")
+              interpolation="none")
     ax.text(left, bottom + height + pad_top / 2, "Before: the old build", ha="left", va="center",
             fontsize=TEXT, color=N["ink"], fontweight="semibold", zorder=8)
 
@@ -114,9 +116,15 @@ def main():
     # Layout in inches: the image keeps its own aspect ratio, the callout list sits under it.
     pad, img_w = 0.06, W_IN - 0.12
     img_h = img_w * img.shape[0] / img.shape[1] if captured else 0.585 * H_IN
+    # The list says what the screenshot's small UI text says: callout 1 the count and the card's line, callout 2 the
+    # Quick edit's chip (their `text`, built by the capture from strings read in the same run); the others
+    # `what: "ui_string"`.
     items = []
+    heading = co.get("captured", {}).get("strings", {}).get("heading")
     for c in co["callouts"]:
-        text = c["what"] + (f": \u201c{c['ui_string']}\u201d" if c.get("ui_string") else "")
+        text = c.get("text") or c["what"] + (f": \u201c{c['ui_string']}\u201d" if c.get("ui_string") else "")
+        if captured and c["n"] == 1 and not (heading and text.startswith(heading)):
+            raise SystemExit("fig_workspace: callout 1 must print the captured count (captured.strings.heading)")
         items.append((c["n"], textwrap.wrap(text, 74)))
     line_h, gap = 0.092, 0.03
     list_h = sum(len(lines) * line_h + gap for _, lines in items) + 0.05
@@ -129,7 +137,7 @@ def main():
     if captured:
         ax.set_xlim(0, 1)
         ax.set_ylim(0, 1)
-        ax.imshow(img, extent=(0, 1, 0, 1), aspect="auto", zorder=1, interpolation="lanczos")
+        ax.imshow(img, extent=(0, 1, 0, 1), aspect="auto", zorder=1, interpolation="none")
         ax.add_patch(FancyBboxPatch((0, 0), 1, 1, boxstyle="round,pad=0,rounding_size=0.006", fc="none",
                                     ec=N["rule"], lw=0.6, zorder=2))
         anchors = {c["n"]: (c["xy"][0], 1 - c["xy"][1]) for c in co["callouts"]}

@@ -1,7 +1,8 @@
 {
   "_provenance": {
     "producer": "scripts/capture_screens.mjs (Figure 2 per spec section 14 of the tool repo, docs/superpowers/specs/2026-11-03-question-first-design.md, local feat branch only); `what` and capture_plan are written in the script",
-    "note": "ui_string values were read from the build in the same run (captured.strings); xy anchors are measured from element boxes in that run; captured.edits are the two typed edits and draft_sha256 hashes the draft after them; captured.local_build (local URLs only) is the tool commit the build was made from."
+    "note": "ui_string values were read from the build in the same run (captured.strings), and so were the strings in callouts 1 and 2 `text` (the line the figure prints); xy anchors are measured from element boxes in that run; captured.edits are the two typed edits and draft_sha256 hashes the draft after them; captured.local_build (local URLs only) is the tool commit the build was made from.",
+    "hand_synced": "2026-11-03, second review round: callouts 1 and 2 gained `text` and callout 2 its ui_string, and captured.strings gained quick_chip, to match scripts/capture_screens.mjs. The capture was not rerun (it needs a served build of the tool): quick_chip was read off data/screens/draft_view.png, whose Quick edit card shows the chip \"No effect in our test\"; the next capture reads and asserts it."
   },
   "status": "captured",
   "screenshot": "data/screens/draft_view.png",
@@ -11,6 +12,7 @@
       "n": 1,
       "what": "Questions covered",
       "ui_string": "Each needs its key words up top and a section that answers it.",
+      "text": "Questions covered: 2 of 4. Each needs its key words up top and a section that answers it.",
       "xy": [
         0.6832,
         0.1222
@@ -19,7 +21,8 @@
     {
       "n": 2,
       "what": "The Quick edit: Preview first, Apply only inside the preview",
-      "ui_string": null,
+      "ui_string": "No effect in our test",
+      "text": "The Quick edit, chip “No effect in our test”: Preview first, Apply only inside the preview",
       "xy": [
         0.8222,
         0.9481
@@ -81,6 +84,7 @@
       "heading": "Questions covered: 2 of 4",
       "line": "Each needs its key words up top and a section that answers it.",
       "chip": "Helped in our test",
+      "quick_chip": "No effect in our test",
       "privacy": "Stays in your browser"
     },
     "local_build": {
