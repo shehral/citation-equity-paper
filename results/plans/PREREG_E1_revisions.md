@@ -1,4 +1,4 @@
-> Copy of `citation-equity/experiments/PREREG_E1_revisions.md`. First in tool commit `28ace41`, last changed in `28ace41` (`git log --format=%h -- experiments/PREREG_E1_revisions.md`: 28ace41). Copied at tool HEAD `edb6354`.
+> Copy of `citation-equity/experiments/PREREG_E1_revisions.md`. First in tool commit `28ace41`, last changed in `28ace41` (`git log --format=%h -- experiments/PREREG_E1_revisions.md`: 28ace41). Copied at tool HEAD `cbbdeea`.
 
 # How the E1 pre-registration changed after critique (2026-10-23)
 

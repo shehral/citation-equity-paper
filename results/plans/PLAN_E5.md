@@ -1,4 +1,4 @@
-> Copy of `citation-equity/experiments/PLAN_E5.md`. First in tool commit `7c1c725`, last changed in `2e780ef` (`git log --format=%h -- experiments/PLAN_E5.md`: 2e780ef 0df6f1e a98da69 7c1c725). Copied at tool HEAD `7b10ad3`.
+> Copy of `citation-equity/experiments/PLAN_E5.md`. First in tool commit `7c1c725`, last changed in `2e780ef` (`git log --format=%h -- experiments/PLAN_E5.md`: 2e780ef 0df6f1e a98da69 7c1c725). Copied at tool HEAD `cbbdeea`.
 
 # E5: does the reader's-words gain survive when the writer has only a keyword?
 

@@ -1,6 +1,6 @@
 # Cluster jobs
 
-Every Slurm job of the sensitivity test, the smoke test and E1 to E3 on Explorer, from
+Every Slurm job of the sensitivity test, the smoke test and E1 to E3 (and E5, once a `--fetch` after its run has pulled it) on Explorer, from
 `sacct -u $USER --starttime 2026-10-23 -X -n -P -o JobID,JobName%60,Partition,AllocTRES%60,State,Elapsed,Start,End` (plus NodeList).
 AllocTRES records the GPU count but not its type, so the type comes from the node's gres (`sinfo -N -o '%N|%G'`) and the exact model from the `nvidia-smi` line the job printed. Times are the cluster's clock (US Eastern). Machine-readable copy: `jobs.csv`; totals: `gpu_hours.json`; each job's start/end lines and JSON summary: `logs/`.
 
@@ -14,8 +14,9 @@ AllocTRES records the GPU count but not its type, so the type comes from the nod
 | e2a | 1.92 |
 | e2b | 1.89 |
 | e3 | 4.16 |
+| e5 | 13.12 |
 | E2 (a + b) | 3.81 |
-| **overall** | **16.87** |
+| **overall** | **29.99** |
 
 | experiment : GPU type | GPU-hours |
 |---|---|
@@ -27,6 +28,8 @@ AllocTRES records the GPU count but not its type, so the type comes from the nod
 | e2b:h200 | 0.43 |
 | e3:a100 | 2.17 |
 | e3:h200 | 1.99 |
+| e5:a100 | 7.97 |
+| e5:h200 | 5.15 |
 | sensitivity:a100 | 0.63 |
 | sensitivity:h200 | 0.23 |
 | smoke:a100 | 0.44 |
@@ -42,6 +45,8 @@ AllocTRES records the GPU count but not its type, so the type comes from the nod
 | e3:edit pages | 0.60 |
 | e3:judge answers | 3.29 |
 | e3:judge answers (E1 queries, extra attempt) | 0.27 |
+| e5:edit pages | 0.35 |
+| e5:judge answers | 12.77 |
 | sensitivity:sensitivity test | 0.86 |
 | smoke:vLLM smoke test | 0.44 |
 
@@ -93,3 +98,29 @@ AllocTRES records the GPU count but not its type, so the type comes from the nod
 | 11354088 | `ce-e3-e3-four.qwen3.8-27b.tierall` | judge answers | gpu | 1 x H200 | 00:36:25 | 0.61 | COMPLETED | 2026-10-24T21:04:10 | Qwen/Qwen3.8-27B | [log](logs/ce-e3-e3-four.qwen3.8-27b.tierall-11354088.summary.txt) |
 | 11354089 | `ce-e3-main.gemma-4-12b.tierall` | judge answers (E1 queries, extra attempt) | gpu-short | 1 x A100-SXM4-80GB | 00:13:13 | 0.22 | COMPLETED | 2026-10-24T21:05:57 | google/gemma-4-12B-it | [log](logs/ce-e3-main.gemma-4-12b.tierall-11354089.summary.txt) |
 | 11354090 | `ce-e3-main.qwen3.8-27b.tierall` | judge answers (E1 queries, extra attempt) | gpu-short | 1 x H200 | 00:02:58 | 0.05 | COMPLETED | 2026-10-24T21:17:58 | Qwen/Qwen3.8-27B | [log](logs/ce-e3-main.qwen3.8-27b.tierall-11354090.summary.txt) |
+| 11586934 | `ce-e5-prompts` | judge answers | short | none | 00:11:48 | 0.00 | COMPLETED | 2026-11-03T06:10:37 |  | [log](logs/ce-e5-prompts-11586934.summary.txt) |
+| 11594719 | `ce-e5-g-t1m-p1of2` | judge answers | gpu | 1 x A100-SXM4-40GB | 01:32:13 | 1.54 | COMPLETED | 2026-11-03T15:04:46 | google/gemma-4-12B-it | [log](logs/ce-e5-g-t1m-p1of2-11594719.summary.txt) |
+| 11594714 | `ce-e5-edit` | edit pages | gpu | 1 x H200 | 00:20:48 | 0.35 | COMPLETED | 2026-11-03T15:05:24 | google/gemma-4-31B-it | [log](logs/ce-e5-edit-11594714.summary.txt) |
+| 11594724 | `ce-e5-q-t1m-p1of2` | judge answers | gpu-short | 1 x H200 | 00:52:24 | 0.87 | COMPLETED | 2026-11-03T15:05:49 | Qwen/Qwen3.8-27B | [log](logs/ce-e5-q-t1m-p1of2-11594724.summary.txt) |
+| 11594726 | `ce-e5-q-t1m-p2of2` | judge answers | gpu-short | 1 x H200 | 00:46:58 | 0.78 | COMPLETED | 2026-11-03T15:05:49 | Qwen/Qwen3.8-27B | [log](logs/ce-e5-q-t1m-p2of2-11594726.summary.txt) |
+| 11594721 | `ce-e5-g-t1m-p2of2` | judge answers | gpu | 1 x A100-SXM4-40GB | 01:28:31 | 1.48 | COMPLETED | 2026-11-03T15:07:34 | google/gemma-4-12B-it | [log](logs/ce-e5-g-t1m-p2of2-11594721.summary.txt) |
+| 11595239 | `ce-e5-step2` | judge answers | short | none | 00:00:19 | 0.00 | FAILED | 2026-11-03T15:28:33 |  | [log](logs/ce-e5-step2-11595239.summary.txt) |
+| 11594742 | `ce-e5-g-t3` | judge answers | gpu | 1 x A100-SXM4-80GB | 01:32:08 | 1.54 | COMPLETED | 2026-11-03T15:31:26 | google/gemma-4-12B-it | [log](logs/ce-e5-g-t3-11594742.summary.txt) |
+| 11595281 | `ce-e5-step2` | judge answers | short | none | 00:18:04 | 0.00 | COMPLETED | 2026-11-03T15:33:51 |  | [log](logs/ce-e5-step2-11595281.summary.txt) |
+| 11595309 | `ce-e5-step2` | judge answers | short | none | 00:15:48 | 0.00 | COMPLETED | 2026-11-03T15:36:55 |  | [log](logs/ce-e5-step2-11595309.summary.txt) |
+| 11595351 | `ce-e5-step2` | judge answers | short | none | 00:20:48 | 0.00 | COMPLETED | 2026-11-03T15:38:05 |  | [log](logs/ce-e5-step2-11595351.summary.txt) |
+| 11595352 | `ce-e5-step2` | judge answers | short | none | 00:14:38 | 0.00 | COMPLETED | 2026-11-03T15:38:05 |  | [log](logs/ce-e5-step2-11595352.summary.txt) |
+| 11594740 | `ce-e5-q-t1r` | judge answers | gpu-short | 1 x H200 | 00:33:23 | 0.56 | COMPLETED | 2026-11-03T15:53:44 | Qwen/Qwen3.8-27B | [log](logs/ce-e5-q-t1r-11594740.summary.txt) |
+| 11596438 | `ce-e5-step2v` | judge answers | short | none | 00:14:18 | 0.00 | COMPLETED | 2026-11-03T15:53:44 |  | [log](logs/ce-e5-step2v-11596438.summary.txt) |
+| 11594729 | `ce-e5-g-t1r` | judge answers | gpu-short | 1 x A100-SXM4-80GB | 00:36:29 | 0.61 | COMPLETED | 2026-11-03T15:59:45 | google/gemma-4-12B-it | [log](logs/ce-e5-g-t1r-11594729.summary.txt) |
+| 11596866 | `ce-e5-q-t2` | judge answers | gpu-short | 1 x H200 | 01:00:33 | 1.01 | COMPLETED | 2026-11-03T16:27:48 | Qwen/Qwen3.8-27B | [log](logs/ce-e5-q-t2-11596866.summary.txt) |
+| 11594744 | `ce-e5-q-t3` | judge answers | gpu | 1 x H200 | 01:06:31 | 1.11 | COMPLETED | 2026-11-03T16:38:04 | Qwen/Qwen3.8-27B | [log](logs/ce-e5-q-t3-11594744.summary.txt) |
+| 11596887 | `ce-e5-g-t2-9L` | judge answers | gpu-short | 1 x A100-SXM4-40GB | 01:05:38 | 1.09 | COMPLETED | 2026-11-03T16:38:04 | google/gemma-4-12B-it | [log](logs/ce-e5-g-t2-9L-11596887.summary.txt) |
+| 11597289 | `ce-e5-g-t2-9L` | judge answers | gpu | 1 x A100-SXM4-40GB | 00:01:42 | 0.03 | CANCELLED | 2026-11-03T16:38:04 | google/gemma-4-12B-it | [log](logs/ce-e5-g-t2-9L-11597289.summary.txt) |
+| 11597110 | `ce-e5-g-t2-9L` | judge answers | gpu-short | none | 00:00:00 | 0.00 | CANCELLED | None |  |  |
+| 11597286 | `ce-e5-g-t2-9L` | judge answers | gpu-short | none | 00:00:00 | 0.00 | CANCELLED | None |  |  |
+| 11597378 | `ce-e5-g-t2-12K` | judge answers | gpu | 1 x A100-SXM4-40GB | 00:48:54 | 0.81 | COMPLETED | 2026-11-03T16:42:19 | google/gemma-4-12B-it | [log](logs/ce-e5-g-t2-12K-11597378.summary.txt) |
+| 11597395 | `ce-e5-q-t3-12` | judge answers | gpu | 1 x H200 | 00:28:28 | 0.47 | COMPLETED | 2026-11-03T16:47:09 | Qwen/Qwen3.8-27B | [log](logs/ce-e5-q-t3-12-11597395.summary.txt) |
+| 11596971 | `ce-e5-g-t3-12` | judge answers | gpu-short | 1 x A100-SXM4-40GB | 00:52:11 | 0.87 | COMPLETED | 2026-11-03T17:32:25 | google/gemma-4-12B-it | [log](logs/ce-e5-g-t3-12-11596971.summary.txt) |
+| 11600661 | `ce-e5-gzip` | judge answers | short | none | 00:01:00 | 0.00 | COMPLETED | 2026-11-03T18:31:23 |  | [log](logs/ce-e5-gzip-11600661.summary.txt) |
+| 11600609 | `ce-e5-envcheck` | judge answers | gpu-short | 1 x a100 | 00:00:12 | 0.00 | COMPLETED | 2026-11-03T18:34:53 |  | [log](logs/ce-e5-envcheck-11600609.summary.txt) |

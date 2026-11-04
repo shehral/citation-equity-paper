@@ -1,5 +1,5 @@
 {
- "tool_head": "edb6354",
+ "tool_head": "cbbdeea",
  "plans": [
   {
    "file": "PREREG_sensitivity.md",
@@ -61,8 +61,9 @@
    "file": "E1_freeze_MANIFEST.md",
    "source": "experiments/e1/freeze/MANIFEST.md",
    "first": "7859b07",
-   "last": "7859b07",
+   "last": "69a8fc0",
    "commits": [
+    "69a8fc0",
     "7859b07"
    ]
   },
@@ -93,9 +94,9 @@
   }
  ],
  "manifest_counts": {
-  "files": 432,
+  "files": 559,
   "local": 116,
-  "cluster": 316
+  "cluster": 443
  },
  "gpu_hours": {
   "smoke": 0.44,
@@ -103,18 +104,9 @@
   "e1": 7.6,
   "e2a": 1.92,
   "e2b": 1.89,
-  "e3": 4.16
+  "e3": 4.16,
+  "e5": 13.12
  },
- "gpu_hours_overall": 16.87,
- "built": "2026-10-24T20:17:37-07:00",
- "e5": {
-  "tool_head": "7b10ad3",
-  "results": "results/e5/",
-  "plans": [
-   "PLAN_E5.md",
-   "E5_freeze_MANIFEST.md"
-  ],
-  "runs": "not in runs/ yet: the cluster cache (.cache/cluster) predates E5; a --fetch pulls its jobs",
-  "built": "2026-11-03T18:01:13-08:00"
- }
+ "gpu_hours_overall": 29.99,
+ "built": "2026-11-03T18:12:24-08:00"
 }

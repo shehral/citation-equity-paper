@@ -1,4 +1,131 @@
 location,experiment,path,lines,bytes,sha256,what
+cluster,?,data/e5/applicability.jsonl,4000,406946,b5489378fbaf02a3fbb8ce4c048e32eede3526a6fb20bd06427697938d315c2c,"frozen per-query, per-arm applicability table (which checks flag something)"
+cluster,?,data/e5/batches/e5-main.gemma-4-12b.tier1-p1of2.prompts.jsonl,3080,109156440,51ffbb0579ca8e3f24fd752b77f358a0250dd5ba8299fcda062257123716fb8a,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-main.gemma-4-12b.tier1-p2of2.prompts.jsonl,3048,107631648,94d4763b205a381e4fef8ddce02cbd67ed03d37c89db97dea79c132aa0410a25,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-main.gemma-4-12b.tier2-12K-p1of2.prompts.jsonl,720,25391064,52fd9cc91ebb1c46d057537ea1f80c77ae0741d57a00c4a31ae41eec96171a63,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-main.gemma-4-12b.tier2-12K-p2of2.prompts.jsonl,704,23958368,b0d6fbaab8aa1570850e8551bc254e2cf4c04f1c036e2c065e3b2bab993051b6,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-main.gemma-4-12b.tier2-9L-p1of2.prompts.jsonl,680,24204696,f249bbc57d5cd2dcf15d4eee587251f0b1e53abcb1412bff7212ed2680a76cd3,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-main.gemma-4-12b.tier2-9L-p2of2.prompts.jsonl,672,24021040,42b019eb96ef21713ee709c5ab9a34bb858be143d7adba7350900a6aee408e08,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-main.gemma-4-12b.tier3-12-p1of2.prompts.jsonl,776,26614320,fc1ac30d3e37bf923f10301dfdf423029c3f5e0e1c1b62666968b799b04eba13,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-main.gemma-4-12b.tier3-12-p2of2.prompts.jsonl,752,26071384,5c74c4f4ebfd0b9e3f5b7fb0b41a606bb63b2928f320d931638be1a30815f29b,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-main.gemma-4-12b.tier3-p1of2.prompts.jsonl,1608,57398688,e7dcbb3e210a43a7ad52d2aeac63cb4a0558ac80c01b6280cf922708aee1da16,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-main.gemma-4-12b.tier3-p2of2.prompts.jsonl,1576,55757768,4709b5b148f4d54eef7ddaf8e5a7634c2fac4ee0de711f107175843cb4bc40f0,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-main.qwen3.8-27b.tier1-p1of2.prompts.jsonl,3080,109141040,011c6f49501d1eaec1cc0211e1e69034b418db06bb17504be827b2729df9cf45,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-main.qwen3.8-27b.tier1-p2of2.prompts.jsonl,3048,107616408,aef2973da53674fd0e04996fd48473f169b27c071543aca9af4257e7742b6add,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-main.qwen3.8-27b.tier2-12K-p1of2.prompts.jsonl,720,25387464,29d1a203b5e25dcdf5ea460bc830011223330710fc2204709652ff7bcf45e139,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-main.qwen3.8-27b.tier2-12K-p2of2.prompts.jsonl,704,23954848,e55fcb84b32f3d06f17052a24e57e0bd4f376c922a40194bd3f0fc9dfcaea591,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-main.qwen3.8-27b.tier2-9L-p1of2.prompts.jsonl,680,24201296,6e9a1825875ebc66efce89c59e406eb025e79c36dbbea9af75c45a6e0953c661,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-main.qwen3.8-27b.tier2-9L-p2of2.prompts.jsonl,672,24017680,a30b968181246f9552249c88ef861f50bd08b69c0faebc9d5b06bd8fe15e2324,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-main.qwen3.8-27b.tier3-12-p1of2.prompts.jsonl,776,26610440,64ca5379cde92ab0c4463e64c38b662d0439b53848556d3877d234ec29824362,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-main.qwen3.8-27b.tier3-12-p2of2.prompts.jsonl,752,26067624,731f35767545bf54162605e9c47c8f807efb3ed38c1e9a7802ecf640e9ba8df7,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-main.qwen3.8-27b.tier3-p1of2.prompts.jsonl,1608,57390648,515479e81f9b08adc5429d8bc284bb67fc8f7a478dc6b363c9d448e5e718d1cb,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-main.qwen3.8-27b.tier3-p2of2.prompts.jsonl,1576,55749888,fa71ea8aa2cef5f36446adafbaae6851515482bcbf61aab91f0a78a97acaa5e7,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-replication.gemma-4-12b.tier1-p1of2.prompts.jsonl,880,29698000,550a1fc95b9eebea8985207248eb886dcae086154e34ccbef48bc76340a7d8c1,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-replication.gemma-4-12b.tier1-p2of2.prompts.jsonl,864,30052528,4a302b46f7da40289bbe1a5e184034e758c4c8cd595823c14a01b4c02571a12a,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-replication.gemma-4-12b.tier2-9L-p1of2.prompts.jsonl,216,7304560,9f89041a0adf00ae6043d3d4fa0e3e841c74b102b40aee1043599789e153e81c,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-replication.gemma-4-12b.tier2-9L-p2of2.prompts.jsonl,208,7324760,1b5f3011d6992f89772dc6a8a82e37f30e8f5b660de4cc4f12e2efd99326f794,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-replication.gemma-4-12b.tier3-p1of2.prompts.jsonl,376,13061952,c00629b17bbf1ddfa3681a92438b88dc068b4926d3571fd4db19e6491618667c,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-replication.gemma-4-12b.tier3-p2of2.prompts.jsonl,368,13168328,7b92149b1598e84171379385d569955cf7d17176e67cf2e2115b30de06ab5ba6,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-replication.qwen3.8-27b.tier1-p1of2.prompts.jsonl,880,29693600,eca84a4b57f35d135d6e1d5c7c32037f0a13c7a442eefa7fea1384c4108c540a,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-replication.qwen3.8-27b.tier1-p2of2.prompts.jsonl,864,30048208,2bc3d9ca02d280a8d20cc39e29a25e9934c5bbe87447e967a121ee43064c1706,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-replication.qwen3.8-27b.tier2-9L-p1of2.prompts.jsonl,216,7303480,d3c7b42d1dda5c08aaebe3c5ea385a04317269ae1962c5986d194b83fb1eac5b,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-replication.qwen3.8-27b.tier2-9L-p2of2.prompts.jsonl,208,7323720,35c49349df39cd73d56b6438147761459560ca2cf1506b77e150047c0d11f5c8,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-replication.qwen3.8-27b.tier3-p1of2.prompts.jsonl,376,13060072,7fba38b2bc02199877c3f288043ffad466de2b0ae0a9c9977db4b27b2d9777b5,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/batches/e5-replication.qwen3.8-27b.tier3-p2of2.prompts.jsonl,368,13166488,028028f5a6e1a1d7a3d0397b91e2bab988aa091c3b27d17c92ce4d9eb30bf1c8,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/edit_applicability.jsonl,520,66322,8e0ac9f6e6d9bf94d4ddf7f1f19cef5968752ac6e1e8c7071f7bd40e9876d857,"E5: which queries the edit job edits (arm 12 on the new queries, 12K on the main set)"
+cluster,?,data/e5/edit_log.jsonl,984,7571849,d6a11feebb847a30e6d6360a4dfeca7bd62c2383b80ce54243208d16b56eb967,withheld data file
+cluster,?,data/e5/edit_questions.jsonl,260,16924,9d713662dc6992034e82fad09105f005de09798f91bf17cde0d70faabbb4433e,E5: the keyword and its question per main query (built from the reader's question)
+cluster,?,data/e5/edit_texts.json,53,1597,a7eea80370bf0a8d801d92f5e6dff36bbd26298ec31fecbb42f84245ed317c29,"E5: the heading text of every guessed-question version (keyword, local model, page question)"
+cluster,?,data/e5/edit_texts.jsonl,320,154284,bbfb9484a0fa92cfe9c57fa9efa1a8dde70be0583276bce3e487e7a75eb4e48b,"E5: the heading text of every guessed-question version (keyword, local model, page question)"
+cluster,?,data/e5/edit_versions.jsonl,762,6510717,8fd80cd55f3bfbf47d7bf043bbc9a2480f22616b3e0a4a3be3d123e414a2fe77,edited page versions per arm with validity flags and validator messages (page text)
+cluster,?,data/e5/engine_original.jsonl,320,4891034,4a0f45fd707301d3ca0712fbecff4ea5f38364ce1f368da09a118b9e1206cf14,engine check results on each original page (spans quote page text)
+cluster,?,data/e5/make_versions.json,207,5065,a6c116a8130fc39ccd4c1f4296dc2bea8bc6428428ded4bf79050d7579f7341f,counts from E2a's 9W and 9P version builder
+cluster,?,data/e5/make_versions_edits.json,86,3065,758adc5b1773cee8184d55614ee0b82be4f7c740e083be834c4d7c9d66bf0b90,withheld data file
+cluster,?,data/e5/make_versions_ql.json,34,529,9a410886f4ccd7587a3b6337e15deaab5d533d9b780ad02629c365dfd7d1e6cb,withheld data file
+cluster,?,data/e5/pages.jsonl,1492,12822369,d71289032d00f7b8bdce9176e4033a7114c3b703d23cffb80d4a92fa9e2fcd13,"normalized pages used by the experiment (page text, roles target/other)"
+cluster,?,data/e5/prompt_build.json,270,9089,f4c222aac622d7e40de0eae02e925203a0c41bd9557390759d3106d2d393656a,prompt counts per batch and the token-limit refusals
+cluster,?,data/e5/prompts.jsonl,33056,1163528304,d7571608ebd9e4fbfa81fe1891798a146296870096b6167c5449d464da3b9934,"judge prompts, one per (version, judge, seed); they hold the full page text"
+cluster,?,data/e5/prompts.jsonl.gz,1005554,267937046,f90a95b5b981f18f9d9395b81030b04cbcf52df3474e46c54e2f78ace1e5ce13,withheld data file
+cluster,?,data/e5/q_L.jsonl,320,76632,6eca1229949be1345e1fbb0cf5406219b556749353806f873403dd2d449d0fd4,E5: the local model's question per keyword (edit job output)
+cluster,?,data/e5/versions.jsonl,2249,20076216,24ece2c62e07008bd503f6795a5e968a0cf7744ca1cd338c44ad34200dd1cf96,edited page versions per arm with validity flags and validator messages (page text)
+cluster,?,logs/ce-e5-edit-11594714.err,20,61922,aecb24729a21750e343d8f1065c2f5cf4ac798a0fdf09a2f9dbaa8bd6f23a10a,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-edit-11594714.out,100,11788,743330d5b74d4213e3c8ceaa9ce2681b20353e72dd1a0b00f6649a337ecc8842,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-edit-11594714.out,100,11788,743330d5b74d4213e3c8ceaa9ce2681b20353e72dd1a0b00f6649a337ecc8842,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-envcheck-11600609.err,0,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-envcheck-11600609.out,55,1339,2056d795871533ab84943fdb07639b3fcf17990d29ed1710d3b6bd7fe738e573,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-envcheck-11600609.out,55,1339,2056d795871533ab84943fdb07639b3fcf17990d29ed1710d3b6bd7fe738e573,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-g-t1m-p1of2-11594719.err,8,405846,eaa966143737921e50bb17839332b6f5ea82c906afe80aa412f0e4ba1b9b6311,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-g-t1m-p1of2-11594719.out,146,12428,f0e76dbb304a0c9b56859f0dcff3535e69b9c97a556f763bfa15746b68290086,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-g-t1m-p1of2-11594719.out,146,12428,f0e76dbb304a0c9b56859f0dcff3535e69b9c97a556f763bfa15746b68290086,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-g-t1m-p2of2-11594721.err,8,403162,b4e83237b3e12a59944b94199b72d0866e43b29437245c5af00d4edd2f22d587,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-g-t1m-p2of2-11594721.out,146,12428,bca8ce5d7d122d5cbe26fb77209562191233f3fa0408c41a3c46ba2db6331763,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-g-t1m-p2of2-11594721.out,146,12428,bca8ce5d7d122d5cbe26fb77209562191233f3fa0408c41a3c46ba2db6331763,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-g-t1r-11594729.err,14,172027,4617f0dd221641b637417dc64bf935c02db1f7e2cf175332edefc4169fda0c1c,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-g-t1r-11594729.out,134,22399,cca12b02e56e82b45e535d9086f837523e2f896c3160486d7d3c70edcf067a93,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-g-t1r-11594729.out,134,22399,cca12b02e56e82b45e535d9086f837523e2f896c3160486d7d3c70edcf067a93,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-g-t2-12K-11597378.err,16,190475,c5772b566571d7773a82e66a93e848f95e6f9e68f3ef512526ce7d9dbc183c29,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-g-t2-12K-11597378.out,166,22919,d47f1562ce2deb0012d248747764a908e28a150a1bb5534bbf4284047b0d79db,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-g-t2-12K-11597378.out,166,22919,d47f1562ce2deb0012d248747764a908e28a150a1bb5534bbf4284047b0d79db,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-g-t2-9L-11596887.err,32,237400,53add710a44b0a4e707433ea8194f634bfb6533c44cfbe846db66531ad680c45,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-g-t2-9L-11596887.out,300,45316,44ac4b09cbb6e215b68ef4057e0a2ff80fabec019c99b878203960ea626351ce,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-g-t2-9L-11596887.out,300,45316,44ac4b09cbb6e215b68ef4057e0a2ff80fabec019c99b878203960ea626351ce,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-g-t2-9L-11597289.err,1,82,f9207441f0f0b93b82b68ca6197834c763ba52b8489266ba4cbd1c34c355bf0e,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-g-t2-9L-11597289.out,6,537,e1bbc5c736c5703ea34d4a9fd978220670c824e7608f1d0e4655779c8a14c9cb,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-g-t2-9L-11597289.out,6,537,e1bbc5c736c5703ea34d4a9fd978220670c824e7608f1d0e4655779c8a14c9cb,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-g-t3-11594742.err,28,432828,8c894ff95beb12153eab8c012b4d30dac0988db2862f6e3865bbf0c1f1a8825e,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-g-t3-11594742.out,278,44951,cc3cf5d1da31c016b892c630af289ef105e1e0357cf62720c0c8d6d1235c66aa,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-g-t3-11594742.out,278,44951,cc3cf5d1da31c016b892c630af289ef105e1e0357cf62720c0c8d6d1235c66aa,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-g-t3-12-11596971.err,16,202431,0f7dd20d2b258ce7c3b9553400fdd341e45395548d31bb9190f9b06039b4c56a,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-g-t3-12-11596971.out,168,22945,681230173f8506b4e371dfeb3841a9a05e077b064a1c2c4409bcdc71150bc141,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-g-t3-12-11596971.out,168,22945,681230173f8506b4e371dfeb3841a9a05e077b064a1c2c4409bcdc71150bc141,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-gzip-11600661.err,0,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-gzip-11600661.out,3,231,5c293851d92a62e4c17a9bd7b6b2d5321e6ed25890a5c0b9e67538829b854939,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-gzip-11600661.out,3,231,5c293851d92a62e4c17a9bd7b6b2d5321e6ed25890a5c0b9e67538829b854939,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-prompts-11586934.err,0,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-prompts-11586934.out,17,1086,df0d0cba1d636ee9f5315f52b162592ef7891026f153a7918f8eb8e229421f97,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-prompts-11586934.out,17,1086,df0d0cba1d636ee9f5315f52b162592ef7891026f153a7918f8eb8e229421f97,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-q-t1m-p1of2-11594724.err,24,376941,ca5fdf85d9ad3704c744883b463343cc9914c53d597f35768ed4c614913ec2d9,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-q-t1m-p1of2-11594724.out,104,14697,4cb959d02b35bb0aaaae88ccbc553cfa8fe369e13d5a49213b65ffaa3a124d77,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-q-t1m-p1of2-11594724.out,104,14697,4cb959d02b35bb0aaaae88ccbc553cfa8fe369e13d5a49213b65ffaa3a124d77,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-q-t1m-p2of2-11594726.err,24,379699,9de7f1633b821532abf62710be81b639ef4438ebf66fcba7c2d871d888bcec13,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-q-t1m-p2of2-11594726.out,104,14695,d6da9cc4b3dce4ce1affb28ae2872a29a865ac313bf628630a55f590faea3a41,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-q-t1m-p2of2-11594726.out,104,14695,d6da9cc4b3dce4ce1affb28ae2872a29a865ac313bf628630a55f590faea3a41,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-q-t1r-11594740.err,48,190123,b2d107eae80d5cfd5c23f9be1893d99d670a03257bc114cf0869392590aee576,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-q-t1r-11594740.out,178,29061,7c6560943f5b01ec7165784b49b56422aa955c246b1066f82fd69532ad486dcc,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-q-t1r-11594740.out,178,29061,7c6560943f5b01ec7165784b49b56422aa955c246b1066f82fd69532ad486dcc,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-q-t2-11596866.err,146,390377,128c6fdfb7a2d465e5530103362453548e7f985fd30e854cc5175ac58caa0dc8,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-q-t2-11596866.out,528,87242,b643a19caff44ec75d28e7c4f27e58a086d1a59239c8a2288b52fb1dd019d7db,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-q-t2-11596866.out,528,87242,b643a19caff44ec75d28e7c4f27e58a086d1a59239c8a2288b52fb1dd019d7db,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-q-t3-11594744.err,96,482602,c361d4453174ee788e2d3aa14ef2fd68fbfc2aba2fe6e9bc62c6fc3b4295d08f,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-q-t3-11594744.out,362,58184,1197cc392e8101eff65e7c30d044b6d106dbb68a5f2815fb02015bb219e9a766,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-q-t3-11594744.out,362,58184,1197cc392e8101eff65e7c30d044b6d106dbb68a5f2815fb02015bb219e9a766,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-q-t3-12-11597395.err,50,182154,2f652e8018749ffa9cfb99b37ef26c031421dcfb755b6e6062f10033f008f173,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-q-t3-12-11597395.out,181,29322,3a20e00441d7bdd8b0d357a9128215385933ad10f2fa700b230e9e324f876f97,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-q-t3-12-11597395.out,181,29322,3a20e00441d7bdd8b0d357a9128215385933ad10f2fa700b230e9e324f876f97,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-step2-11595239.err,1,58,9879749b3745d5d25d1403355ff52f4e91c9c5f22a1910b204559c92575d1605,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-step2-11595239.out,0,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-step2-11595239.out,0,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-step2-11595281.err,0,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-step2-11595281.out,37,2851,75cfbffc8e04f8ba5df00a70f568ea82ad8244025366e4b404665b20505465df,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-step2-11595281.out,37,2851,75cfbffc8e04f8ba5df00a70f568ea82ad8244025366e4b404665b20505465df,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-step2-11595309.err,0,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-step2-11595309.out,37,2851,75cfbffc8e04f8ba5df00a70f568ea82ad8244025366e4b404665b20505465df,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-step2-11595309.out,37,2851,75cfbffc8e04f8ba5df00a70f568ea82ad8244025366e4b404665b20505465df,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-step2-11595351.err,0,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-step2-11595351.out,37,2851,75cfbffc8e04f8ba5df00a70f568ea82ad8244025366e4b404665b20505465df,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-step2-11595351.out,37,2851,75cfbffc8e04f8ba5df00a70f568ea82ad8244025366e4b404665b20505465df,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-step2-11595352.err,0,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-step2-11595352.out,37,2851,75cfbffc8e04f8ba5df00a70f568ea82ad8244025366e4b404665b20505465df,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-step2-11595352.out,37,2851,75cfbffc8e04f8ba5df00a70f568ea82ad8244025366e4b404665b20505465df,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-step2v-11596438.err,0,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-e5-step2v-11596438.out,37,2851,75cfbffc8e04f8ba5df00a70f568ea82ad8244025366e4b404665b20505465df,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-e5-step2v-11596438.out,37,2851,75cfbffc8e04f8ba5df00a70f568ea82ad8244025366e4b404665b20505465df,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-probe-h100-11586973.err,0,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-probe-h100-11586973.out,3,648,48ef352cce225e3cc9a82848e9703538afcc1d60a8a4cc2355533ff8cc09a68f,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-probe-h100-11586973.out,3,648,48ef352cce225e3cc9a82848e9703538afcc1d60a8a4cc2355533ff8cc09a68f,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-probe-l40s-11586972.err,0,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,job stderr (vLLM and Python warnings; holds cluster paths)
+cluster,?,logs/ce-probe-l40s-11586972.out,3,638,1bb0489fb581a4a5affa059a243bc4234ea87def8a82a4043cdf567ffa3c9abd,job stdout; summary lines are in results/runs/logs/
+cluster,?,logs/ce-probe-l40s-11586972.out,3,638,1bb0489fb581a4a5affa059a243bc4234ea87def8a82a4043cdf567ffa3c9abd,job stdout; summary lines are in results/runs/logs/
 cluster,e1,data/e1/.pages.jsonl.gHgMmU,705,6029573,b4ad4a6d84b403dbb94a6501bc83567084aeaf23b827aba5130cbc3938afb65a,temporary copy of pages.jsonl left by an interrupted write (same bytes as pages.jsonl)
 cluster,e1,data/e1/admission.json,25,408,fb08e42ed58eb45beaeb0fff87baa0d1a0fd439f950624e256562d094c8b61ab,admitted query ids and set sizes
 cluster,e1,data/e1/applicability.jsonl,2115,196157,1f17fb793294c029da02514f232318cf537d4afb454319f7524930cd9c7fda77,"frozen per-query, per-arm applicability table (which checks flag something)"

@@ -1,4 +1,4 @@
-> Copy of `citation-equity/experiments/e5/freeze/MANIFEST.md`. First in tool commit `23b1dfb`, last changed in `7b10ad3` (`git log --format=%h -- experiments/e5/freeze/MANIFEST.md`: 7b10ad3 73e6400 75a5bde 4200356 23b1dfb). Copied at tool HEAD `7b10ad3`.
+> Copy of `citation-equity/experiments/e5/freeze/MANIFEST.md`. First in tool commit `23b1dfb`, last changed in `7b10ad3` (`git log --format=%h -- experiments/e5/freeze/MANIFEST.md`: 7b10ad3 73e6400 75a5bde 4200356 23b1dfb). Copied at tool HEAD `cbbdeea`.
 
 # E5 freeze manifest
 

@@ -1,4 +1,4 @@
-> Copy of `citation-equity/experiments/PREREG_E1.md`. First in tool commit `2266c09`, last changed in `4ec7417` (`git log --format=%h -- experiments/PREREG_E1.md`: 4ec7417 a2322d7 f70e830 d04667a f38d34e 4bedd35 db21c71 28ace41 2266c09). Copied at tool HEAD `edb6354`.
+> Copy of `citation-equity/experiments/PREREG_E1.md`. First in tool commit `2266c09`, last changed in `4ec7417` (`git log --format=%h -- experiments/PREREG_E1.md`: 4ec7417 a2322d7 f70e830 d04667a f38d34e 4bedd35 db21c71 28ace41 2266c09). Copied at tool HEAD `cbbdeea`.
 
 # Pre-registration: E1, which suggestions change citation?
 

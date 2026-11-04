@@ -5,10 +5,11 @@
   "e1": 7.6,
   "e2a": 1.92,
   "e2b": 1.89,
-  "e3": 4.16
+  "e3": 4.16,
+  "e5": 13.12
  },
  "e2_total": 3.81,
- "overall": 16.87,
+ "overall": 29.99,
  "per_experiment_and_gpu_type": {
   "e1:a100": 3.44,
   "e1:h200": 4.17,
@@ -18,6 +19,8 @@
   "e2b:h200": 0.43,
   "e3:a100": 2.17,
   "e3:h200": 1.99,
+  "e5:a100": 7.97,
+  "e5:h200": 5.15,
   "sensitivity:a100": 0.63,
   "sensitivity:h200": 0.23,
   "smoke:a100": 0.44
@@ -32,9 +35,11 @@
   "e3:edit pages": 0.6,
   "e3:judge answers": 3.29,
   "e3:judge answers (E1 queries, extra attempt)": 0.27,
+  "e5:edit pages": 0.35,
+  "e5:judge answers": 12.77,
   "sensitivity:sensitivity test": 0.86,
   "smoke:vLLM smoke test": 0.44
  },
- "jobs": 44,
+ "jobs": 70,
  "note": "GPU-hours = Slurm Elapsed x GPUs allocated (gres/gpu); every GPU job used 1 GPU. CPU-only jobs (ce-e1-norm) count 0. The cancelled job never started. Times are the cluster's clock (US Eastern)."
 }

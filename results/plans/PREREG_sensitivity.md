@@ -1,4 +1,4 @@
-> Copy of `citation-equity/experiments/PREREG_sensitivity.md`. First in tool commit `3c86c02`, last changed in `3c86c02` (`git log --format=%h -- experiments/PREREG_sensitivity.md`: 3c86c02). Copied at tool HEAD `edb6354`.
+> Copy of `citation-equity/experiments/PREREG_sensitivity.md`. First in tool commit `3c86c02`, last changed in `3c86c02` (`git log --format=%h -- experiments/PREREG_sensitivity.md`: 3c86c02). Copied at tool HEAD `cbbdeea`.
 
 # Pre-registration: bench sensitivity test
 

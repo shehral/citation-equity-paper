@@ -1,0 +1,32 @@
+=== ce-e5-chain: e5-replication.gemma-4-12b.tier1-p1of2 start Tue Nov  3 15:59:47 EST 2026 ===
+=== ce-e1-gen start: Tue Nov  3 15:59:48 EST 2026 on d1029 judge=gemma-4-12b model=google/gemma-4-12B-it prompts=$CE_ROOT_PARENT/geo/e5/batches/e5-replication.gemma-4-12b.tier1-p1of2.prompts.jsonl out=$CE_ROOT_PARENT/geo/e5/answers/e5-replication.gemma-4-12b.tier1-p1of2.jsonl tp=1 ===
+settings ok
+NVIDIA A100-SXM4-80GB, 81920 MiB
+torch 2.13.0+cu130 NVIDIA A100-SXM4-80GB (8, 0)
+{
+ "model": "google/gemma-4-12B-it",
+ "prompts": 880,
+ "max_model_len": 32768,
+ "answers_cut_at_max_tokens": 0,
+ "load_seconds": 210.3,
+ "generate_seconds": 845.0,
+ "out": "$CE_ROOT_PARENT/geo/e5/answers/e5-replication.gemma-4-12b.tier1-p1of2.jsonl"
+}
+=== ce-e1-gen done: Tue Nov  3 16:17:45 EST 2026 ===
+=== ce-e5-chain: e5-replication.gemma-4-12b.tier1-p1of2 end Tue Nov  3 16:17:45 EST 2026 ===
+=== ce-e5-chain: e5-replication.gemma-4-12b.tier1-p2of2 start Tue Nov  3 16:17:45 EST 2026 ===
+=== ce-e1-gen start: Tue Nov  3 16:17:45 EST 2026 on d1029 judge=gemma-4-12b model=google/gemma-4-12B-it prompts=$CE_ROOT_PARENT/geo/e5/batches/e5-replication.gemma-4-12b.tier1-p2of2.prompts.jsonl out=$CE_ROOT_PARENT/geo/e5/answers/e5-replication.gemma-4-12b.tier1-p2of2.jsonl tp=1 ===
+settings ok
+NVIDIA A100-SXM4-80GB, 81920 MiB
+torch 2.13.0+cu130 NVIDIA A100-SXM4-80GB (8, 0)
+{
+ "model": "google/gemma-4-12B-it",
+ "prompts": 864,
+ "max_model_len": 32768,
+ "answers_cut_at_max_tokens": 0,
+ "load_seconds": 121.4,
+ "generate_seconds": 885.1,
+ "out": "$CE_ROOT_PARENT/geo/e5/answers/e5-replication.gemma-4-12b.tier1-p2of2.jsonl"
+}
+=== ce-e1-gen done: Tue Nov  3 16:34:44 EST 2026 ===
+=== ce-e5-chain: e5-replication.gemma-4-12b.tier1-p2of2 end Tue Nov  3 16:34:44 EST 2026 ===

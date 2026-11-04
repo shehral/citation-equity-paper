@@ -1,4 +1,4 @@
-> Copy of `citation-equity/experiments/PLAN_E3.md`. First in tool commit `571e8fc`, last changed in `248a2ec` (`git log --format=%h -- experiments/PLAN_E3.md`: 248a2ec 571e8fc). Copied at tool HEAD `edb6354`.
+> Copy of `citation-equity/experiments/PLAN_E3.md`. First in tool commit `571e8fc`, last changed in `248a2ec` (`git log --format=%h -- experiments/PLAN_E3.md`: 248a2ec 571e8fc). Copied at tool HEAD `cbbdeea`.
 
 # E3: enough pages for the checks E1 could not judge
 

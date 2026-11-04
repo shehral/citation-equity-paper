@@ -1,0 +1,96 @@
+=== ce-e5-chain: e5-main.qwen3.8-27b.tier2-9L-p1of2 start Tue Nov  3 16:27:52 EST 2026 ===
+=== ce-e1-gen start: Tue Nov  3 16:27:52 EST 2026 on d4052 judge=qwen3.8-27b model=Qwen/Qwen3.8-27B prompts=$CE_ROOT_PARENT/geo/e5/batches/e5-main.qwen3.8-27b.tier2-9L-p1of2.prompts.jsonl out=$CE_ROOT_PARENT/geo/e5/answers/e5-main.qwen3.8-27b.tier2-9L-p1of2.jsonl tp=1 ===
+settings ok
+NVIDIA H200, 143771 MiB
+torch 2.13.0+cu130 NVIDIA H200 (9, 0)
+{
+ "model": "Qwen/Qwen3.8-27B",
+ "prompts": 680,
+ "max_model_len": 32768,
+ "answers_cut_at_max_tokens": 0,
+ "load_seconds": 89.8,
+ "generate_seconds": 660.2,
+ "out": "$CE_ROOT_PARENT/geo/e5/answers/e5-main.qwen3.8-27b.tier2-9L-p1of2.jsonl"
+}
+=== ce-e1-gen done: Tue Nov  3 16:40:33 EST 2026 ===
+=== ce-e5-chain: e5-main.qwen3.8-27b.tier2-9L-p1of2 end Tue Nov  3 16:40:33 EST 2026 ===
+=== ce-e5-chain: e5-main.qwen3.8-27b.tier2-9L-p2of2 start Tue Nov  3 16:40:33 EST 2026 ===
+=== ce-e1-gen start: Tue Nov  3 16:40:33 EST 2026 on d4052 judge=qwen3.8-27b model=Qwen/Qwen3.8-27B prompts=$CE_ROOT_PARENT/geo/e5/batches/e5-main.qwen3.8-27b.tier2-9L-p2of2.prompts.jsonl out=$CE_ROOT_PARENT/geo/e5/answers/e5-main.qwen3.8-27b.tier2-9L-p2of2.jsonl tp=1 ===
+settings ok
+NVIDIA H200, 143771 MiB
+torch 2.13.0+cu130 NVIDIA H200 (9, 0)
+{
+ "model": "Qwen/Qwen3.8-27B",
+ "prompts": 672,
+ "max_model_len": 32768,
+ "answers_cut_at_max_tokens": 0,
+ "load_seconds": 88.4,
+ "generate_seconds": 656.6,
+ "out": "$CE_ROOT_PARENT/geo/e5/answers/e5-main.qwen3.8-27b.tier2-9L-p2of2.jsonl"
+}
+=== ce-e1-gen done: Tue Nov  3 16:53:09 EST 2026 ===
+=== ce-e5-chain: e5-main.qwen3.8-27b.tier2-9L-p2of2 end Tue Nov  3 16:53:09 EST 2026 ===
+=== ce-e5-chain: e5-replication.qwen3.8-27b.tier2-9L-p1of2 start Tue Nov  3 16:53:09 EST 2026 ===
+=== ce-e1-gen start: Tue Nov  3 16:53:09 EST 2026 on d4052 judge=qwen3.8-27b model=Qwen/Qwen3.8-27B prompts=$CE_ROOT_PARENT/geo/e5/batches/e5-replication.qwen3.8-27b.tier2-9L-p1of2.prompts.jsonl out=$CE_ROOT_PARENT/geo/e5/answers/e5-replication.qwen3.8-27b.tier2-9L-p1of2.jsonl tp=1 ===
+settings ok
+NVIDIA H200, 143771 MiB
+torch 2.13.0+cu130 NVIDIA H200 (9, 0)
+{
+ "model": "Qwen/Qwen3.8-27B",
+ "prompts": 216,
+ "max_model_len": 32768,
+ "answers_cut_at_max_tokens": 0,
+ "load_seconds": 88.6,
+ "generate_seconds": 199.3,
+ "out": "$CE_ROOT_PARENT/geo/e5/answers/e5-replication.qwen3.8-27b.tier2-9L-p1of2.jsonl"
+}
+=== ce-e1-gen done: Tue Nov  3 16:58:07 EST 2026 ===
+=== ce-e5-chain: e5-replication.qwen3.8-27b.tier2-9L-p1of2 end Tue Nov  3 16:58:07 EST 2026 ===
+=== ce-e5-chain: e5-replication.qwen3.8-27b.tier2-9L-p2of2 start Tue Nov  3 16:58:07 EST 2026 ===
+=== ce-e1-gen start: Tue Nov  3 16:58:07 EST 2026 on d4052 judge=qwen3.8-27b model=Qwen/Qwen3.8-27B prompts=$CE_ROOT_PARENT/geo/e5/batches/e5-replication.qwen3.8-27b.tier2-9L-p2of2.prompts.jsonl out=$CE_ROOT_PARENT/geo/e5/answers/e5-replication.qwen3.8-27b.tier2-9L-p2of2.jsonl tp=1 ===
+settings ok
+NVIDIA H200, 143771 MiB
+torch 2.13.0+cu130 NVIDIA H200 (9, 0)
+{
+ "model": "Qwen/Qwen3.8-27B",
+ "prompts": 208,
+ "max_model_len": 32768,
+ "answers_cut_at_max_tokens": 0,
+ "load_seconds": 90.3,
+ "generate_seconds": 197.7,
+ "out": "$CE_ROOT_PARENT/geo/e5/answers/e5-replication.qwen3.8-27b.tier2-9L-p2of2.jsonl"
+}
+=== ce-e1-gen done: Tue Nov  3 17:03:05 EST 2026 ===
+=== ce-e5-chain: e5-replication.qwen3.8-27b.tier2-9L-p2of2 end Tue Nov  3 17:03:05 EST 2026 ===
+=== ce-e5-chain: e5-main.qwen3.8-27b.tier2-12K-p1of2 start Tue Nov  3 17:03:05 EST 2026 ===
+=== ce-e1-gen start: Tue Nov  3 17:03:05 EST 2026 on d4052 judge=qwen3.8-27b model=Qwen/Qwen3.8-27B prompts=$CE_ROOT_PARENT/geo/e5/batches/e5-main.qwen3.8-27b.tier2-12K-p1of2.prompts.jsonl out=$CE_ROOT_PARENT/geo/e5/answers/e5-main.qwen3.8-27b.tier2-12K-p1of2.jsonl tp=1 ===
+settings ok
+NVIDIA H200, 143771 MiB
+torch 2.13.0+cu130 NVIDIA H200 (9, 0)
+{
+ "model": "Qwen/Qwen3.8-27B",
+ "prompts": 720,
+ "max_model_len": 32768,
+ "answers_cut_at_max_tokens": 0,
+ "load_seconds": 88.2,
+ "generate_seconds": 655.3,
+ "out": "$CE_ROOT_PARENT/geo/e5/answers/e5-main.qwen3.8-27b.tier2-12K-p1of2.jsonl"
+}
+=== ce-e1-gen done: Tue Nov  3 17:15:44 EST 2026 ===
+=== ce-e5-chain: e5-main.qwen3.8-27b.tier2-12K-p1of2 end Tue Nov  3 17:15:44 EST 2026 ===
+=== ce-e5-chain: e5-main.qwen3.8-27b.tier2-12K-p2of2 start Tue Nov  3 17:15:44 EST 2026 ===
+=== ce-e1-gen start: Tue Nov  3 17:15:44 EST 2026 on d4052 judge=qwen3.8-27b model=Qwen/Qwen3.8-27B prompts=$CE_ROOT_PARENT/geo/e5/batches/e5-main.qwen3.8-27b.tier2-12K-p2of2.prompts.jsonl out=$CE_ROOT_PARENT/geo/e5/answers/e5-main.qwen3.8-27b.tier2-12K-p2of2.jsonl tp=1 ===
+settings ok
+NVIDIA H200, 143771 MiB
+torch 2.13.0+cu130 NVIDIA H200 (9, 0)
+{
+ "model": "Qwen/Qwen3.8-27B",
+ "prompts": 704,
+ "max_model_len": 32768,
+ "answers_cut_at_max_tokens": 0,
+ "load_seconds": 95.8,
+ "generate_seconds": 643.5,
+ "out": "$CE_ROOT_PARENT/geo/e5/answers/e5-main.qwen3.8-27b.tier2-12K-p2of2.jsonl"
+}
+=== ce-e1-gen done: Tue Nov  3 17:28:15 EST 2026 ===
+=== ce-e5-chain: e5-main.qwen3.8-27b.tier2-12K-p2of2 end Tue Nov  3 17:28:15 EST 2026 ===

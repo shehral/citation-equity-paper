@@ -1,13 +1,13 @@
-> Copy of `citation-equity/experiments/e1/freeze/MANIFEST.md`. First in tool commit `7859b07`, last changed in `7859b07` (`git log --format=%h -- experiments/e1/freeze/MANIFEST.md`: 7859b07). Copied at tool HEAD `edb6354`.
+> Copy of `citation-equity/experiments/e1/freeze/MANIFEST.md`. First in tool commit `7859b07`, last changed in `69a8fc0` (`git log --format=%h -- experiments/e1/freeze/MANIFEST.md`: 69a8fc0 7859b07). Copied at tool HEAD `cbbdeea`.
 
 # E1 freeze manifest
 
 Written 2026-10-24 01:33 PDT at code commit `a2322d7` (feat/citation-equity), before any edited page of the main or replication set was generated and before any E1 answer was collected. The pre-registration is `experiments/PREREG_E1.md` (r3 with amendments 1 to 10).
 
-## Sizes (owner decision)
+## Sizes
 
 - Main: 80 queries (target 80, floor 60), replication: 60 queries. Timing query `geo-test-939` held out of both (amendment 8).
-- Private-individual screen: 0 of 80 dropped (controller read the admitted list).
+- Private-individual screen: 0 of 80 dropped (we read the admitted list by hand).
 
 ## Data hashes (files are local and never committed)
 

@@ -1,4 +1,4 @@
-> Copy of `citation-equity/experiments/PLAN_E2.md`. First in tool commit `cf2f9a1`, last changed in `d90fc84` (`git log --format=%h -- experiments/PLAN_E2.md`: d90fc84 b257365 cf2f9a1). Copied at tool HEAD `edb6354`.
+> Copy of `citation-equity/experiments/PLAN_E2.md`. First in tool commit `cf2f9a1`, last changed in `d90fc84` (`git log --format=%h -- experiments/PLAN_E2.md`: d90fc84 b257365 cf2f9a1). Copied at tool HEAD `cbbdeea`.
 
 # E2: why does the question-as-heading edit help?
 

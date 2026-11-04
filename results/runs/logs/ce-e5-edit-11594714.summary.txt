@@ -1,0 +1,48 @@
+=== ce-e1-edit start: Tue Nov  3 15:05:25 EST 2026 on d4052 model=google/gemma-4-31B-it tp=1 sets=--set main --set e3 --set e3-four extra=--arms 12,12K --no-all --edit-questions $CE_ROOT_PARENT/geo/data/e5/edit_questions.jsonl --q-l-from $CE_ROOT_PARENT/geo/data/e5/edit_texts.jsonl --q-l-out $CE_ROOT_PARENT/geo/data/e5/q_L.jsonl ===
+node v22.11.0 at node
+NVIDIA H200, 143771 MiB
+torch 2.13.0+cu130 NVIDIA H200 (9, 0)
+{
+ "backend": "vllm",
+ "model": "google/gemma-4-31B-it",
+ "seconds": 349.4,
+ "prompts": 984,
+ "per_arm": {
+  "original": {
+   "versions": 260,
+   "valid": 260,
+   "not_applicable": 0,
+   "attempts_2": 0
+  },
+  "12": {
+   "versions": 144,
+   "valid": 117,
+   "not_applicable": 0,
+   "attempts_2": 32
+  },
+  "12K": {
+   "versions": 132,
+   "valid": 109,
+   "not_applicable": 0,
+   "attempts_2": 37
+  },
+  "P12": {
+   "versions": 117,
+   "valid": 74,
+   "not_applicable": 0,
+   "attempts_2": 46
+  },
+  "P12K": {
+   "versions": 109,
+   "valid": 69,
+   "not_applicable": 0,
+   "attempts_2": 47
+  }
+ },
+ "q_L": {
+  "rows": 320,
+  "ok": 320,
+  "out": "$CE_ROOT_PARENT/geo/data/e5/q_L.jsonl"
+ }
+}
+=== ce-e1-edit done: Tue Nov  3 15:19:59 EST 2026 ===
