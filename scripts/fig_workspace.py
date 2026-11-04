@@ -1,14 +1,16 @@
-"""Figure 2: the draft view. The author applies one fix at a time, and every fix shows how strong its evidence is.
+"""Figure 2: the draft view now and before. The question-first draft view, with the old build's score card as an inset.
 
 Two modes, chosen by what exists in data/:
-  * data/screens/draft_view.png present (captured by scripts/capture_screens.mjs from the deployed build) (now):
-    the screenshot at its own aspect ratio with numbered callouts at the anchors measured in the same capture
-    (data/fig2_callouts.json `xy`, fractions from the image's top-left);
-  * otherwise: a marked PLACEHOLDER frame, a wireframe of the planned capture (dashboard state 3, Draft
-    (working), in the redesign mockup) with the numbered callouts where they will sit, and the callout list.
-    Nothing in the wireframe is data; it shows layout only.
+  * data/screens/draft_view.png present (captured by scripts/capture_screens.mjs, Task 16: the espresso example after
+    the two typed edits, "Questions covered: 2 of 4") (now): the screenshot at its own aspect ratio with numbered
+    callouts at the anchors measured in the same capture (data/fig2_callouts.json `xy`, fractions from the image's
+    top-left), and, as the "before", the score card of the pre-redesign capture (data/screens/draft_view_before.png,
+    a byte copy of the old draft_view.png, score ring 37; its callouts in data/fig2_callouts_before.json) set as an
+    inset over the lower left of the draft body, where no callout sits;
+  * otherwise: a marked PLACEHOLDER frame, a wireframe of the planned capture with the numbered callouts where they
+    will sit, and the callout list. Nothing in the wireframe is data; it shows layout only.
 
-Input: data/fig2_callouts.json (and the screenshot, when it exists).
+Input: data/fig2_callouts.json and the two screenshots.
 
 Usage: .venv/bin/python -I -B scripts/fig_workspace.py [--out figures] [--png <dir>]
 """
@@ -24,6 +26,13 @@ import figstyle as fs  # noqa: E402
 from matplotlib.patches import FancyBboxPatch  # noqa: E402
 
 W_IN, H_IN = fs.COLUMN_IN, 2.75
+BEFORE = "data/screens/draft_view_before.png"
+# The old score card in BEFORE, in image pixels (2500 x 1800 capture): the card ("37", "AI-ready score", "A writing
+# checklist, not a forecast. Why?") and the "0 of 29 handled" line under it. Callout 1 of fig2_callouts_before.json
+# (xy 0.6832, 0.1578, i.e. pixel 1708, 284) marks the card's left edge.
+BEFORE_CROP = (1708, 2484, 160, 540)  # x0, x1, y0, y1
+INSET = (0.025, 0.37, 0.055)  # left edge, width (fractions of the image width), bottom margin (fraction of its height)
+TEXT = fs.FS["small"] - 0.6   # 6.2 pt: the callout list and the inset label (STYLE.md section 6; review S5)
 N, S, C = fs.NEUTRAL, fs.SURFACE, fs.CONCEPT
 OWN = N["owner"]
 
@@ -78,6 +87,21 @@ def wireframe(ax):
     return {1: (0.62, 0.86), 2: (0.62, 0.64), 3: (0.97, 0.415), 4: (0.97, 0.26), 5: (0.73, 0.952)}
 
 
+def inset_before(ax, img_w_in, img_h_in):
+    """The old build's score card, small, over the lower left of the draft body, labelled as the before."""
+    x0p, x1p, y0p, y1p = BEFORE_CROP
+    crop = fs.plt.imread(os.path.join(figdata.PAPER, BEFORE))[y0p:y1p, x0p:x1p]
+    left, width, bottom = INSET
+    height = width * img_w_in * (crop.shape[0] / crop.shape[1]) / img_h_in
+    pad_x, pad_top = 0.012, 0.075
+    box(ax, left - pad_x, bottom - pad_x * img_w_in / img_h_in, width + 2 * pad_x,
+        height + pad_top + pad_x * img_w_in / img_h_in, "white", N["ink_soft"], lw=0.7, r=0.01, z=6)
+    ax.imshow(crop, extent=(left, left + width, bottom, bottom + height), aspect="auto", zorder=7,
+              interpolation="lanczos")
+    ax.text(left, bottom + height + pad_top / 2, "Before: the old build", ha="left", va="center",
+            fontsize=TEXT, color=N["ink"], fontweight="semibold", zorder=8)
+
+
 def main():
     args = fs.cli(__doc__)
     fs.apply()
@@ -93,8 +117,8 @@ def main():
     items = []
     for c in co["callouts"]:
         text = c["what"] + (f": \u201c{c['ui_string']}\u201d" if c.get("ui_string") else "")
-        items.append((c["n"], textwrap.wrap(text, 92)))
-    line_h, gap = 0.083, 0.035
+        items.append((c["n"], textwrap.wrap(text, 74)))
+    line_h, gap = 0.092, 0.03
     list_h = sum(len(lines) * line_h + gap for _, lines in items) + 0.05
     note_h = 0.0 if captured else 0.1
     fig_h = pad + img_h + 0.06 + list_h + note_h
@@ -109,7 +133,11 @@ def main():
         ax.add_patch(FancyBboxPatch((0, 0), 1, 1, boxstyle="round,pad=0,rounding_size=0.006", fc="none",
                                     ec=N["rule"], lw=0.6, zorder=2))
         anchors = {c["n"]: (c["xy"][0], 1 - c["xy"][1]) for c in co["callouts"]}
-        inputs.append(shot)
+        left, width, _ = INSET
+        if any(left - 0.02 <= x <= left + width + 0.02 and y <= 0.5 for x, y in anchors.values()):
+            raise SystemExit("fig_workspace: a callout falls under the before inset; move INSET")
+        inset_before(ax, img_w, img_h)
+        inputs += [shot, os.path.join(figdata.PAPER, BEFORE)]
     else:
         ax.set_xlim(-0.01, 1.01)
         ax.set_ylim(-0.01, 1.01)
@@ -121,12 +149,12 @@ def main():
         callout(ax, x, y, n)
 
     # callout list under the image
-    y = fig_h - pad - img_h - 0.09
+    y = fig_h - pad - img_h - 0.10
     for n, lines in items:
-        fig.text(0.11 / W_IN, y / fig_h, str(n), ha="center", va="top", fontsize=fs.FS["small"] - 1.2,
+        fig.text(0.11 / W_IN, y / fig_h, str(n), ha="center", va="top", fontsize=TEXT - 0.4,
                  color="white", fontweight="bold", bbox=dict(boxstyle="circle,pad=0.18", fc=C["after"], ec="none"))
         fig.text(0.24 / W_IN, (y + 0.012) / fig_h, "\n".join(lines), ha="left", va="top",
-                 fontsize=fs.FS["small"] - 1.3, color=N["ink"], linespacing=1.1)
+                 fontsize=TEXT, color=N["ink"], linespacing=1.1)
         y -= len(lines) * line_h + gap
     if not captured:
         fig.text(0.035, 0.004, "Wireframe of the redesign mockup, state 3; wording to be checked on the deployed build.",

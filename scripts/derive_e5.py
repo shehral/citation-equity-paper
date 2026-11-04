@@ -118,6 +118,14 @@ def main():
         "amendment_3_every_label_unchanged": ana["amendment_3_sensitivity"]["every_label_unchanged"],
         "gate_without_near_duplicates": {k: ana["added_analyses"]["gate_without_near_duplicates"][k]
                                          for k in ("n", "mean_d", "ci95", "p", "label")},
+        # The gate's new-query estimate reweighted to E1's key-term-count mix (PLAN_E5 r2: the new queries are longer;
+        # a planned secondary, reported without a verdict).
+        "gate_reweighted_new": {k: planned["gate"]["reweighted_new"][k]
+                                for k in ("n", "estimate", "ci95", "weights", "unweighted")},
+        # How often the current tool counts the reader's question covered on a page with the tested question section
+        # (arm 9): RESULTS_E5.md "Edits that passed validation", column "Tool: covers q".
+        "tool_covers_q_arm9": {s: ana["validity"][s]["all"]["9"]["tool_flags"]["tool_covers_q"]
+                               for s in ("main", "replication")},
     }
     path = os.path.join(PAPER, "data", "e5_results.json")
     with open(path, "w") as f:

@@ -38,8 +38,8 @@ HARM = fs.shade(C["bar"], 0.12)         # coral: harm
 SURVEY_POS = C["moderate"]
 BG = "#B9BDC4"
 
-W_IN, H_IN = fs.COLUMN_IN, 3.08
-LABEL_IN = 1.12       # row-label column (from the figure's left edge)
+W_IN, H_IN = fs.COLUMN_IN, 3.13  # 3.13 (was 3.08): the 58-degree column names fit (review S1)
+LABEL_IN = 1.15       # row-label column (from the figure's left edge); 1.15 clears the group bracket (review S1)
 COL_IN = 0.144        # one study column
 CHIP_IN = 0.368       # one grade-chip column
 GAP_IN = 0.055        # matrix to chips

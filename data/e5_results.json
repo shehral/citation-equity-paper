@@ -1243,5 +1243,32 @@
     ],
     "p": 9.99990000099999e-06,
     "label": "reported without a verdict"
+  },
+  "gate_reweighted_new": {
+    "n": 115,
+    "estimate": 0.03286749146124146,
+    "ci95": [
+      0.019289157638086904,
+      0.04664654385914892
+    ],
+    "weights": {
+      "2 or fewer": 0.125,
+      "3": 0.2875,
+      "4": 0.2875,
+      "5 or more": 0.3
+    },
+    "unweighted": 0.0390333850931677
+  },
+  "tool_covers_q_arm9": {
+    "main": {
+      "true": 46,
+      "of": 169,
+      "share": 0.27218934911242604
+    },
+    "replication": {
+      "true": 24,
+      "of": 52,
+      "share": 0.46153846153846156
+    }
   }
 }
