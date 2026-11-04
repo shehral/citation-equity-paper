@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Recompute the paper's E1, E2 and E3 headline contrasts from the cells alone and check them.
+"""Recompute the paper's E1, E2, E3 and E5 headline contrasts from the cells alone and check them.
 
 What it does
   (a) Recomputes every headline contrast from results/*/cells.jsonl (or cells.jsonl.gz) and nothing
@@ -9,8 +9,8 @@ What it does
       query_differences (CE experiments/e1/analyze.py), with one assumption: a cell exists only for
       an applicable, valid version (true of these files; the analysis JSONs agree to 1e-9 below).
   (b) Checks each recomputed (d, n) against the analysis JSON in results/ (e1/analysis.json,
-      e2/analysis_e2.json, e3/pooled/analysis_e3.json) to within 1e-9, and against the paper's
-      data/e1_results.json, which the figures and prose are built from.
+      e2/analysis_e2.json, e3/pooled/analysis_e3.json, e5/analysis_e5.json) to within 1e-9, and against
+      the paper's data/e1_results.json and data/e5_results.json, which the figures and prose are built from.
   (c) Reads the rendered prose of sections/*.tex (comments, \\owner marks and \\Description text
       removed) and checks every printed number of these contrasts: d and n against the recomputed
       values (printed to 3 decimals), intervals, Holm p and labels against the analysis JSONs (which
@@ -25,9 +25,12 @@ How the cells are pooled
   E3 pooled sets main, e3 and e3-four only (never the C-SEO replication set): E1's main-set cells,
             minus each (query, arm) that E3 edited again, plus results/e3/retry cells (the extra
             attempt on E1's failed pairs) and results/e3/new cells (180 new queries).
+  E5        results/e5/cells.jsonl only (E5 answered every version again, the unedited page and arm 9
+            included): "new" = sets e3 and e3-four (the 180 new queries), "pooled" = main, e3 and
+            e3-four (the 260-query main set), "replication" = the C-SEO Bench set.
 
 Usage (from the repo root)
-  .venv/bin/python -I results/verify_numbers.py            # table; exit 1 on any mismatch
+  .venv/bin/python -I results/verify_numbers.py            # table; exit 1 on any mismatch (E1 to E3 and E5)
   .venv/bin/python -I results/verify_numbers.py --claims results/CLAIMS.md
                                                            # also rewrite the claims list
 Standard library only; numpy is used for the means when it is installed (results agree either way).
@@ -110,6 +113,14 @@ def load_pools() -> dict[str, list[dict]]:
     return pools
 
 
+E5_SCOPES = {"new": ("e3", "e3-four"), "pooled": ("main", "e3", "e3-four"), "replication": ("replication",)}
+
+
+def load_e5() -> dict[str, list[dict]]:
+    e5 = read_cells("e5/cells.jsonl")
+    return {scope: [c for c in e5 if c["set"] in sets] for scope, sets in E5_SCOPES.items()}
+
+
 def contrast(cells: list[dict], arm: str, ref: str, judges) -> dict:
     """E1's d_q and its mean over queries, from cells only."""
     ix = {(c["query_id"], c["arm"], c["judge"]): c for c in cells}
@@ -162,6 +173,61 @@ CONTRASTS = [
     ("E3.5-P5", "E3 pooled", "e3", "5", "P5", E1_JUDGES, "statistics (too few)", "insufficient n"),
     ("E3.10-P10", "E3 pooled", "e3", "10", "P10", E1_JUDGES, "comparisons (too few)", "insufficient n"),
 ]
+
+
+CONTRASTS.append(("E1.main.1-original", "E1 main", "e1:main", "1", "original", E1_JUDGES, "standalone paragraphs",
+                  "descriptive"))
+
+# E5: id, scope, arm, ref, what the paper calls it, the label the paper gives (prefix of the analysis label;
+# None = no label stated), where the row sits in results/e5/analysis_e5.json, its key in data/e5_results.json.
+E5_CONTRASTS = [
+    ("E5.gate", "new", "9", "original", "exact question, new queries", "helps", ("planned", "gate"),
+     "main:9-original:new queries"),
+    ("E5.step5", "pooled", "9", "original", "exact question, pooled with E1's queries", "helps", ("planned", "step5"),
+     "main:9-original:all main queries"),
+    ("E5.12-P12.new", "new", "12", "P12", "missing words up top, new queries", "reported without a verdict",
+     ("reported", "new queries"), "main:12-P12:new queries"),
+    ("E5.9K-original", "pooled", "9K", "original", "keyword's two words", "helps", ("family", None),
+     "main:9K-original:pooled"),
+    ("E5.9K-9P", "pooled", "9K", "9P", "keyword vs a section without the words", "helps", ("family", None),
+     "main:9K-9P:pooled"),
+    ("E5.9L-original", "pooled", "9L", "original", "local model's question", "no effect larger than", ("family", None),
+     "main:9L-original:pooled"),
+    ("E5.9L-9P", "pooled", "9L", "9P", "local model's question vs no-words section", "no effect larger than",
+     ("family", None), "main:9L-9P:pooled"),
+    ("E5.9K-9", "pooled", "9K", "9", "keyword minus exact question (retention)", None, ("retention", "9K"),
+     "main:9K-9:pooled"),
+    ("E5.12K-P12K", "pooled", "12K", "P12K", "keyword's missing words vs placebo", "no effect larger than",
+     ("planned", "arm12"), "main:12K-P12K:pooled"),
+    ("E5.9-9A", "pooled", "9", "9A", "exact question vs all its key words", "reported without a verdict",
+     ("reported", "pooled"), "main:9-9A:pooled"),
+    ("E5.rep.9K-original", "replication", "9K", "original", "keyword (replication)", "no effect larger than",
+     ("rep_family", None), "replication:9K-original:pooled"),
+    ("E5.rep.9K-9P", "replication", "9K", "9P", "keyword vs no-words section (replication)", "helps",
+     ("rep_family", None), "replication:9K-9P:pooled"),
+    ("E5.rep.9L-original", "replication", "9L", "original", "local model (replication)", "no effect larger than",
+     ("rep_family", None), "replication:9L-original:pooled"),
+    ("E5.rep.9L-9P", "replication", "9L", "9P", "local model vs no-words section (replication)", "helps",
+     ("rep_family", None), "replication:9L-9P:pooled"),
+]
+
+
+def e5_analysis_row(arm: str, ref: str, where: tuple, A5: dict) -> dict | None:
+    kind, key = where
+    m = A5["main"]
+    if kind == "planned":
+        return m["planned"][key]
+    if kind == "family":
+        return _find(m["planned"]["family"], arm, ref)
+    if kind == "retention":
+        return m["planned"]["retention"][key]
+    if kind == "rep_family":
+        return _find(A5["replication"]["planned"]["family"], arm, ref)
+    if kind == "reported":
+        for r in m["reported"]:
+            if r["arm"] == arm and r["ref"] == ref and r.get("scope") == key:
+                return r
+    return None
 
 
 def _find(rows, arm, ref):
@@ -318,63 +384,106 @@ def gn(name):
 
 
 # Each anchor: (file, regex over the rendered line, {group: (contrast id or count key, field)}).
-# field: d / n (recomputed), lo / hi / holm / label (analysis JSON), approx (|d - value| <= 0.01).
+# field: d / n (recomputed), lo / hi / holm / label (analysis JSON), approx (|d - value| <= 0.01),
+# rd / rlo / rhi (E5 retention: the exact question minus the guess, d and its 95% CI from the analysis readings),
+# share (E5: the share of the gain the keyword keeps on the new queries, printed in words).
+# main_www.tex anchors read figure captions only.
 ANCHORS = [
     ("sections/evidence.tex",
-     r"a section headed by the question \(" + g("d") + r", 95\\% CI \$\[(?P<lo>[+-][\d.]+), (?P<hi>[+-][\d.]+)\]\$,"
+     r"a section under the title \(" + g("d") + r", 95\\% CI \$\[(?P<lo>[+-][\d.]+), (?P<hi>[+-][\d.]+)\]\$,"
      r" Holm \$p = (?P<holm>[\d.]+)\$; replication " + g("rep") + r"\)",
      {"d": ("E1.main.9-original", "d"), "lo": ("E1.main.9-original", "lo"), "hi": ("E1.main.9-original", "hi"),
       "holm": ("E1.main.9-original", "holm"), "rep": ("E1.rep.9-original", "d")}),
-    ("sections/evidence.tex", r"missing words in title and lead \(" + g("d") + r"\)",
+    ("sections/evidence.tex", r"worked into the title and opening \(" + g("d") + r" against its placebo\)",
      {"d": ("E1.main.12-P12", "d")}),
     ("sections/evidence.tex", r"set as plain \(" + g("w") + r"; replication " + g("wr") + r"\)",
      {"w": ("E2a.main.9-9W", "d"), "wr": ("E2a.rep.9-9W", "d")}),
-    ("sections/evidence.tex", r"scored higher than the untouched page \(" + g("m") + r"; " + g("r") + r"\)",
+    ("sections/evidence.tex", r"beat the untouched page \(" + g("m") + r"; " + g("r") + r"\)",
      {"m": ("E2a.main.9W-original", "d"), "r": ("E2a.rep.9W-original", "d")}),
-    ("sections/evidence.tex",
-     r"reader's-words gain kept its sign \(" + g("d12") + ", " + gn("n12") + r"\), as did all fixes together \("
-     + g("dall") + ", " + gn("nall") + r"\)",
-     {"d12": ("E2b.12-P12", "d"), "n12": ("E2b.12-P12", "n"), "dall": ("E2b.ALL-P_ALL", "d"),
-      "nall": ("E2b.ALL-P_ALL", "n")}),
-    ("sections/evidence.tex", r"added (?P<new>\d+) queries for the checks with too few pages: over (?P<pool>\d+),",
+    ("sections/evidence.tex", r"reader's-words gain kept its sign \(" + g("d12") + ", " + gn("n12") + r"\)",
+     {"d12": ("E2b.12-P12", "d"), "n12": ("E2b.12-P12", "n")}),
+    ("sections/evidence.tex", r"A follow-up added (?P<new>\d+) queries for the checks with too few pages: over (?P<pool>\d+),",
      {"new": ("q:e3.new", "n"), "pool": ("q:e3.pooled", "n")}),
-    ("sections/evidence.tex", r"real pages \((?P<q>\d+) informational GEO-bench queries",
-     {"q": ("q:e1.main", "n")}),
-    ("sections/evidence.tex", r"replicated on (?P<q>\d+) from C-SEO Bench~\\cite\{puerto2025cseo\}",
-     {"q": ("q:e1.replication", "n")}),
-    ("sections/conclusion.tex", r"the one-change tests (?P<q>\d+) English queries",
-     {"q": ("q:all", "n")}),
-    ("sections/abstract.tex", r"clearly raised citation, by about (?P<a>0\.\d+) on a 0-to-1 scale",
+    ("sections/evidence.tex", r"as did lists over (?P<q>\d+);", {"q": ("q:e1.main", "n")}),
+    ("sections/intro.tex", r"\((?P<q>\d+) GEO-bench queries, with (?P<r>\d+) from C-SEO Bench",
+     {"q": ("q:e1.main", "n"), "r": ("q:e1.replication", "n")}),
+    ("sections/conclusion.tex", r"The tests cover (?P<q>\d+) English queries", {"q": ("q:all", "n")}),
+    ("sections/abstract.tex", r"clearly raised citation: the reader's own words near the top of the page, by about (?P<a>0\.\d+) on a 0-to-1",
      {"a": ("E1.main.9-original|E1.main.12-P12|E2a.main.9W-original", "approx")}),
-    ("sections/intro.tex", r"clearly helped, by about (?P<a>0\.\d+) on a 0-to-1 citation score",
-     {"a": ("E1.main.9-original|E1.main.12-P12|E2a.main.9W-original", "approx")}),
+    ("sections/conclusion.tex", r"The effects are small, about (?P<a>0\.\d+) on a 0-to-1 score",
+     {"a": ("E1.main.9-original|E1.main.12-P12|E2a.main.9W-original|E5.gate", "approx")}),
+    # E5
+    ("sections/abstract.tex", r"On (?P<q>\d+) queries the first test never used, the gain held \(" + g("d") + r"\)",
+     {"q": ("q:e5.new", "n"), "d": ("E5.gate", "d")}),
+    ("sections/intro.tex", r"the gain held on (?P<q>\d+) queries the first test never used", {"q": ("q:e5.new", "n")}),
+    ("sections/evidence.tex", r"reran the question section on those (?P<q>\d+) new queries", {"q": ("q:e5.new", "n")}),
+    ("sections/evidence.tex",
+     r"helped on the new queries \(" + g("d") + r", 95\\% CI \$\[(?P<lo>[+-][\d.]+), (?P<hi>[+-][\d.]+)\]\$, " + gn("n")
+     + r"; " + g("s5") + r" pooled with the first test's queries, " + gn("n5") + r"\)",
+     {"d": ("E5.gate", "d"), "lo": ("E5.gate", "lo"), "hi": ("E5.gate", "hi"), "n": ("E5.gate", "n"),
+      "s5": ("E5.step5", "d"), "n5": ("E5.step5", "n")}),
+    ("sections/evidence.tex", r"held there too \(" + g("d") + r" against their placebo, " + gn("n") + r", shown without a verdict\)",
+     {"d": ("E5.12-P12.new", "d"), "n": ("E5.12-P12.new", "n")}),
+    ("sections/evidence.tex",
+     r"against the untouched page \(" + g("a") + r"\) and against a section without the reader's words \(" + g("b")
+     + r"; Holm \$p = (?P<holm>[\d.]+)\$ for both\)",
+     {"a": ("E5.9K-original", "d"), "b": ("E5.9K-9P", "d"), "holm": ("E5.9K-original|E5.9K-9P", "holm")}),
+    ("sections/evidence.tex",
+     r"the exact question beat it by " + g("rd") + r" \$\[(?P<rlo>[+-][\d.]+), (?P<rhi>[+-][\d.]+)\]\$",
+     {"rd": ("E5.9K-9", "rd"), "rlo": ("E5.9K-9", "rlo"), "rhi": ("E5.9K-9", "rhi")}),
+    ("sections/evidence.tex", r"on the new queries it kept about (?P<share>two thirds) of it",
+     {"share": ("E5.9K-9", "share")}),
+    ("sections/evidence.tex", r"all its key words but not the string by " + g("x"), {"x": ("E5.9-9A", "d")}),
+    ("sections/evidence.tex", r"wrote from the keyword showed no effect larger than 0\.03 \(" + g("l") + r"\)",
+     {"l": ("E5.9L-original", "d")}),
+    ("sections/evidence.tex", r"keyword's missing words worked into the top \(" + g("k") + r" against their placebo\)",
+     {"k": ("E5.12K-P12K", "d")}),
+    ("sections/conclusion.tex", r"the (?P<q>\d+) new queries do not have this bias", {"q": ("q:e5.new", "n")}),
+    ("main_www.tex", r"on (?P<q>\d+) GEO-bench queries \((?P<p>\d+) for checks with too few pages\)",
+     {"q": ("q:e1.main", "n"), "p": ("q:e3.pooled", "n")}),
+    ("main_www.tex", r"The same edits on (?P<q>\d+) new queries", {"q": ("q:e5.new", "n")}),
 ]
 
 # Label claims the prose makes in words (checked against the analysis JSON labels).
 LABEL_ANCHORS = [
-    ("sections/abstract.tex", r"question headings, cited sources, direct answer first and lists showed no effect larger than 0\.03",
-     ["E3.2-P2", "E3.7-P7", "E3.8-P8", "E1.main.3-P3"]),
-    ("sections/abstract.tex", r"attributed quotes were inconclusive", ["E3.6-P6"]),
-    ("sections/abstract.tex", r"kept its sign with another editor", ["E2b.12-P12", "E2b.ALL-P_ALL"]),
-    ("sections/intro.tex", r"lists showed no effect larger than 0\.03 and attributed quotes were inconclusive",
-     ["E3.2-P2", "E3.7-P7", "E3.8-P8", "E1.main.3-P3", "E3.6-P6"]),
-    ("sections/evidence.tex", r"reader's-words gain kept its sign .* as did all fixes together", ["E2b.12-P12", "E2b.ALL-P_ALL"]),
+    ("sections/abstract.tex", r"question headings, lists, cited sources and leading with a direct answer showed no effect larger than 0\.03",
+     ["E3.2-P2", "E1.main.3-P3", "E3.7-P7", "E3.8-P8"]),
+    ("sections/abstract.tex", r"The words mattered, not the heading form", ["E2a.main.9-9W", "E2a.rep.9-9W"]),
+    ("sections/abstract.tex", r"a keyword's two words kept part of it, and a question a local model wrote from that keyword did not clearly help",
+     ["E5.9K-original", "E5.9K-9P", "E5.9L-original"]),
+    ("sections/intro.tex", r"a keyword's two words kept part of it, and a question a local model wrote from the keyword did not clearly help",
+     ["E5.9K-original", "E5.9K-9P", "E5.9L-original"]),
+    ("sections/intro.tex", r"Only the reader's own words near the top of the page clearly raised citation",
+     ["E1.main.9-original", "E1.main.12-P12"]),
     ("sections/evidence.tex", r"only the two that add the reader's own words near the top clearly raised the score",
      ["E1.main.9-original", "E1.main.12-P12"]),
-    ("sections/evidence.tex", r"question heading did no better than the same text set as plain",
+    ("sections/evidence.tex", r"the question as a heading did no better than the same text set as plain",
      ["E2a.main.9-9W", "E2a.rep.9-9W"]),
-    ("sections/evidence.tex", r"showed no effect larger than 0\.03 and attributed quotes were inconclusive; tables, statistics and comparisons still had too few",
-     ["E3.2-P2", "E3.7-P7", "E3.8-P8", "E3.6-P6", "E3.4-original", "E3.5-P5", "E3.10-P10"]),
-    ("sections/evidence.tex", r"the heading form, sources and answer-first showed no effect larger than 0\.03; quotes were inconclusive",
-     ["E2a.main.9-9W", "E2a.rep.9-9W", "E3.7-P7", "E3.8-P8", "E3.6-P6"]),
+    ("sections/evidence.tex", r"reader's-words gain kept its sign", ["E2b.12-P12"]),
+    ("sections/evidence.tex", r"showed no effect larger than 0\.03, as did lists over 80; attributed quotes were inconclusive, and tables, statistics and comparisons still had too few pages",
+     ["E3.2-P2", "E3.7-P7", "E3.8-P8", "E1.main.3-P3", "E3.6-P6", "E3.4-original", "E3.5-P5", "E3.10-P10"]),
+    ("sections/evidence.tex", r"The exact question helped on the new queries", ["E5.gate", "E5.step5"]),
+    ("sections/evidence.tex", r"shown without a verdict", ["E5.12-P12.new"]),
+    ("sections/evidence.tex", r"The keyword helped against the untouched page", ["E5.9K-original", "E5.9K-9P"]),
+    ("sections/evidence.tex", r"the keyword loses the gain", ["E5.9K-9"]),
+    ("sections/evidence.tex", r"A question a local model wrote from the keyword showed no effect larger than 0\.03", ["E5.9L-original"]),
+    ("sections/evidence.tex", r"and neither did the keyword's missing words", ["E5.12K-P12K"]),
+    ("sections/system.tex", r"The two question checks read Helped for the reader's own questions; question headings, lists, cited sources and answer first read No effect; the other five read Unclear",
+     ["E1.main.9-original", "E1.main.12-P12", "E3.2-P2", "E1.main.3-P3", "E3.7-P7", "E3.8-P8", "E3.6-P6",
+      "E3.4-original", "E3.5-P5", "E3.10-P10", "E1.main.1-original"]),
+    ("sections/system.tex", r"found clear gains for only two checks", ["E1.main.9-original", "E1.main.12-P12"]),
+    ("main_www.tex", r"only the reader's own words near the top moved citation; the gain held on new queries, and a keyword kept part of it",
+     ["E1.main.9-original", "E1.main.12-P12", "E5.gate", "E5.9K-original"]),
 ]
 
 # Analysis settings the prose prints (the 0.03 equivalence margin, the 30-query minimum), checked in every
 # analysis JSON: (regex with group v, settings key).
 SETTING_ANCHORS = [
     (r"no effect larger than (?P<v>0\.\d+)", "delta"),
+    (r"inside \$\\pm (?P<v>0\.\d+)\$", "delta"),
     (r"band: \$\\pm (?P<v>0\.\d+)\$", "delta"),
     (r"filled: (?P<v>\d+)\+ pages", "min_n"),
+    (r"A result needs (?P<v>\d+) or more queries", "min_n"),
 ]
 
 
@@ -443,8 +552,9 @@ def write_claims(path: Path, verified: dict[tuple[str, int], list[str]]) -> int:
         "",
         "**check**: \"verified by verify_numbers.py\" lists the numbers on that line that the script recomputes from",
         "`results/*/cells.jsonl` (contrast d and n, query counts) or checks against the analysis JSONs (95%",
-        "intervals, Holm p) and data/e1_results.json; \"labels\" marks a verdict stated in words (no effect larger",
-        "than 0.03, inconclusive, kept its sign) that the script checks against the analysis labels. Unmarked",
+        "intervals, Holm p, E5's retention reading and share kept) and data/e1_results.json or data/e5_results.json;",
+        "\"labels\" marks a verdict stated in words (no effect larger than 0.03, inconclusive, kept its sign, helped,",
+        "loses the gain) that the script checks against the analysis labels. Unmarked",
         "numbers (the sensitivity test, the system, the literature) are checked by their src only.",
         "",
     ]
@@ -504,11 +614,14 @@ def main(argv=None) -> int:
     A = {"e1": load_json("results/e1/analysis.json"), "e2": load_json("results/e2/analysis_e2.json"),
          "e3": load_json("results/e3/pooled/analysis_e3.json")}
     P = load_json("data/e1_results.json")
+    A5 = load_json("results/e5/analysis_e5.json")
+    P5 = load_json("data/e5_results.json")
+    pools5 = load_e5()
     problems: list[str] = []
 
     # (a) recompute, (b) compare with the analysis JSONs and data/e1_results.json
     R = {}
-    print("verify_numbers: E1, E2 and E3 headline contrasts recomputed from results/*/cells.jsonl")
+    print("verify_numbers: E1, E2, E3 and E5 headline contrasts recomputed from results/*/cells.jsonl")
     print("d = mean over queries of the per-query mean over two judges of (arm score - reference score)")
     print("E3 pool: " + ", ".join(f"{k} {v}" for k, v in parts.items()))
     if parts["e1 cells displaced by a retry"]:
@@ -539,6 +652,44 @@ def main(argv=None) -> int:
         print(f"{cid:<22} {what:<40} {r['n']:>3} {r['d'] if r['d'] is not None else float('nan'):>+11.6f} "
               f"{'match' if ok_a else 'DIFFERS':>9} {'match' if ok_p else 'DIFFERS':>10}  {label}")
 
+    # E5: recompute from results/e5/cells.jsonl; compare with results/e5/analysis_e5.json and data/e5_results.json
+    print()
+    print("E5 (results/e5/cells.jsonl; scopes: new = sets e3 and e3-four, pooled = main, e3, e3-four)")
+    hdr5 = hdr.replace("e1_results", "e5_results")
+    print(hdr5)
+    print("-" * len(hdr5))
+    readings = A5["main"]["readings"]
+    for cid, scope, arm, ref, what, paper_label, where, pkey in E5_CONTRASTS:
+        r = contrast(pools5[scope], arm, ref, E1_JUDGES)
+        a = e5_analysis_row(arm, ref, where, A5)
+        p = P5["contrasts"].get(pkey)
+        ok_a = a is not None and a["n"] == r["n"] and close(a["mean_d"], r["d"])
+        label = a.get("label") if a else None
+        if where[0] == "retention":  # the planned reading lives in readings.retention, with d(guess - exact)
+            ret = readings["retention"][where[1]]
+            label = ret["reading"]
+            if label != "loses the gain":
+                problems.append(f"{cid}: the paper says the keyword loses the gain; the analysis reading is '{label}'")
+            if not (ret["n"] == r["n"] and close(ret["d_G_minus_9"], r["d"])):
+                problems.append(f"{cid}: readings.retention differs from the recomputed d")
+        ok_p = p is not None and p["n"] == r["n"] and close(p["d"], r["d"])
+        if not ok_a:
+            problems.append(f"{cid}: cells give n={r['n']} d={r['d']!r}, results/e5/analysis_e5.json {where} gives "
+                            f"{None if a is None else (a.get('n'), a.get('mean_d', a.get('d_G_minus_9')))}")
+        if not ok_p:
+            problems.append(f"{cid}: cells give n={r['n']} d={r['d']!r}, data/e5_results.json {pkey} gives "
+                            f"{None if p is None else (p['n'], p['d'])}")
+        if paper_label and not (label or "").startswith(paper_label):
+            problems.append(f"{cid}: the paper calls it '{paper_label}', the analysis labels it '{label}'")
+        if p is not None and where[0] != "retention" and p.get("label") != label:
+            problems.append(f"{cid}: label '{p.get('label')}' in data/e5_results.json, '{label}' in the analysis")
+        R[cid] = {"n": r["n"], "d": r["d"], "a": a, "label": label}
+        print(f"{cid:<22} {what:<40} {r['n']:>3} {r['d'] if r['d'] is not None else float('nan'):>+11.6f} "
+              f"{'match' if ok_a else 'DIFFERS':>9} {'match' if ok_p else 'DIFFERS':>10}  {label}")
+    share = A5["main"]["share_kept_new"]["9K"]
+    if P5["share_kept_new"]["9K"]["share"] != share["share"]:
+        problems.append("E5 share kept (9K, new queries): data/e5_results.json differs from the analysis")
+
     # E2b's "kept E1's sign": the E1 d it compares with is E1's own cells for the same contrast
     for cid, e1id in (("E2b.12-P12", "E1.main.12-P12"), ("E2b.ALL-P_ALL", "E1.main.ALL-P_ALL")):
         a = R[cid]["a"]
@@ -555,9 +706,14 @@ def main(argv=None) -> int:
          "q:e3.new": qcount(pools["e3"], {"e3", "e3-four"}),
          "q:e3.pooled": qcount(pools["e3"], set(E3_SETS))}
     Q["q:all"] = Q["q:e3.pooled"] + Q["q:e1.replication"]
+    Q["q:e5.new"] = qcount(pools5["new"], {"e3", "e3-four"})
+    Q["q:e5.main"] = qcount(pools5["pooled"], set(E5_SCOPES["pooled"]))
     expect_q = {"q:e1.main": A["e1"]["main"]["n_queries"], "q:e1.replication": A["e1"]["replication"]["n_queries"],
                 "q:e3.new": A["e3"]["queries_by_part"]["new"], "q:e3.pooled": A["e3"]["n_queries"],
-                "q:all": A["e3"]["n_queries"] + A["e1"]["replication"]["n_queries"]}
+                "q:all": A["e3"]["n_queries"] + A["e1"]["replication"]["n_queries"],
+                "q:e5.new": A5["queries"]["new"], "q:e5.main": A5["queries"]["main"]}
+    if Q["q:e5.main"] != Q["q:e3.pooled"]:
+        problems.append("E5's main set and E3's pooled set differ in size; the paper's 320 assumes they are the same set")
     print()
     print("queries with at least one cell: " + ", ".join(f"{k[2:]} {v}" for k, v in Q.items())
           + "  (analysis JSONs: " + ", ".join(f"{expect_q[k]}" for k in Q) + ")")
@@ -575,7 +731,7 @@ def main(argv=None) -> int:
     covered: set[tuple[str, int, str]] = set()
     prose_cache = {}
     for rel in sorted({a[0] for a in ANCHORS} | {a[0] for a in LABEL_ANCHORS}):
-        prose_cache[rel] = list(prose_lines(ROOT / rel))
+        prose_cache[rel] = list(prose_lines(ROOT / rel, captions_only=rel == "main_www.tex"))
     for rel, rx, groups in ANCHORS:
         hits = [(no, m) for no, t in prose_cache[rel] for m in [re.search(rx, t)] if m]
         if not hits:
@@ -605,7 +761,21 @@ def main(argv=None) -> int:
                     ci = R[key]["a"]["ci95"]
                     exp_s, why = fmt(ci[0] if field == "lo" else ci[1]), "analysis JSON ci95"
                 elif field == "holm":
-                    exp_s, why = fmt(R[key]["a"]["p_holm"], "holm"), "analysis JSON p_holm"
+                    vals = {fmt(R[k]["a"]["p_holm"], "holm") for k in key.split("|")}
+                    exp_s = vals.pop() if len(vals) == 1 else "/".join(sorted(vals))
+                    why = "analysis JSON p_holm" + (" (each of " + ", ".join(key.split("|")) + ")" if "|" in key else "")
+                elif field in ("rd", "rlo", "rhi"):
+                    ret = readings["retention"][key.split(".")[1].split("-")[0]]
+                    x = {"rd": ret["d_9_minus_G"], "rlo": ret["ci95_9_minus_G"][0], "rhi": ret["ci95_9_minus_G"][1]}[field]
+                    exp_s, why = fmt(x), "analysis readings.retention (exact minus guess), 95% CI"
+                    if field == "rd" and not close(x, -R[key]["d"]):
+                        problems.append(f"{key}: readings d_9_minus_G differs from minus the recomputed d")
+                elif field == "share":
+                    words = {"two thirds": (0.6, 0.72), "half": (0.45, 0.55), "a third": (0.28, 0.38)}
+                    lo_w, hi_w = words.get(val, (None, None))
+                    ok_w = lo_w is not None and lo_w <= share["share"] <= hi_w
+                    exp_s = val if ok_w else f"{share['share']:.2f}"
+                    why = f"share_kept_new.9K.share {share['share']:.3f} (90% CI {share['ci90'][0]:.2f} to {share['ci90'][1]:.2f})"
                 else:
                     raise ValueError(field)
                 same = val == exp_s
@@ -624,7 +794,7 @@ def main(argv=None) -> int:
             print(f"{rel + ':' + str(no):<26} {'labels: ' + ', '.join(keys):<46} label  (words)  analysis labels: {labels}")
 
     settings = {"e1": A["e1"]["main"]["settings"], "e1 replication": A["e1"]["replication"]["settings"],
-                "e2": A["e2"]["settings"], "e3": A["e3"]["settings"]}
+                "e2": A["e2"]["settings"], "e3": A["e3"]["settings"], "e5": A5["settings"]}
     for f in sorted((ROOT / "sections").glob("*.tex")):
         rel = f.relative_to(ROOT).as_posix()
         for no, t in prose_lines(f):
@@ -638,11 +808,11 @@ def main(argv=None) -> int:
                     if not ok:
                         problems.append(f"{rel}:{no}: prints {key} {val}, analysis settings say {vals}")
                     print(f"{rel + ':' + str(no):<26} {'setting: ' + key:<46} {'set':<6} {val:>8} "
-                          f"{'same' if ok else 'DIFFERS':>8}  settings.{key} in the e1, e2, e3 analysis JSONs")
+                          f"{'same' if ok else 'DIFFERS':>8}  settings.{key} in the e1, e2, e3, e5 analysis JSONs")
 
     # signed numbers in the prose that no anchor covers (other results, e.g. the sensitivity test)
     print()
-    print("Signed numbers in sections/*.tex prose not tied to an E1-E3 contrast (not checked here):")
+    print("Signed numbers in sections/*.tex prose not tied to an E1-E5 contrast (not checked here):")
     for f in sorted((ROOT / "sections").glob("*.tex")):
         rel = f.relative_to(ROOT).as_posix()
         for no, t in prose_lines(f):
@@ -663,7 +833,7 @@ def main(argv=None) -> int:
         for p in problems:
             print("  " + p)
         return 1
-    print("All recomputed contrasts match the analysis JSONs (1e-9) and data/e1_results.json, "
+    print("All recomputed contrasts match the analysis JSONs (1e-9), data/e1_results.json and data/e5_results.json, "
           "and every paper number for them matches.")
     return 0
 

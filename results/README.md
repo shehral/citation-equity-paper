@@ -9,19 +9,21 @@ Everything except this README, `verify_numbers.py`, `VERIFY.txt` and `CLAIMS.md`
 ```sh
 .venv/bin/python -I -B scripts/build_results.py --fetch   # pulls logs, sacct, hashes and versions from Explorer first
 .venv/bin/python -I -B scripts/build_results.py           # rebuilds from the cached pulls in .cache/cluster/
+.venv/bin/python -I -B scripts/build_results.py --only e5 # adds or refreshes E5 only; every other file stays as it is
 ```
 
-`--fetch` needs ssh access to Explorer and a gitignored `.cache/cluster/settings.json` with the cluster user, paths and Slurm account (the format is in the script's header). `build_info.json` records the CE commit the copies were taken at (`edb6354`; the paper text is synced to CE `4831ff9`, and no experiment file changed between the two).
+`--fetch` needs ssh access to Explorer and a gitignored `.cache/cluster/settings.json` with the cluster user, paths and Slurm account (the format is in the script's header). `build_info.json` records the CE commit the copies were taken at (`edb6354` for the sensitivity test and E1 to E3, unchanged since; `7b10ad3` for E5, under its `e5` key).
 
 ## Layout
 
 | Folder | What it holds |
 |---|---|
-| `plans/` | The sensitivity pre-registration, the E1 pre-registration and its revision log, the E2 and E3 plans, and E1's freeze manifest. Each starts with a line naming the CE commit that first contained it and the commit it last changed in. |
+| `plans/` | The sensitivity pre-registration, the E1 pre-registration and its revision log, the E2, E3 and E5 plans, and E1's and E5's freeze manifests (E5's ends with its freeze log). Each starts with a line naming the CE commit that first contained it and the commit it last changed in. |
 | `sensitivity/` | The bench sensitivity test (4 models x 256 answers) and the vLLM smoke test that came before it. |
 | `e1/` | E1, one suggestion at a time on real pages: 80 GEO-bench queries (main) and 60 C-SEO Bench queries (replication). |
 | `e2/` | E2: `a/` asks whether the question-heading edit works through heading markup or through the reader's words (arms 9W and 9P); `b/` repeats E1's arm 12 and ALL with a second editor model (Qwen3.8-27B). |
 | `e3/` | E3, seven checks E1 could not judge: `new/` (180 new queries), `retry/` (one more editing attempt on E1's failed pairs), `pooled/` (the analysis over 260 queries). |
+| `e5/` | E5, when the writer has only a keyword: the reader's exact question as a section on E3's 180 new queries (the gate), then the same edits made from a keyword's two rarest key words (9K, 12K) or a question a local model wrote from it (9L), with placebos and the reported ladder (9A, 9G). Main set 260 queries (E1's 80 and the 180 new), replication 60 (C-SEO Bench). |
 | `manifests/` | Path, line count, size and sha256 of every withheld file, on the owner's machine and on the cluster. |
 | `runs/` | Every cluster job of these experiments, its GPU, run time and GPU-hours, and the summary lines of its log. |
 | `env/` | Python, vLLM, torch and transformers versions on the cluster, Node and pnpm locally, and the exact revision of every model. |
@@ -31,12 +33,13 @@ Per experiment, the files are:
 | File | What it is |
 |---|---|
 | `RESULTS_*.md` | The report the analysis script wrote (copied from CE `experiments/`). |
+| `e5_results.json` | (E5) The compact result the tool's data module reads (every planned and reported contrast and the readings), as committed in CE `experiments/results/e5/`. |
 | `analysis*.json` | The analysis output: every contrast, interval, p value, Holm family and label. Validator messages inside it are reduced to their template (see below); every number is identical to CE `experiments/results/`. |
 | `score_summary.json` | Answer counts and completion per set, judge and arm. |
 | `cells.jsonl` | One row per (query, version, judge): answers, valid answers, mean citation score, cited rate, word share. |
 | `scores.jsonl` | One row per answer: key, seed, valid, rank of the target page, score, cited, word share. Numbers and ids only. |
 | `retrieval.jsonl` | (E1) The lexical retriever's rank of each version in its pool. |
-| `null_simulation.json` | (E1) The null simulation frozen before E1 ran (identical to CE `experiments/e1/freeze/null_simulation.json`). |
+| `null_simulation.json` | (E1) The null simulation frozen before E1 ran (identical to CE `experiments/e1/freeze/null_simulation.json`); E5's is `null_simulation_e5.json` (CE `experiments/e5/freeze/`). |
 | `validity_counts.{json,md}` | Per set and arm: edited versions, valid, invalid, not applicable, attempts used, and the validator message categories; plus the frozen applicability pre-check per arm. |
 | `sensitivity_*.json`, `smoke_*.json` | Summaries, per-question results and per-answer rows; each raw answer is replaced by its sha256 and length. |
 
@@ -44,24 +47,20 @@ Per experiment, the files are:
 
 Section and figure numbers are those of `main_www.pdf`. Every number in the LaTeX also carries a `% src:` comment.
 
-`CLAIMS.md` lists every number in the rendered prose and figure captions with the `% src:` comment that covers it. `verify_numbers.py` recomputes the E1, E2 and E3 contrasts the paper reports from the `cells.jsonl` files alone, checks them against the analysis JSONs (to 1e-9) and `../data/e1_results.json`, and checks every printed number for them in `../sections/*.tex`; it exits non-zero on any mismatch. Run it from the repo root with `.venv/bin/python -I results/verify_numbers.py --claims results/CLAIMS.md`; its last output is `VERIFY.txt`.
+`CLAIMS.md` lists every number in the rendered prose and figure captions with the `% src:` comment that covers it. `verify_numbers.py` recomputes the E1, E2, E3 and E5 contrasts the paper reports from the `cells.jsonl` files alone, checks them against the analysis JSONs (to 1e-9), `../data/e1_results.json` and `../data/e5_results.json`, and checks every printed number for them in `../sections/*.tex` and in the figure captions of `../main_www.tex` (E5's retention reading and the share kept are checked against `e5/analysis_e5.json`); it exits non-zero on any mismatch. Run it from the repo root with `.venv/bin/python -I results/verify_numbers.py --claims results/CLAIMS.md`; its last output is `VERIFY.txt`.
 
 | Paper | Numbers | Results file |
 |---|---|---|
-| Abstract, Introduction | citation share +8% to +17% (+0.014 to +0.031) after the suggested edits; the answer edit missing the +0.10 bar on all four models | `sensitivity/sensitivity_*.json` (`summary.after_minus_before_exploratory`, `summary.answer_first_minus_before`), `sensitivity/RESULTS_sensitivity.md` |
-| Abstract, Introduction | E1, E2 and E3 outcomes (the reader's-words result, 260 queries pooled) | `e1/analysis.json`, `e2/analysis_e2.json`, `e3/pooled/analysis_e3.json` |
-| Abstract, Introduction, Figure 1 | checklist score 40 to 69 and 42 to 68 | not a cluster result: `../data/scores.json` (`ce analyze` on the two sample drafts) |
-| Section 2 (Citation Equity) | check counts, evidence grades, analyze() timing | `../data/system_checks.json`, `../data/evidence_grades_loose.json`, CE `docs/evidence.md` |
-| Section 2.3 (the citation bench) | laptop runs on llama3.2:3b | CE `samples/README.md`; the model's Ollama digest is in `env/` |
-| Section 3, "On larger models" | 4 models x 256 valid answers, off-topic share, answer edit +0.007 to +0.034, plan before results | `sensitivity/`, `plans/PREREG_sensitivity.md` (commit `3c86c02`, results `4d77fa0`), `../data/sensitivity_derived.json` |
-| Section 3, E1 | arm 9 (question headings) +0.027 [+0.010, +0.043], Holm 0.006, n 54; replication +0.036, n 52; other arms "insufficient n" | `e1/RESULTS_E1.md`, `e1/analysis.json`; n per arm in `e1/validity_counts.md` |
-| Section 3, E2 | 9 vs 9W and 9 vs 9P per set; E2b with Qwen3.8-27B as editor and Qwen3.5-9B as a second judge | `e2/RESULTS_E2.md`, `e2/analysis_e2.json`, `e2/a/`, `e2/b/` |
-| Section 3, E3 | pooled contrasts over 260 queries (180 new), which checks reach 30 valid pairs | `e3/pooled/RESULTS_E3.md`, `e3/pooled/analysis_e3.json`, `e3/new/validity_counts.md`, `e3/retry/validity_counts.md` |
+| Abstract, Section 1 | E1 to E3 outcomes (the reader's words up top about +0.03; the heading form; the checks with no effect larger than 0.03); E5's +0.039 on 180 new queries, the keyword keeping part of the gain, the local model's question | `e1/analysis.json`, `e2/analysis_e2.json`, `e3/pooled/analysis_e3.json`, `e5/analysis_e5.json` (`../data/e1_results.json`, `../data/e5_results.json`) |
+| Figure 1 (a) | E1 main and replication, E2a's two heading rows, E3 pooled contrasts | `../data/e1_results.json`, derived by `scripts/derive_e1_results.py` from the three analysis files above (numbers identical) |
+| Figure 1 (b) | E5: the gate, 12 vs P12 on the new queries, 9K and 9L against the unedited page and against 9P (with the replication set), 12K vs P12K, the exact question against 9K and 9A | `../data/e5_results.json`, derived by `scripts/derive_e5.py` from CE `experiments/results/e5/` (= `e5/e5_results.json`, `e5/analysis_e5.json`) |
+| Section 2 (What we tested) | E1: arm 9 +0.027 [+0.010, +0.043], Holm 0.006, n 54, replication +0.036; arm 12 +0.035; E2a 9 vs 9W and 9W vs original per set; E2b 12 vs P12 +0.029, n 29; E3: 180 new queries, 260 pooled; E5: gate +0.039 [+0.023, +0.056], n 115; step 5 +0.035, n 169; 12 vs P12 on the new queries +0.036, n 74; 9K +0.016 and +0.018 (Holm 0.006); exact minus 9K +0.019 [+0.008, +0.031]; the share kept on the new queries (about two thirds, 0.65); 9 vs 9A +0.014; 9L +0.008; 12K vs P12K +0.004 | `e1/`, `e2/`, `e3/pooled/`, `e5/` (`RESULTS_*.md`, analysis JSONs); n per arm in each `validity_counts.md` |
+| Section 3 (Citation Equity) | the first version's checklist score 40 to 69 and 42 to 68 (+29, +26); citation share +0.014 to +0.031 ("1 to 3 points") in the sensitivity test; evidence grades; the label tally | not cluster results: `../data/scores.json` (`ce analyze` on the two sample drafts, at CE `c908431`); `sensitivity/sensitivity_*.json` (`summary.after_minus_before_exploratory`); `../data/evidence_grades_loose.json`, CE `docs/evidence.md` |
+| Section 3, the citation test | laptop runs on llama3.2:3b, the 0.125 p floor | CE `samples/README.md`; the model's Ollama digest is in `env/` |
 | Figure 3 | grades per check and source | not a cluster result: `../data/grades.json`, `../data/evidence_matrix.csv`, `../data/evidence_grades_loose.json` |
-| Figure 4 | E1 main and replication, E2, E3 pooled contrasts | `../data/e1_results.json`, derived by `scripts/derive_e1_results.py` from the three analysis files above (numbers identical) |
-| Section 6 (Ethics and use of data) | only aggregates and hashes are shared | `plans/PREREG_E1.md` ("Data"), `manifests/` |
-| Section 7 (Limitations and future work) | 320 queries = 260 GEO-bench (E3 pooled) + 60 C-SEO Bench (E1 replication); Gemma-4-31B-it edits; the smoke test before any run | `e3/pooled/`, `e1/`, `sensitivity/smoke_google__gemma-4-12B-it.json` |
-| Compute (any mention) | GPU-hours | `runs/gpu_hours.json`: 16.87 GPU-hours in all (E1 7.60, E2 3.81, E3 4.16, sensitivity 0.86, smoke 0.44) |
+| Section 6 (Limitations and future work) | the sensitivity test's answer edit +0.007 to +0.034 against its +0.10 bar; 320 queries = 260 GEO-bench (E3 pooled, E5 main) + 60 C-SEO Bench (E1 and E5 replication) | `sensitivity/`, `plans/PREREG_sensitivity.md` (commit `3c86c02`, results `4d77fa0`), `../data/sensitivity_derived.json`; `e3/pooled/`, `e5/`, `e1/` |
+| Section 7 (Ethics and use of data) | only aggregates and hashes are shared | `plans/PREREG_E1.md` ("Data"), `plans/E5_freeze_MANIFEST.md`, `manifests/` |
+| Compute (any mention) | GPU-hours | `runs/gpu_hours.json`: 16.87 GPU-hours for the sensitivity test, the smoke test and E1 to E3 (E1 7.60, E2 3.81, E3 4.16, sensitivity 0.86, smoke 0.44). E5 is not in `runs/` yet (see "How each experiment was run"). |
 
 ## How each experiment was run
 
@@ -73,8 +72,11 @@ All runs used the tool's own prompts, retrieval, seeds and metrics: the bench ex
 | E1 | `PREREG_E1.md`, frozen as r3 with amendments 1 to 10 (`7859b07`; code `a2322d7`) | `experiments/e1/` | `e258a1a` | CE `experiments/e1/README.md` |
 | E2 | `PLAN_E2.md` (`cf2f9a1`, amendment 1 in `d90fc84`) | `experiments/e2/` (merged in `8f0de5f`) | `2e9bb7d` (aggregates cleaned in `c8e5fc6`) | CE `experiments/e2/README.md` |
 | E3 | `PLAN_E3.md` (`571e8fc`, amendment 1 in `248a2ec`) | `experiments/e3/` (merged in `e0705db`) | `82aa8b3` | CE `experiments/e3/README.md` |
+| E5 | `PLAN_E5.md` r2 (`7c1c725`), amendments 1 to 3 (`a98da69`, `0df6f1e`, `2e780ef`); frozen in `23b1dfb` (`plans/E5_freeze_MANIFEST.md`, with its freeze log) | `experiments/e5/` | `12e4ac8` (aggregates through `experiments/e5/sanitize_e5.py`), freeze log `7b10ad3` | CE `experiments/e5/README.md` ("On Explorer, in order") and `README-analysis.md` |
 
-Each plan's commit can be checked against the job start times in `runs/` (the cluster clock is US Eastern; in Eastern time the plan commits are: sensitivity `3c86c02` 2026-10-23 23:18:42, E1 freeze `7859b07` 2026-10-24 04:33:28, E2 `cf2f9a1` 17:26:11, E3 `571e8fc` 19:19:27). Every editing and answer job of E1, E2 and E3 starts after its plan's commit (and after the amendments). The E1 jobs before the freeze are page normalization (no edits, no answers) and the timing smoke on a held-out query, whose outcomes were discarded. Three of the four sensitivity jobs started at 23:18:39, three seconds before the plan's commit, and the fourth (Gemma-4-31B-it) at 23:34:02, after it: the plan was committed as the jobs were submitted, and the results came in a later commit (`4d77fa0`).
+Each plan's commit can be checked against the job start times in `runs/` (the cluster clock is US Eastern; in Eastern time the plan commits are: sensitivity `3c86c02` 2026-10-23 23:18:42, E1 freeze `7859b07` 2026-10-24 04:33:28, E2 `cf2f9a1` 17:26:11, E3 `571e8fc` 19:19:27; E5 plan `7c1c725` 2026-11-03 04:18:09, its last amendment `2e780ef` 06:04:48 and its freeze `23b1dfb` 06:07:18). Every editing and answer job of E1, E2 and E3 starts after its plan's commit (and after the amendments). The E1 jobs before the freeze are page normalization (no edits, no answers) and the timing smoke on a held-out query, whose outcomes were discarded. Three of the four sensitivity jobs started at 23:18:39, three seconds before the plan's commit, and the fourth (Gemma-4-31B-it) at 23:34:02, after it: the plan was committed as the jobs were submitted, and the results came in a later commit (`4d77fa0`).
+
+**E5's jobs are not in `runs/` yet.** The cluster cache this package was built from (`.cache/cluster/`) was pulled on 2026-10-24, before E5 ran, and this build did not contact the cluster. A later `--fetch` pulls them; jobs that start on or after 2026-11-02 (cluster clock) are counted as E5, since E5 ran E1's edit and generate scripts under their E1 job names next to its own `ce-e5-chain` wrapper. Until then, what the tool repo records: the freeze log (`plans/E5_freeze_MANIFEST.md`) says the job logs show torch 2.13.0 on H200 (17 job logs), A100-SXM4-40GB (11) and A100-SXM4-80GB (6), that the environment check found 0 mismatches with E1's records, and that every E5 batch was answered (32 answer files, 33,056 answers, 0 cut at the token limit); its README projected about 10.6 GPU-hours (11.5 to 13.8 summed over the jobs) before the run. No measured E5 GPU-hours are claimed anywhere in the paper.
 
 ## What is withheld, and why
 
@@ -99,5 +101,6 @@ From a CE checkout at the commits above, follow the pipeline READMEs:
 2. **E2** (CE `experiments/e2/README.md`, "On Explorer, in order"): `make_versions.py` for 9W and 9P, prompts and four generation jobs for E2a; `edit.sbatch` with `MODEL=Qwen/Qwen3.8-27B --arms 12` for E2b, then `reuse_answers.py`, prompts and generation; `analyze_e2.py`, `report_e2.py`.
 3. **E3** (CE `experiments/e3/README.md`, "On Explorer, in order"): `admit.py`, two editing jobs (new queries, and the extra attempt with `--retry-from`), `reuse_e3.py`, prompts and generation; `analyze_e3.py`, `report_e3.py`.
 4. **Sensitivity** (CE `experiments/README.md`): `sensitivity.sbatch` once per model; the pages are the synthetic samples in CE `samples/`.
+5. **E5** (CE `experiments/e5/README.md`, "Local steps" and "On Explorer, in order"): `applicability.py`, `make_versions.py build`, `build_prompts_e5.py`; on Explorer the edit job (E1's `edit.sbatch` with the E5 command line), then `make_versions.py ql` and `merge-edits` and the tier 1 to 3 batches through `e5_chain.sbatch`; locally E1's `score.py`, then `analyze_e5.py` and `report_e5.py` once on the logged snapshot. Compare against `manifests/` (`e5` rows: the files the analysis read).
 
 Use the model revisions in `env/` (each job read the Hugging Face cache offline at that revision) and the cluster settings from CE `experiments/explorer/local.env.example`. vLLM ran with `enforce_eager=True` and fixed seeds; batched GPU decoding can still differ in the last digits between GPU types, so compare reruns on the aggregate results, not answer by answer.

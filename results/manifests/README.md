@@ -2,6 +2,8 @@
 
 Every file below stays on the owner's machine (`local`, paths relative to `citation-equity/experiments/`) or on Explorer (`cluster`, paths relative to the project folder `$CE_ROOT_PARENT/geo`). None is in this repo: they hold third-party page text, edited versions, prompts, editor logs or raw model answers. A rerun that produces the same bytes has the same sha256. Machine-readable copy: `withheld.csv`.
 
+E5 is listed twice: `e5` holds every file under `e5/data/` that its single planned analysis read (sha256 and bytes from `e5/analysis_e5.json` "snapshot"; lines when the local copy still matches), and `e5-freeze` the local inputs its freeze manifest hashed before any answer existed (`plans/E5_freeze_MANIFEST.md`). Files the edit job changed after the freeze (the versions, prompts and edit texts) have different hashes in the two lists, as the freeze log records.
+
 ## e1
 
 | location | path | lines | bytes | sha256 | what it is |
@@ -392,6 +394,66 @@ Every file below stays on the owner's machine (`local`, paths relative to `citat
 | local | `e3/data/retry/versions.jsonl` | 138 | 1121177 | `8d726a30807e20140925f73fc2654116ff74afc25a05d9371f5a90f69d49461d` | edited page versions per arm with validity flags and validator messages (page text) |
 | local | `e3/data/reuse.json` | 186 | 3763 | `3efece128f4d94ddf35c38934bb6ff0415c749b3f2dff0145e800a8470f879db` | which answers were reused from E1 for byte-identical prompts |
 | local | `e3/data/versions.jsonl` | 863 | 7867474 | `dd7a6be80fb8aa12ac99ff3edff3587d52fc424ae654fdbe6c5839eac98d69c7` | edited page versions per arm with validity flags and validator messages (page text) |
+
+## e5
+
+| location | path | lines | bytes | sha256 | what it is |
+|---|---|---|---|---|---|
+| local | `e5/data/answers/e5-main.gemma-4-12b.tier1-p1of2.jsonl` | 3080 | 5483931 | `83042129f70f2d67292781a993076bb2f22ba12ad23f9d046e5c9652b93fc72f` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-main.gemma-4-12b.tier1-p2of2.jsonl` | 3048 | 5996941 | `8955b462eaf66693bbef2c6192af1eb93bab9f58f7d075beee6450ea6847176c` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-main.gemma-4-12b.tier2-12K-p1of2.jsonl` | 720 | 1238960 | `04e4c81e14d730bff67e63c78a8f0f9531f7d911cd9d4c6ee29f1d83701ad00c` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-main.gemma-4-12b.tier2-12K-p2of2.jsonl` | 704 | 1351798 | `fa27f59af6ecf2d1381d56fed34498048543c914434ff5afa972f633c19c7d7e` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-main.gemma-4-12b.tier2-9L-p1of2.jsonl` | 680 | 1215633 | `6e62dace2cf65f8df65ad2ec01fb2b8bcfb88f52a44062c64b41305cfed0523c` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-main.gemma-4-12b.tier2-9L-p2of2.jsonl` | 672 | 1353057 | `bc64236143b4ae34447ae7a7d873705ccbf24aee3b0d50524d399ce7e9c2c203` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-main.gemma-4-12b.tier3-12-p1of2.jsonl` | 776 | 1384794 | `0d7347851c7b518b4bf1a611fa6eea22c31e1b2b1927308faac7cc15a3548680` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-main.gemma-4-12b.tier3-12-p2of2.jsonl` | 752 | 1506037 | `ea167ecb33abcd2588aab23d34de4980c2079921f4a727cf3233f32a455a0bac` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-main.gemma-4-12b.tier3-p1of2.jsonl` | 1608 | 2926333 | `e6cc6640ca4b1838cff5e0d33ac495c101ba15a96d10e08bd1bc4d8115a9ee8b` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-main.gemma-4-12b.tier3-p2of2.jsonl` | 1576 | 3024041 | `ff3455d7996b40d33ddd9f19d0a18fc1c553220eb47b49729e80c45bc990cffa` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-main.qwen3.8-27b.tier1-p1of2.jsonl` | 3080 | 5086422 | `4e35393c9f6966fde34eb690a45bd7fef4f9115fa0c183a3d72d579d88c82a9e` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-main.qwen3.8-27b.tier1-p2of2.jsonl` | 3048 | 5347013 | `1d24fa6848d12b8e688c41935096b883a8fd6de8d21e6088f56b5069df64f2a0` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-main.qwen3.8-27b.tier2-12K-p1of2.jsonl` | 720 | 1172294 | `9082c6e2b4c191a8faa00c7e47786eb40338cd8a6d952cde4bb6ad44627cced8` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-main.qwen3.8-27b.tier2-12K-p2of2.jsonl` | 704 | 1241859 | `7b78cf63463209c7645f3279cd62930bfe83284f7045ae9baa1040d5380762d6` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-main.qwen3.8-27b.tier2-9L-p1of2.jsonl` | 680 | 1145569 | `9215c648e384887d3381fac2a9ac7db814ee43e4e0a179415361bfe0cecaacef` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-main.qwen3.8-27b.tier2-9L-p2of2.jsonl` | 672 | 1201366 | `5a4078782fcfc1c222caf06c5ae8f71649c8f9276d8fcf37cc4073fe5db813cc` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-main.qwen3.8-27b.tier3-12-p1of2.jsonl` | 776 | 1248808 | `38884e992a1dfda659cd88b6d681b638843a40f8e5fac20fba3d6e55e4055210` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-main.qwen3.8-27b.tier3-12-p2of2.jsonl` | 752 | 1366297 | `e6fd38dc7a62c10a1159ad52d609154d4184a1e09427895f92389125edcc9ffe` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-main.qwen3.8-27b.tier3-p1of2.jsonl` | 1608 | 2731883 | `a2fd309d7eeebd8c83cb53bc8316834d2f04cf1a5841ef71e4ee574e1df55815` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-main.qwen3.8-27b.tier3-p2of2.jsonl` | 1576 | 2695139 | `f47e6f2e61318349d82818e4e07c29089dbecfff1de7529053394c02f4b42d48` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-replication.gemma-4-12b.tier1-p1of2.jsonl` | 880 | 1053821 | `4ff3d36550241f8ba85d6a8ca00443f079e090df0347fc0e033e4b3759fe7ccc` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-replication.gemma-4-12b.tier1-p2of2.jsonl` | 864 | 1193612 | `2e4de2316d4fce62fd4a3c1c3a02d0e291c53760986a0a0bd64795e66b3a945f` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-replication.gemma-4-12b.tier2-9L-p1of2.jsonl` | 216 | 260554 | `5c5dffb2af7ed41525ec6677eaff4113cc15693c9f2c20716534f6e90759c62b` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-replication.gemma-4-12b.tier2-9L-p2of2.jsonl` | 208 | 286983 | `810df5440abfe41b27abb65aa937e9b03991a56540d96e9d03bf9ccd3f293131` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-replication.gemma-4-12b.tier3-p1of2.jsonl` | 376 | 449567 | `420bcbeafd96c258d8fad24e8fb2dca5d6bd2bf2b7787646caded106b6a6d4b9` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-replication.gemma-4-12b.tier3-p2of2.jsonl` | 368 | 510241 | `7c6409d67fe3433e799001610368afc39e91d80d0753b2bdb9ddf56b8eda701f` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-replication.qwen3.8-27b.tier1-p1of2.jsonl` | 880 | 1043813 | `1289e5952bc140a5cf32e7e37d12efe359d9caa829d9597a0be2a3fc6a757333` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-replication.qwen3.8-27b.tier1-p2of2.jsonl` | 864 | 1101408 | `ae53d3d2be085a2c431dfb2a2cafee52cb7de74f81976552563272538096cd20` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-replication.qwen3.8-27b.tier2-9L-p1of2.jsonl` | 216 | 248019 | `817795f9c904f6abd1e812fc4491a3653b2b119a9a088b2ad8798f523c749bec` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-replication.qwen3.8-27b.tier2-9L-p2of2.jsonl` | 208 | 264511 | `73dafe6d85cb3960b90feb1174ba3bd89efadb05eb0192a7762538af6fe08176` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-replication.qwen3.8-27b.tier3-p1of2.jsonl` | 376 | 451948 | `9712ba752325a0b1f3f80a00031bc84c388a6a1fb668fa5b76f86e3d6d3945ed` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/answers/e5-replication.qwen3.8-27b.tier3-p2of2.jsonl` | 368 | 465443 | `5899b6855c8957bcb7c9a1d26062580ab9c3cd1d777237b442238c696b251b6f` | raw judge answers for one batch (raw model answers); read by the planned analysis |
+| local | `e5/data/applicability.jsonl` | 4000 | 406946 | `b5489378fbaf02a3fbb8ce4c048e32eede3526a6fb20bd06427697938d315c2c` | frozen per-query, per-arm applicability table (which checks flag something); read by the planned analysis |
+| local | `e5/data/edit_texts.jsonl` | 320 | 154284 | `bbfb9484a0fa92cfe9c57fa9efa1a8dde70be0583276bce3e487e7a75eb4e48b` | E5: the heading text of every guessed-question version (keyword, local model, page question); read by the planned analysis |
+| local | `e5/data/prompt_build.json` | 270 | 9089 | `f4c222aac622d7e40de0eae02e925203a0c41bd9557390759d3106d2d393656a` | prompt counts per batch and the token-limit refusals; read by the planned analysis |
+| local | `e5/data/prompts.jsonl` | 33056 | 1163528304 | `d7571608ebd9e4fbfa81fe1891798a146296870096b6167c5449d464da3b9934` | judge prompts, one per (version, judge, seed); they hold the full page text; read by the planned analysis |
+| local | `e5/data/versions.jsonl` | 2249 | 20076216 | `24ece2c62e07008bd503f6795a5e968a0cf7744ca1cd338c44ad34200dd1cf96` | edited page versions per arm with validity flags and validator messages (page text); read by the planned analysis |
+
+## e5-freeze
+
+| location | path | lines | bytes | sha256 | what it is |
+|---|---|---|---|---|---|
+| local | `e5/data/applicability.json` |  |  | `bf6cc63b1fca4a6a20a8f3c1404f694c4b807ead42bf431df11dc13a9728c740` | E5: applicability counts per arm and set; as frozen before any answer (e5/freeze/MANIFEST.md) |
+| local | `e5/data/applicability.jsonl` |  |  | `c37ea3383636e78748670413812e67a37c921d2240d5a76bfb0ffd547eb7c1ef` | frozen per-query, per-arm applicability table (which checks flag something); as frozen before any answer (e5/freeze/MANIFEST.md) |
+| local | `e5/data/edit_applicability.jsonl` |  |  | `8e0ac9f6e6d9bf94d4ddf7f1f19cef5968752ac6e1e8c7071f7bd40e9876d857` | E5: which queries the edit job edits (arm 12 on the new queries, 12K on the main set); as frozen before any answer (e5/freeze/MANIFEST.md) |
+| local | `e5/data/edit_questions.jsonl` |  |  | `9d713662dc6992034e82fad09105f005de09798f91bf17cde0d70faabbb4433e` | E5: the keyword and its question per main query (built from the reader's question); as frozen before any answer (e5/freeze/MANIFEST.md) |
+| local | `e5/data/edit_texts.json` |  |  | `a7eea80370bf0a8d801d92f5e6dff36bbd26298ec31fecbb42f84245ed317c29` | E5: the heading text of every guessed-question version (keyword, local model, page question); as frozen before any answer (e5/freeze/MANIFEST.md) |
+| local | `e5/data/edit_texts.jsonl` |  |  | `fa16a8c99c24a58ae3f15685a07788e2c6b4ebb425b81247ee08ca74054a12c6` | E5: the heading text of every guessed-question version (keyword, local model, page question); as frozen before any answer (e5/freeze/MANIFEST.md) |
+| local | `e5/data/engine_original.jsonl` |  |  | `4a0f45fd707301d3ca0712fbecff4ea5f38364ce1f368da09a118b9e1206cf14` | engine check results on each original page (spans quote page text); as frozen before any answer (e5/freeze/MANIFEST.md) |
+| local | `e5/data/make_versions.json` |  |  | `a6c116a8130fc39ccd4c1f4296dc2bea8bc6428428ded4bf79050d7579f7341f` | E5: counts from its version builder; as frozen before any answer (e5/freeze/MANIFEST.md) |
+| local | `e5/data/pages.jsonl` |  |  | `d71289032d00f7b8bdce9176e4033a7114c3b703d23cffb80d4a92fa9e2fcd13` | normalized pages used by the experiment (page text, roles target/other); as frozen before any answer (e5/freeze/MANIFEST.md) |
+| local | `e5/data/prerun_counts.json` |  |  | `13c5d79acfb30f0ee5942f3cf9593577f5f078b50437d547544e7b70396347f0` | E5: counts printed before the run (queries, applicable and valid versions per arm); as frozen before any answer (e5/freeze/MANIFEST.md) |
+| local | `e5/data/prompt_build.json` |  |  | `df7612ba8fc13ea33c3a5c5ef42fcdc89d18a44aff56e0af129ec061e2f01b09` | prompt counts per batch and the token-limit refusals; as frozen before any answer (e5/freeze/MANIFEST.md) |
+| local | `e5/data/prompts.jsonl` |  |  | `8c66b3f6ce084a213b88ad5acf312ae9afc5fdc0a7ae280c653ebbf4357c0cca` | judge prompts, one per (version, judge, seed); they hold the full page text; as frozen before any answer (e5/freeze/MANIFEST.md) |
+| local | `e5/data/versions.jsonl` |  |  | `17d0d1360a972c7b5b55b2e1d5497bafd9981e99362b0759d9269734b04e6f6c` | edited page versions per arm with validity flags and validator messages (page text); as frozen before any answer (e5/freeze/MANIFEST.md) |
 
 ## sensitivity
 

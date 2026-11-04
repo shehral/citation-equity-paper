@@ -2,10 +2,13 @@
 
     .venv/bin/python -I -B scripts/build_results.py --fetch   # pull logs, sacct, hashes and env from Explorer first
     .venv/bin/python -I -B scripts/build_results.py           # rebuild from the cached pulls in .cache/cluster/
+    .venv/bin/python -I -B scripts/build_results.py --only e5 # add or refresh E5 only; every other file stays as it is
 
 Inputs:
   CE (default ../citation-equity, or --ce-root): experiments/ plans, RESULTS_*.md, results/, and the gitignored
-     local outputs experiments/{e1,e2,e3}/out and data dirs (data files are hashed, never copied).
+     local outputs experiments/{e1,e2,e3,e5}/out and data dirs (data files are hashed, never copied).
+     E5's withheld-file hashes come from its analysis snapshot (results/e5/analysis_e5.json "snapshot", the sha256 of
+     every file the single planned analysis read) and from its freeze manifest (experiments/e5/freeze/MANIFEST.md).
   Explorer (ssh host alias `explorer`, --fetch only): job .out logs, sacct, sha256 of every data/answer file,
      the env's package versions and the HF cache refs. Nothing on the cluster is written.
 
@@ -36,7 +39,10 @@ OUT = REPO / "results"
 CACHE = REPO / ".cache" / "cluster"
 SSH = ["ssh", "-o", "BatchMode=yes", "explorer"]
 MODELS = ["Qwen/Qwen3.5-9B", "Qwen/Qwen3.8-27B", "google/gemma-4-12B-it", "google/gemma-4-31B-it"]
-JOB_PREFIXES = ("ce-sens", "ce-smoke", "ce-e1-", "ce-e2a-", "ce-e2b-", "ce-e3-")
+JOB_PREFIXES = ("ce-sens", "ce-smoke", "ce-e1-", "ce-e2a-", "ce-e2b-", "ce-e3-", "ce-e5-")
+# E5 (frozen 2026-11-03 03:07 PST) reran E1's edit and generate jobs under their E1 names (ce-e1-edit, ce-e1-gen) next to
+# its own ce-e5-chain wrapper, so every job that starts on or after this cluster-clock time (US Eastern) counts as E5.
+E5_START = "2026-11-02T00:00:00"
 GZIP_OVER = 5 * 1024 * 1024
 
 # ---------------------------------------------------------------- settings and sanitizing
@@ -255,11 +261,15 @@ PLANS = [
     ("PLAN_E3.md", "experiments/PLAN_E3.md"),
     ("E1_freeze_MANIFEST.md", "experiments/e1/freeze/MANIFEST.md"),
 ]
+PLANS_E5 = [
+    ("PLAN_E5.md", "experiments/PLAN_E5.md"),
+    ("E5_freeze_MANIFEST.md", "experiments/e5/freeze/MANIFEST.md"),
+]
 
 
-def build_plans(ce: Path, head: str) -> list[dict]:
+def build_plans(ce: Path, head: str, plans=None) -> list[dict]:
     rows = []
-    for name, rel in PLANS:
+    for name, rel in (PLANS + PLANS_E5 if plans is None else plans):
         commits = git_commits(ce, rel)
         first, last = commits[-1], commits[0]
         header = (
@@ -390,6 +400,23 @@ def build_results(ce: Path) -> None:
                        "E3 new queries (sets e3, e3-four)" if part == "new" else "E3 extra attempt on E1's main set")
 
 
+def build_results_e5(ce: Path) -> None:
+    """E5: the report, the committed aggregates (already through CE experiments/e5/sanitize_e5.py), the frozen null
+    simulation, numbers-only cells and scores from the local run, and validity counts (counts and templates only)."""
+    ex = ce / "experiments"
+    d = OUT / "e5"
+    if d.exists():
+        shutil.rmtree(d)
+    write_text(d / "RESULTS_E5.md", sanitize((ex / "RESULTS_E5.md").read_text()))
+    for name in ("analysis_e5.json", "e5_results.json", "score_summary.json"):
+        write_json(d / name, sanitize_json_strings(json.loads((ex / "results/e5" / name).read_text())))
+    shutil.copyfile(ex / "e5/freeze/null_simulation_e5.json", d / "null_simulation_e5.json")
+    for name in ("cells.jsonl", "scores.jsonl"):
+        copy_numbers_jsonl(ex / "e5/out" / name, d / name)
+    write_validity(d, ex / "e5/data/versions.jsonl", ex / "e5/data/applicability.jsonl",
+                   "E5 (main: E1's 80 and 180 new queries; replication: C-SEO Bench)")
+
+
 # ---------------------------------------------------------------- 3. manifests of withheld files
 
 WHAT = [
@@ -403,7 +430,14 @@ WHAT = [
     (r"wayback_needed\.jsonl$", "pages queued for a Wayback fetch"),
     (r"versions\.main-only\.jsonl$", "edited versions of the main set only (kept from before the replication edit job)"),
     (r"pages\.jsonl$", "normalized pages used by the experiment (page text, roles target/other)"),
+    (r"edit_applicability\.jsonl$", "E5: which queries the edit job edits (arm 12 on the new queries, 12K on the main set)"),
     (r"applicability\.jsonl$", "frozen per-query, per-arm applicability table (which checks flag something)"),
+    (r"applicability\.json$", "E5: applicability counts per arm and set"),
+    (r"edit_questions\.jsonl$", "E5: the keyword and its question per main query (built from the reader's question)"),
+    (r"edit_texts\.jsonl?$", "E5: the heading text of every guessed-question version (keyword, local model, page question)"),
+    (r"prerun_counts\.json$", "E5: counts printed before the run (queries, applicable and valid versions per arm)"),
+    (r"env_check\.json$", "E5: the GPU node's package and model revisions, checked against E1's records"),
+    (r"q_L\.jsonl$", "E5: the local model's question per keyword (edit job output)"),
     (r"admission(_e3)?\.json$", "admitted query ids and set sizes"),
     (r"versions\.jsonl$", "edited page versions per arm with validity flags and validator messages (page text)"),
     (r"editor_log\.jsonl$", "editor model requests and responses per edit attempt (page text)"),
@@ -446,6 +480,59 @@ def experiment_of(path: str) -> str:
     return "?"
 
 
+def e5_manifest_rows(ce: Path) -> list[dict]:
+    """E5's withheld files: every file under experiments/e5/data that its single planned analysis read (sha256 and bytes
+    from results/e5/analysis_e5.json "snapshot"), and the local inputs its freeze manifest hashed before the run. Line
+    counts come from the local copy when its sha256 still matches; a mismatch is reported in the row."""
+    ex = ce / "experiments"
+    rows = []
+    snap = json.loads((ex / "results/e5/analysis_e5.json").read_text())["snapshot"]["files"]
+    for rel, meta in sorted(snap.items()):
+        if not rel.startswith("experiments/e5/data/"):
+            continue
+        f = ce / rel
+        lines, note = "", ""
+        if f.exists():
+            if sha256(f) == meta["sha256"]:
+                lines = count_lines(f)
+            else:
+                note = " (the local copy has changed since the analysis)"
+        sub = rel.removeprefix("experiments/")
+        rows.append({"location": "local", "experiment": "e5", "path": sub, "lines": lines, "bytes": meta["bytes"],
+                     "sha256": meta["sha256"], "what": what_is(sub) + "; read by the planned analysis" + note})
+    text = (ex / "e5/freeze/MANIFEST.md").read_text()
+    for m in re.finditer(r"^\| (experiments/e5/data/[^ |]+) \| ([0-9a-f]{64}) \|$", text, re.M):
+        rel, digest = m.group(1), m.group(2)
+        sub = rel.removeprefix("experiments/")
+        what = "E5: counts from its version builder" if sub.endswith("make_versions.json") else what_is(sub)
+        rows.append({"location": "local", "experiment": "e5-freeze", "path": sub, "lines": "", "bytes": "",
+                     "sha256": digest, "what": what + "; as frozen before any answer (e5/freeze/MANIFEST.md)"})
+    if not any(r["experiment"] == "e5-freeze" for r in rows):
+        sys.exit("E5 freeze manifest: no hashed input found")
+    return rows
+
+
+def write_manifests(rows: list[dict]) -> dict:
+    rows.sort(key=lambda r: (r["experiment"], r["location"], r["path"]))
+    d = OUT / "manifests"
+    d.mkdir(parents=True, exist_ok=True)
+    with open(d / "withheld.csv", "w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=["location", "experiment", "path", "lines", "bytes", "sha256", "what"])
+        w.writeheader()
+        w.writerows(rows)
+    md = ["# Withheld files: path, line count, sha256", "",
+          "Every file below stays on the owner's machine (`local`, paths relative to `citation-equity/experiments/`) or on Explorer (`cluster`, paths relative to the project folder `$CE_ROOT_PARENT/geo`). None is in this repo: they hold third-party page text, edited versions, prompts, editor logs or raw model answers. A rerun that produces the same bytes has the same sha256. Machine-readable copy: `withheld.csv`.",
+          "",
+          "E5 is listed twice: `e5` holds every file under `e5/data/` that its single planned analysis read (sha256 and bytes from `e5/analysis_e5.json` \"snapshot\"; lines when the local copy still matches), and `e5-freeze` the local inputs its freeze manifest hashed before any answer existed (`plans/E5_freeze_MANIFEST.md`). Files the edit job changed after the freeze (the versions, prompts and edit texts) have different hashes in the two lists, as the freeze log records.", ""]
+    for exp in sorted({r["experiment"] for r in rows}):
+        md += [f"## {exp}", "", "| location | path | lines | bytes | sha256 | what it is |", "|---|---|---|---|---|---|"]
+        md += [f"| {r['location']} | `{r['path']}` | {r['lines']} | {r['bytes']} | `{r['sha256']}` | {r['what']} |" for r in rows if r["experiment"] == exp]
+        md.append("")
+    write_text(d / "README.md", "\n".join(md))
+    return {"files": len(rows), "local": sum(r["location"] == "local" for r in rows),
+            "cluster": sum(r["location"] == "cluster" for r in rows)}
+
+
 def build_manifests(ce: Path) -> dict:
     ex = ce / "experiments"
     rows = []
@@ -464,21 +551,15 @@ def build_manifests(ce: Path) -> dict:
         rows.append({"location": "cluster", "experiment": experiment_of(path), "path": path, "lines": int(lines), "bytes": int(size), "sha256": digest, "what": what_is(path)})
     for f in sorted((CACHE / "logs").glob("ce-*.out")):
         rows.append({"location": "cluster", "experiment": experiment_of(f.name), "path": f"logs/{f.name}", "lines": count_lines(f), "bytes": f.stat().st_size, "sha256": sha256(f), "what": what_is(f"logs/{f.name}")})
-    rows.sort(key=lambda r: (r["experiment"], r["location"], r["path"]))
-    d = OUT / "manifests"
-    d.mkdir(parents=True, exist_ok=True)
-    with open(d / "withheld.csv", "w", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=list(rows[0].keys()))
-        w.writeheader()
-        w.writerows(rows)
-    md = ["# Withheld files: path, line count, sha256", "",
-          "Every file below stays on the owner's machine (`local`, paths relative to `citation-equity/experiments/`) or on Explorer (`cluster`, paths relative to the project folder `$CE_ROOT_PARENT/geo`). None is in this repo: they hold third-party page text, edited versions, prompts, editor logs or raw model answers. A rerun that produces the same bytes has the same sha256. Machine-readable copy: `withheld.csv`.", ""]
-    for exp in sorted({r["experiment"] for r in rows}):
-        md += [f"## {exp}", "", "| location | path | lines | bytes | sha256 | what it is |", "|---|---|---|---|---|---|"]
-        md += [f"| {r['location']} | `{r['path']}` | {r['lines']} | {r['bytes']} | `{r['sha256']}` | {r['what']} |" for r in rows if r["experiment"] == exp]
-        md.append("")
-    write_text(d / "README.md", "\n".join(md))
-    return {"files": len(rows), "local": sum(r["location"] == "local" for r in rows), "cluster": sum(r["location"] == "cluster" for r in rows)}
+    rows += e5_manifest_rows(ce)
+    return write_manifests(rows)
+
+
+def refresh_manifests_e5(ce: Path) -> dict:
+    """--only e5: keep every other row of manifests/withheld.csv as it is, replace the E5 rows."""
+    with open(OUT / "manifests" / "withheld.csv", newline="") as fh:
+        rows = [r for r in csv.DictReader(fh) if r["experiment"] not in ("e5", "e5-freeze")]
+    return write_manifests(rows + e5_manifest_rows(ce))
 
 
 # ---------------------------------------------------------------- 4. runs
@@ -493,7 +574,9 @@ def elapsed_hours(s: str) -> float:
     return days * 24 + h + m / 60 + sec / 3600
 
 
-def gpu_group(name: str) -> str:
+def gpu_group(name: str, start: str = "") -> str:
+    if start and start != "None" and start >= E5_START and name.startswith("ce-"):
+        return "e5"
     for exp, pre in (("smoke", "ce-smoke"), ("sensitivity", "ce-sens"), ("e1", "ce-e1-"), ("e2a", "ce-e2a-"), ("e2b", "ce-e2b-"), ("e3", "ce-e3-")):
         if name.startswith(pre):
             return exp
@@ -593,7 +676,7 @@ def build_runs() -> dict:
         gpu_type = tres_type or (gm.group(1) if gm else "")
         hours = elapsed_hours(elapsed)
         rows.append({
-            "job_id": jobid, "job_name": name, "experiment": gpu_group(name), "role": role_of(name, info),
+            "job_id": jobid, "job_name": name, "experiment": gpu_group(name, start), "role": role_of(name, info),
             "partition": part, "node": sanitize(node), "gpus": gpus, "gpu_type": gpu_type, "gpu_model": info.get("gpu_name", ""),
             "alloc_tres": tres, "state": state, "elapsed": elapsed, "hours": round(hours, 4), "gpu_hours": round(hours * gpus, 4),
             "start": start, "end": end, "model": info.get("model", ""), "log_summary": summary_file,
@@ -612,13 +695,13 @@ def build_runs() -> dict:
         by_role[f"{r['experiment']}:{r['role']}"] += r["gpu_hours"]
         if r["gpus"]:
             by_type[f"{r['experiment']}:{r['gpu_type']}"] += r["gpu_hours"]
-    order = ["smoke", "sensitivity", "e1", "e2a", "e2b", "e3"]
+    order = ["smoke", "sensitivity", "e1", "e2a", "e2b", "e3"] + (["e5"] if totals.get("e5") else [])
     gh = {"per_experiment": {e: round(totals[e], 2) for e in order}, "e2_total": round(totals["e2a"] + totals["e2b"], 2),
           "overall": round(sum(totals.values()), 2), "per_experiment_and_gpu_type": {k: round(v, 2) for k, v in sorted(by_type.items())},
           "per_experiment_and_role": {k: round(v, 2) for k, v in sorted(by_role.items()) if v},
           "jobs": len(rows), "note": "GPU-hours = Slurm Elapsed x GPUs allocated (gres/gpu); every GPU job used 1 GPU. CPU-only jobs (ce-e1-norm) count 0. The cancelled job never started. Times are the cluster's clock (US Eastern)."}
     write_json(d / "gpu_hours.json", gh)
-    md = ["# Cluster jobs", "", "Every Slurm job of the sensitivity test, the smoke test and E1 to E3 on Explorer, from",
+    md = ["# Cluster jobs", "", "Every Slurm job of the sensitivity test, the smoke test and E1 to E3 (and E5, once a `--fetch` after its run has pulled it) on Explorer, from",
           "`sacct -u $USER --starttime 2026-10-23 -X -n -P -o JobID,JobName%60,Partition,AllocTRES%60,State,Elapsed,Start,End` (plus NodeList).",
           "AllocTRES records the GPU count but not its type, so the type comes from the node's gres (`sinfo -N -o '%N|%G'`) and the exact model from the `nvidia-smi` line the job printed. Times are the cluster's clock (US Eastern). Machine-readable copy: `jobs.csv`; totals: `gpu_hours.json`; each job's start/end lines and JSON summary: `logs/`.", "",
           "## GPU-hours", "", "| experiment | GPU-hours |", "|---|---|"]
@@ -723,16 +806,32 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--ce-root", default=str(REPO.parent / "citation-equity"))
     ap.add_argument("--fetch", action="store_true", help="pull logs, sacct, hashes and env from Explorer (read only)")
+    ap.add_argument("--only", choices=["e5"], help="add or refresh one experiment and leave every other file as it is")
     args = ap.parse_args()
     ce = Path(args.ce_root).resolve()
     if args.fetch:
         fetch()
     head = git_head(ce)
-    for sub in ("plans", "sensitivity", "e1", "e2", "e3", "manifests", "runs", "env"):
+    if args.only == "e5":
+        plans = build_plans(ce, head, PLANS_E5)
+        build_results_e5(ce)
+        man = refresh_manifests_e5(ce)
+        info = json.loads((OUT / "build_info.json").read_text())
+        info["plans"] = [p for p in info["plans"] if p["file"] not in {n for n, _ in PLANS_E5}] + plans
+        info["manifest_counts"] = man
+        info["e5"] = {"tool_head": head, "results": "results/e5/", "plans": [n for n, _ in PLANS_E5],
+                      "runs": "not in runs/ yet: the cluster cache (.cache/cluster) predates E5; a --fetch pulls its jobs",
+                      "built": datetime.now().astimezone().isoformat(timespec="seconds")}
+        write_json(OUT / "build_info.json", info)
+        final_checks()
+        print(json.dumps({"tool_head": head, "manifest": man, "e5": info["e5"]}, indent=1))
+        return
+    for sub in ("plans", "sensitivity", "e1", "e2", "e3", "e5", "manifests", "runs", "env"):
         if (OUT / sub).exists():
             shutil.rmtree(OUT / sub)
     plans = build_plans(ce, head)
     build_results(ce)
+    build_results_e5(ce)
     man = build_manifests(ce)
     gh = build_runs()
     build_env(ce)

@@ -5,7 +5,7 @@
 Writers are told that question headings, lists, statistics, quotes and cited sources help AI answer engines cite their pages.
 % src: eleven checks: CE/docs/evidence.md line 3 ("runs eleven checks"); one change at a time against a same-length paraphrase,
 %      open models over fixed sources: CE/experiments/PREREG_E1.md (design) and CE/experiments/RESULTS_E1.md; data/e1_results.json
-We tested eleven such checks by editing real web pages one change at a time, each against a same-length paraphrase, while open models answered from fixed sources.
+We tested eleven such checks by editing real web pages one change at a time, each against a same-length paraphrase or the untouched page, while open models answered from fixed sources.
 % src: "about 0.03": E1 target questions answered (question section) +0.027 and your reader's words up top +0.035 (data/e1_results.json
 %      "main" arms 9 and 12; CE/experiments/RESULTS_E1.md); the 0-to-1 citation score (5 - r)/4: CE/experiments/PREREG_E1.md line 119
 Only one kind of change clearly raised citation: the reader's own words near the top of the page, by about 0.03 on a 0-to-1 citation score.

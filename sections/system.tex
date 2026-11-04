@@ -13,8 +13,8 @@
 %      CE/experiments/results/sensitivity/sensitivity_*.json (data/sensitivity_derived.json; results/sensitivity/)
 % src: no total anywhere: spec section 2 item 1 and section 16 acceptance 1 and 2; CE/README.md lines 24 to 28 (CE 7b10ad3)
 \paragraph{From a score to questions}
-The first version averaged the eleven checks into a 0-to-100 checklist score.
-On two sample drafts, following every suggestion raised it by 26 to 29 points, while mean citation share on four open models moved by only 1 to 3 points, and Section~\ref{sec:findings} found clear gains for only two checks.
+The first version averaged its checks into a 0-to-100 checklist score.
+On two sample drafts, following its suggestions raised that score by 26 to 29 points, while mean citation share on four open models moved by only 1 to 3 points, and Section~\ref{sec:findings} found clear gains for only two checks.
 The tool now shows no total anywhere and starts from the reader's questions.
 
 % src: flow and copy: spec section 4 (four steps and routes), 7.2 (home: "What will your readers ask?", type, paste keywords, Import
@@ -60,7 +60,7 @@ Below sit one ready edit and the other checks as collapsed writing notes.
 %      RESULTS_E5.md "Reading these lines against the data" ("a copy decision made after the results"; planned readings unchanged)
 \paragraph{Labels, not scores}\label{sec:labels}
 Each check carries one fixed label for what our tests found.
-A check that helped reads \emph{Helped in our test}, one whose interval sat inside $\pm 0.03$ reads \emph{No effect in our test}, and one that ran without a verdict reads \emph{Unclear}, since \emph{Not tested} would be untrue; \emph{Not tested} is kept for inputs our tests never used, such as questions made from the page itself.
+A check that helped reads \emph{Helped in our test}, one with no effect larger than 0.03 reads \emph{No effect in our test}, and one that ran without a verdict reads \emph{Unclear}, since \emph{Not tested} would be untrue; \emph{Not tested} is kept for inputs our tests never used, such as questions made from the page itself.
 The two question checks read Helped for the reader's own questions; question headings, lists, cited sources and answer first read No effect; the other five read Unclear.
 For a question made from a keyword the answer line reads \emph{May help less} and the words line \emph{No effect in our test}, and for a local model's question the answer line reads \emph{No effect in our test}, label words we chose after seeing the results.
 

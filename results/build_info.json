@@ -65,11 +65,36 @@
    "commits": [
     "7859b07"
    ]
+  },
+  {
+   "file": "PLAN_E5.md",
+   "source": "experiments/PLAN_E5.md",
+   "first": "7c1c725",
+   "last": "2e780ef",
+   "commits": [
+    "2e780ef",
+    "0df6f1e",
+    "a98da69",
+    "7c1c725"
+   ]
+  },
+  {
+   "file": "E5_freeze_MANIFEST.md",
+   "source": "experiments/e5/freeze/MANIFEST.md",
+   "first": "23b1dfb",
+   "last": "7b10ad3",
+   "commits": [
+    "7b10ad3",
+    "73e6400",
+    "75a5bde",
+    "4200356",
+    "23b1dfb"
+   ]
   }
  ],
  "manifest_counts": {
-  "files": 382,
-  "local": 66,
+  "files": 432,
+  "local": 116,
   "cluster": 316
  },
  "gpu_hours": {
@@ -81,5 +106,15 @@
   "e3": 4.16
  },
  "gpu_hours_overall": 16.87,
- "built": "2026-10-24T20:17:37-07:00"
+ "built": "2026-10-24T20:17:37-07:00",
+ "e5": {
+  "tool_head": "7b10ad3",
+  "results": "results/e5/",
+  "plans": [
+   "PLAN_E5.md",
+   "E5_freeze_MANIFEST.md"
+  ],
+  "runs": "not in runs/ yet: the cluster cache (.cache/cluster) predates E5; a --fetch pulls its jobs",
+  "built": "2026-11-03T18:01:13-08:00"
+ }
 }
