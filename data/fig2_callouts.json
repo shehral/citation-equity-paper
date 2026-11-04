@@ -1,46 +1,46 @@
 {
   "_provenance": {
-    "producer": "hand-written from notes/OUTLINE.md (Figure 2) and the dashboard design; UI strings quoted with their file and line",
-    "note": "ui_string values were read from the deployed build by scripts/capture_screens.mjs (captured.strings); xy anchors are measured from element boxes in the same run."
+    "producer": "scripts/capture_screens.mjs (Figure 2 per spec section 14 of the tool repo, docs/superpowers/specs/2026-11-03-question-first-design.md); `what` and capture_plan are written in the script",
+    "note": "ui_string values were read from the build in the same run (captured.strings); xy anchors are measured from element boxes in that run; captured.edits are the two typed edits and draft_sha256 hashes the draft after them; captured.local_build (local URLs only) is the tool commit the build was made from."
   },
   "status": "captured",
   "screenshot": "data/screens/draft_view.png",
-  "capture_plan": "scripts/capture_screens.mjs (Playwright, 1440x900 at 2x, light, the espresso example loaded, 'Show me' on the second Start-here fix, against https://shehral.github.io/citation-equity/)",
+  "capture_plan": "scripts/capture_screens.mjs (Playwright, headless Chromium, 1440x900 at 2x, light: Try it with an example, /draft/, the two typed edits of spec section 14 (title; first sentence under \"## Why espresso turns bitter\"), waits for exactly \"Questions covered: 2 of 4\", Show on the first open line, the rail scrolled so the heading and the Quick edit's Preview are both in view, against http://127.0.0.1:47431/citation-equity/)",
   "callouts": [
     {
       "n": 1,
-      "what": "AI-ready score",
-      "ui_string": "A writing checklist, not a forecast.",
+      "what": "Questions covered",
+      "ui_string": "Each needs its key words up top and a section that answers it.",
       "xy": [
         0.6832,
-        0.1578
+        0.1222
       ]
     },
     {
       "n": 2,
-      "what": "The ready edit: Preview first, Apply only inside the preview",
+      "what": "The Quick edit: Preview first, Apply only inside the preview",
       "ui_string": null,
       "xy": [
         0.8222,
-        0.8544
+        0.9481
       ]
     },
     {
       "n": 3,
-      "what": "The selected fix's passage, marked in the draft",
+      "what": "The passage marked by Show on the first open line",
       "ui_string": null,
       "xy": [
-        0.4788,
-        0.2572
+        0.6461,
+        0.2791
       ]
     },
     {
       "n": 4,
-      "what": "A check's tag from our tests",
-      "ui_string": "Helps",
+      "what": "The card's label from our own tests",
+      "ui_string": "Helped in our test",
       "xy": [
-        0.9634,
-        0.9256
+        0.9308,
+        0.0939
       ]
     },
     {
@@ -54,7 +54,7 @@
     }
   ],
   "captured": {
-    "url": "https://shehral.github.io/citation-equity/draft/",
+    "url": "http://127.0.0.1:47431/citation-equity/draft/",
     "viewport": "1440x900 CSS px at 2x, light",
     "crop": {
       "x": 95,
@@ -62,10 +62,30 @@
       "w": 1250,
       "h": 900
     },
+    "edits": [
+      {
+        "where": "the title line",
+        "typed": ", and how do I fix it"
+      },
+      {
+        "where": "the start of the first paragraph under \"## Why espresso turns bitter\"",
+        "typed": "Espresso tastes bitter when too much comes out of the coffee, and you fix it with a coarser grind or cooler water. "
+      }
+    ],
+    "draft_sha256": "576bcb4ee2258e1d696345e45fd547ce7e8babcb601bb4c580e419dc2217ef0c",
+    "show": {
+      "button": "Show where: words up top, \"What water temperature should I use for espresso?\"",
+      "passage": "Why does my espresso taste bitter, and how do I fix it?"
+    },
     "strings": {
-      "caption": "A writing checklist, not a forecast. Why?",
-      "chip": "Stays in your browser",
-      "tag": "Helps"
+      "heading": "Questions covered: 2 of 4",
+      "line": "Each needs its key words up top and a section that answers it.",
+      "chip": "Helped in our test",
+      "privacy": "Stays in your browser"
+    },
+    "local_build": {
+      "ce_commit": "3991cc0b02001ad2e8ad24621f95ef31e2effd10",
+      "ce_tree_clean": true
     }
   }
 }

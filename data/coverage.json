@@ -1,0 +1,59 @@
+{
+  "ce_commit": "3991cc0b02001ad2e8ad24621f95ef31e2effd10",
+  "ce_tree_clean": true,
+  "engine_version": "0.0.0",
+  "samples": {
+    "espresso-bitterness": {
+      "after": {
+        "covered": 1,
+        "draft": "samples/espresso-bitterness/after.md",
+        "draft_sha256": "a7d59817740258387e06db3ae739a916d284d1cf38d0dd1c59923cb22806ae93",
+        "from": "yours",
+        "measured": 4
+      },
+      "before": {
+        "covered": 0,
+        "draft": "samples/espresso-bitterness/before.md",
+        "draft_sha256": "180aa52dd65d0bc1417c127067909280c6014a202b8b0267f8d7764309f84d26",
+        "from": "yours",
+        "measured": 4
+      },
+      "label": "espresso",
+      "pack": "samples/espresso-bitterness/pack.json",
+      "pack_sha256": "c7bd08ffaf4f2c7b6fb8547e846dff46438b131fe23d3424be85edb0e94c9cc5",
+      "questions": [
+        "Why does my espresso taste bitter?",
+        "How do I fix bitter espresso?",
+        "What water temperature should I use for espresso?",
+        "How long should an espresso shot take?"
+      ]
+    },
+    "rag-explained": {
+      "after": {
+        "covered": 3,
+        "draft": "samples/rag-explained/after.md",
+        "draft_sha256": "10c18957e28f79d29c4667f2bbdd810c5c0e7c2664bfe8d442ec845953d11c32",
+        "from": "yours",
+        "measured": 4
+      },
+      "before": {
+        "covered": 1,
+        "draft": "samples/rag-explained/before.md",
+        "draft_sha256": "f5ba3462facc6785214280a47af1648f35fff1cfd2a61bab1459edafec53f9c2",
+        "from": "yours",
+        "measured": 4
+      },
+      "label": "RAG",
+      "pack": "samples/rag-explained/pack.json",
+      "pack_sha256": "1de3612d63113d43165e48aa276f293ec29b76ce6e6d2d76f5b43ed0aa1e4ef1",
+      "questions": [
+        "What is retrieval-augmented generation?",
+        "How does a RAG pipeline work?",
+        "Should I use RAG or fine-tuning?",
+        "How do you evaluate a RAG system?"
+      ]
+    }
+  },
+  "schema_version": 2,
+  "source": "ce analyze <draft> --questions <the sample pack's questions> --json (from the bench's source)"
+}
