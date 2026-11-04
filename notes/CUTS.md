@@ -212,7 +212,7 @@ spilled); these cuts brought it to 4 (no font, margin or spacing change):
 
 ## Fix pass after the consolidated review (2026-11-03 evening)
 
-Rulings Q26 (`../citation-equity/.superpowers/sdd/2026-11-03-final-shape/paper-review-consolidated.md`) moved the evidence
+Rulings Q26 (the consolidated review notes (private working files, not in this repo)) moved the evidence
 matrix out and spent the room on Section 4, a before/after Figure 2 and the review's fixes. The first build of the fixed text
 ran to 5 pages (about 8 lines over); these moves and cuts brought it to 4 (no font, margin or spacing change):
 
