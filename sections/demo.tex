@@ -1,22 +1,21 @@
-% sections/demo.tex: Section 5, the demonstration at the venue (required by the WWW 2027 demo call).
-% Draft 2, 2026-10-24: cut from about 275 to about 190 words (notes/CUTS.md).
+% sections/demo.tex: Section 4, the demonstration at the venue (required by the WWW 2027 demo call), final shape 2026-11-03.
 % CE = ../citation-equity (the tool repo, read only). Every number carries a "% src:" comment.
 
 \section{Demonstration at the venue}\label{sec:demo}
 
-% src: CE/samples/README.md line 82 (Apple M4 Pro, 24 GB, Ollama 0.40.9); CE/README.md lines 40 to 47 (Ollama setup), CE c908431
+% src: CE/samples/README.md line 82 (Apple M4 Pro, 24 GB, Ollama 0.40.9); CE/README.md lines 40 to 47 (Ollama setup), CE 7b10ad3
 One laptop serves the static build and runs Ollama (\texttt{llama3.2:3b}), so the core demonstration needs no venue network.
-A second screen shows the hosted demo, and a poster carries Figures~\ref{fig:overview} and~\ref{fig:e1}.
+A second screen shows the hosted demo, and a poster carries Figures~\ref{fig:result} and~\ref{fig:workspace}.
 
-% src (Station 1, CE c908431): Start here on the example = the reader-question advice, the reader's-words advice and the
-%      example's only ready edit, the heading "?" (an unscored note, kept by "Start here always keeps one ready edit":
-%      CE/packages/engine/src/rank.ts lines 69 to 95, CE commit 5e7ac43; CE/README.md line 20). Rechecked 2026-10-26 with the
-%      engine source (analyze with the four pack questions as questions and authorQuestions, rankFixes, startHereFixes):
-%      score 37; the "?" edit leaves 37; working the questions' words into the opening raises it (reader's words weight 0.5).
-%      Figure 2 shows the same three fixes.
-% src: CE/samples/README.md lines 81 and 83 (64 answers = 2 drafts x 4 questions x 8 runs; espresso 18:37 to 18:52 PDT)
-\emph{Station 1, the 90-second loop.} The visitor loads the espresso example, follows the reader's-words advice and watches the score change (Figure~\ref{fig:readerwords}), applies a ready edit through Preview (a heading's question mark, an unscored note, so the score holds), opens the studies behind one mixed check and the recorded citation test beside its chance line.
+% src (Station 1): spec section 7.2.1 (Try it with an example: four pack questions, 0 of 4 covered, 1 blocker, crawler-access, on the
+%      example page) and section 14 (two typed edits, the title and one opening sentence under the first section, give "Questions
+%      covered: 2 of 4", checked with the engine on 2026-11-03); the Quick edit on the example is the question-heading "?" edit,
+%      labelled No effect in our test (spec section 7.3; rank.test.ts); the recorded test: CE/samples/README.md lines 87 to 98
+% src: 64 answers in 15 minutes: CE/samples/README.md lines 81 and 83 (2 drafts x 4 questions x 8 runs; espresso 18:37 to 18:52 PDT)
+\emph{Station 1, the 90-second loop.} The visitor clicks \emph{Try it with an example}: four reader questions, a draft that covers none of them, and one blocker on the example page.
+Two typed edits, a few words in the title and one answering sentence, take the count to 2 of 4; the visitor then applies the ready edit through Preview, reads its label, and opens the recorded before-and-after test beside its chance line.
 A live run (64 answers, 15 minutes) starts each session and fills in while visitors watch.
-\emph{Station 2, bring your own text (offline).} Visitors paste their own paragraph and see checks, suggestions and grades; the text never leaves the laptop.
-% src: CE/README.md line 59 (ce site); CE/docs/evidence.md line 262 (five items in the browser, two need a fetch: ce site), CE c908431
-\emph{Station 3, can engines reach your site? (online).} The command-line \texttt{ce site} runs the seven readiness items on the visitor's URL over a phone hotspot; offline, pasted HTML runs five of them in the browser.
+\emph{Station 2, your readers' questions (offline).} Visitors type their questions or keywords and paste their own paragraph; they see which questions it covers and which words are missing, and the text never leaves the laptop.
+% src: CE/docs/cli.md line 95 (ce site: blockers first); spec section 7.4 (pasted HTML and robots.txt in the browser; "1 check needs
+%      your live site")
+\emph{Station 3, can engines reach your site? (online).} The command-line \texttt{ce site} checks the visitor's URL for blockers over a phone hotspot; offline, pasted HTML and robots.txt run the same checks in the browser, except those that need the live site.

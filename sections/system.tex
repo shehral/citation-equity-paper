@@ -1,101 +1,108 @@
-% sections/system.tex: Section 2, the system (what the tool does, how a creator uses it, design principles).
-% Draft 2, 2026-10-24: cut from about 1,140 to about 640 words to fit 4 pages (notes/CUTS.md).
-% CE = ../citation-equity (the tool repo, read only). Every number carries a "% src:" comment.
-% Labels defined here: sec:system, sec:checks, sec:suggest, sec:beyond, sec:bench, fig:workspace.
+% sections/system.tex: Section 3, the tool as rebuilt from Section 2 (final shape, 2026-11-03): the question-first flow, the
+% labels and the rule for nulls, suggest never rewrite, architecture and the citation test.
+% CE = ../citation-equity (the tool repo, read only; feat head 7b10ad3, with the redesign merged; the E5 labels are being filled
+% in on the sdd/qf-e5fill branch by Ruling Q23, .superpowers/sdd/2026-11-03-final-shape/progress.md). Every number carries a
+% "% src:" comment. The redesign spec: CE/docs/superpowers/specs/2026-11-03-question-first-design.md (local feat branch only).
+% Labels defined here: sec:system, sec:flow, sec:labels, sec:suggest, sec:bench, fig:workspace, fig:evidence.
 
 \section{Citation Equity}\label{sec:system}
 
-% src (CE c908431): CE/README.md lines 11 to 23 ("What it does", "How to use it"); up to eight: CE/apps/workspace/lib/questions.ts
-%      line 12 (MAX_QUESTIONS = 8); CE/docs/superpowers/specs/2026-10-23-citation-equity-design.md sections 1 and 4 (local feat
-%      branch only; not on public main b10887e)
-A writer pastes a draft, sets up to eight target questions, applies fixes one at a time and tests the revision.
-% src: CE/README.md line 68 ("Privacy": the CLI sends the draft only to "a hosted API you choose") and CE/docs/cli.md line 89
-%      ("Drafts stay on your disk unless you point `ce bench` at a hosted server"); beside, never inside: CE/docs/architecture.md
-%      line 27 ("It reports; it never retunes the weights.") and CE/docs/evidence.md line 14 ("reports a measured outcome
-%      separately from the score"), CE c908431
-Measured outcomes are reported beside the score, never inside it, and drafts stay local unless the author picks a hosted model.
-% src (CE c908431): CE/docs/architecture.md lines 3 to 18 (monorepo, no server), 34 (engine: browser and CLI), 49 to 59 (bench),
-%      67 (static export, GitHub Pages) and 104 (Playwright: "no request leaving the origin on load")
-A TypeScript monorepo holds an \emph{engine} of pure check functions (browser and CLI), a \emph{bench} with the citation test, and a \emph{workspace}, a Next.js static export on GitHub Pages with no server; a browser test asserts no request leaves the origin on load.
-% src: data/system_checks.json (scripts/system_checks.py, rerun 2026-10-26 at CE c908431, tree clean): analyze() median 7.47 ms
-%      (espresso, 831 words) and 10.21 ms (RAG, 1,041 words), 60 warm runs, Apple M4 Pro; three reruns of scripts/engine_time.mts
-%      gave 10.6 to 11.0 ms for RAG; /draft/ loads 801,485 B of gzipped JS; 1,248 Vitest tests passed; 78 Playwright tests
-%      (each spec against the root and the GitHub Pages build). The earlier 6 ms and 1,171 were measured at CE 2851854,
-%      before the reader's-words check existed.
-The engine checks a 1{,}000-word draft in about 10\,ms on a laptop; 1{,}248 unit and 78 browser tests cover the code.
+% src: checklist score 40 -> 69 (+29) and 42 -> 68 (+26), Standard ("foundation") preset, the first version (CE c908431):
+%      data/scores.json (scripts/collect_scores.py; CE/samples/README.md at c908431, line 100)
+% src: citation share +0.014 to +0.031 ("1 to 3 points") on four open models: summary.after_minus_before_exploratory of
+%      CE/experiments/results/sensitivity/sensitivity_*.json (data/sensitivity_derived.json; results/sensitivity/)
+% src: no total anywhere: spec section 2 item 1 and section 16 acceptance 1 and 2; CE/README.md lines 24 to 28 (CE 7b10ad3)
+\paragraph{From a score to questions}
+The first version averaged the eleven checks into a 0-to-100 checklist score.
+On two sample drafts, following every suggestion raised it by 26 to 29 points, while mean citation share on four open models moved by only 1 to 3 points, and Section~\ref{sec:findings} found clear gains for only two checks.
+The tool now shows no total anywhere and starts from the reader's questions.
 
-\subsection{Check: eleven checks with graded evidence}\label{sec:checks}
-
-% src (CE c908431): CE/docs/evidence.md line 3 (six from Prof. Bayat's design for the project, i.e. the PI's; four from the
-%      literature; one, your reader's words up top, added because it helped in E1); CE/docs/architecture.md line 30;
-%      CE/packages/engine/src/registry.ts lines 13 to 17
-Six checks come from the project's initial design, four from the literature (Figure~\ref{fig:evidence} names them all), and one, \emph{your reader's words up top}, from our own test, where it helped (Section~\ref{sec:findings});
-% src: CE/README.md lines 21 ("Not scored") and 27 ("seven are averaged into the AI-ready score"); CE/docs/evidence.md line 34; CE/docs/architecture.md line 30 (weight 0 in both built-in
-%      weightings, still analyzed and still suggest); CE/packages/engine/src/registry.ts lines 98 to 128 (UNSCORED_CHECKS,
-%      PRESET_WEIGHTS); owner approved the change (task brief, 2026-10-24)
-four (question headings, lists, cited sources, direct answer first) are shown and still suggest fixes but are not scored, as our tests found no clear effect on citation.
-% src: CE/docs/evidence.md lines 16 to 32 (rubric; the null rule at lines 24 and 29) and line 34 (outcome); lines 76 to 88 ("The
-%      studies", the nine sources), CE c908431
-Each check scores the draft from 0 to 1 and carries an evidence grade (strong, moderate, mixed or untested) under a written rubric in which a null or negative result in any study, even in one subgroup, makes a check mixed.
-% src: CE/docs/evidence.md line 3 ("opened and read on 2026-10-23") and line 34 ("Nine are mixed and two are untested");
-%      "in full" dropped (verify-claims B6)
-% The nine sources are cited in Figure 3's caption, in column order (clarity pass 2026-10-26).
-Over the nine sources the tool cites, each opened and read, no check is strong or moderate: nine are mixed and two untested (Figure~\ref{fig:evidence}).
-% src: data/evidence_grades_loose.json (scripts/derive_loose_grades.py): loose rule 0 strong, 5 moderate, 4 mixed, 2 untested
-%      (lists, direct-answer lead, question coverage, comparisons and reader's words move to moderate); single-rater coding,
-%      the reader's-words cells coded 2026-10-24 (notes/FINAL-TOOL-SYNC.md)
-A looser rule, defined post hoc, that counts only a study's own no-effect conclusion or a significant harm makes five mixed checks moderate. \owner{Second rater (Ishan Gupta): agreement pending.}
-% src: CE/README.md lines 27 and 32; CE/packages/engine/src/registry.ts lines 98 to 128; CE/apps/workspace/components/draft/score-card.tsx
-%      line 112 (shipped wording "A writing checklist, not a forecast."; CE/apps/workspace/lib/presets.ts lines 11 to 12 keep
-%      "not a prediction of citations" for the weighting notes).
-% src: UI name "AI-ready score": CE/README.md lines 11 and 27, CE/docs/architecture.md line 39 and CE/docs/evidence.md line 7
-%      ("The AI-ready score is a content check"), CE c908431; Figure 2 shows "AI-ready score".
-The \emph{checklist score} (the tool's AI-ready score) averages the checks out of 100 under editable weights and is labelled a writing checklist, not a forecast.
-
-\subsection{Suggest, never rewrite}\label{sec:suggest}
-
-% src (CE c908431): CE/docs/architecture.md lines 26 (anchored ranges), 78 (anchors follow the author's edits; merge preview),
-%      81 (CE/apps/workspace/lib/apply.ts: Apply only if the text is unchanged, else "Out of date"; "There is no bulk action."),
-%      84 (Rewrite with local AI only after a click) and 104 (Preview, Apply, Undo, Done, Skip); CE/README.md line 13;
-%      side by side: CE/apps/workspace/components/draft/draft-view.tsx lines 683 to 686 ("opens the proposal side by side.
-%      Nothing is applied here.")
-% src: AnchoredAI arXiv 2509.16128: within-subjects lab study, more agency and ownership than a chat interface
-Comments anchored to spans of text improved writers' agency over a chat interface in a lab study~\cite{lou2025anchoredai}, so every suggestion is anchored to an exact range of the draft and follows the author's own edits.
-An \emph{edit} (say, a missing question mark) is previewed, and Apply changes the range only if its text is unchanged; an \emph{advisory} (say, name a real source for a figure) is left to the author.
-Every action has Undo, and there is no ``apply all'' (Figure~\ref{fig:workspace}). An optional local model can propose wording for one suggestion, shown side by side and applied only on the author's click.
-% "Beyond the draft" was a \paragraph; the clarity pass (2026-10-26) runs it on in this paragraph (notes/CUTS.md 79).
-% src (CE c908431): CE/README.md line 15; CE/docs/architecture.md lines 44 (seven readiness items) and 74 (/cited/: cited sites
-%      grouped by type); CE/docs/evidence.md line 262 ("no readiness item changes a score"), lines 264 to 271 (readiness rubric:
-%      operator documentation counts) and the grades at lines 277, 289, 301, 315, 328, 338, 372 (2 strong, 1 moderate, 2 mixed,
-%      2 untested)
-\emph{Beyond the draft}, \emph{site readiness}\label{sec:beyond} checks seven items of the published page (crawler access and indexing directives are graded strong, on operators' documentation); % src: CE/README.md (Your questions; Searches behind this question), CE 96375d4; CE/docs/cli.md (ce questions --keywords --fanout)
-\emph{who gets cited} sorts the sources of pasted AI answers; \emph{your questions} turns keywords or Search Console queries into a ranked list of reader questions for the whole site, each with the searches an answer engine is likely to run behind it. None changes the score, and the last two are untested helpers.
-
-\subsection{Test it: the citation bench}\label{sec:bench}
-
-% src (CE c908431): CE/samples/README.md line 39 ("How the test works") and line 81 (settings); CE/docs/architecture.md lines 52
-%      (BM25, top k = 8), 54 (N = 8 seeds, seeded shuffle of the source order), 55 (chance level, exact sign-flip test) and 63
-%      ("It does not predict live AI engines."); valid answers and failures: CE/samples/README.md line 56
-% src: Martinez arXiv 2607.14035 Section 11.2 (randomized context order; "Seven to eight repetitions"; failed outputs are outcomes)
-% src: "plus one format reminder": CE/samples/README.md line 55 (GEO's instruction word for word, one line added after the sources)
-For each question, BM25 retrieves the top 8 of the draft and its competitor pages, and a model the author runs (\texttt{llama3.2:3b} through Ollama by default) answers with numbered citations under GEO's prompt plus one format reminder~\cite{aggarwal2024geo}, 8 times with different seeds and source orders~\cite[Sec.~11.2]{martinez2026survey}.
-Reports keep apart how often the draft was retrieved, how many answers were \emph{valid} (failures are outcomes, not discarded data), how often it was cited, and its \emph{word share} beside the \emph{chance level} of an even split (0.125), with a paired sign-flip test; each says \emph{``It does not predict live AI engines.''}
-% src: CE/samples/README.md line 83 (espresso 18:37 to 18:52, RAG 18:52 to 19:10 PDT: 64 answers per sample, 2 drafts x 4
-%      questions x 8 runs, in 15 and 18 min: 14.1 and 16.9 s per answer) and line 82 (Apple M4 Pro, 24 GB, Ollama 0.40.9);
-%      CE/docs/cli.md line 73 (`ce bench --export-prompts` and `--answers`: export, then replay answers generated elsewhere)
-% Clarity pass 2026-10-26 (notes/CUTS.md 79): "An answer takes 14 to 17 s on the authors' laptop;" dropped; Section 5 keeps
-% the live run's 64 answers in 15 minutes (same README line 83).
-For larger models it exports the prompts and replays answers generated elsewhere.
-% src: CE/samples/README.md line 98 ("With 4 questions the smallest possible p is 0.125, so these runs can show a direction at most.")
-% Cut 2026-10-26 (notes/CUTS.md 72): "With a sample's 4 questions the smallest possible p is 0.125, so a laptop run shows a
-% direction at most." The p floor moved into Section 3's laptop paragraph.
+% src: flow and copy: spec section 4 (four steps and routes), 7.2 (home: "What will your readers ask?", type, paste keywords, Import
+%      CSV from Search Console or Bing Webmaster, Try it with an example), 7.3 (draft rail: Questions covered card, Quick edit,
+%      Writing notes collapsed), 7.4 (blockers: crawler access, indexing directives, renders without JavaScript; four other page
+%      notes), 7.5 (Did it change anything?: Test before and after, Who AI search cites); CE/README.md lines 11 to 22 (CE 7b10ad3)
+% src: covered = (a) and (b): spec section 5 (Ruling Q1): (a) no key word missing from the title, the headings above the first
+%      non-question heading or the first paragraphs; (b) a section that opens with a plain sentence holding at least 60% of the key
+%      words; the card names at most 3 missing words (MAX_NAMED) and never inserts them
+% src: blockers rest on operators' documentation: CE/docs/evidence.md lines 306 to 309 (readiness rubric) and the crawler-access and
+%      indexing grades (strong); CE/docs/cli.md line 95 ("Blockers can keep a page out of AI answers; the other items are notes")
+\paragraph{The flow}\label{sec:flow}
+Four screens follow the writer's work.
+\emph{Your questions} asks ``What will your readers ask?'': the writer types questions, pastes keywords or imports a Search Console or Bing Webmaster export, or loads an example with one click.
+\emph{Your draft} leads with ``Questions covered: N of M'' (Figure~\ref{fig:workspace}).
+A question is covered when its key words appear in the title, first heading or first paragraph, and a section opens with a plain sentence that uses most of them; the card names the missing words and never inserts them.
+Below sit one ready edit and the other checks as collapsed writing notes.
+\emph{Can engines reach it?} checks pasted HTML and robots.txt for three blockers (a blocked AI crawler, a noindex rule, text that needs JavaScript), which rest on the engines' own documentation; the other page items are notes.
+\emph{Did it change anything?} runs the citation test on the draft before and after, and shows whom live AI answers cite.
 
 \begin{figure}[t]
   \centering
+  % TODO Figure 2: question-first capture (Task 16)
+  % Placeholder: figures/fig2_workspace.pdf is still the pre-redesign draft view (score ring 37). Task 16 (spec section 14)
+  % recaptures it with scripts/capture_screens.mjs after Try it with an example and two typed edits (title and one opening
+  % sentence), so the card reads "Questions covered: 2 of 4", with callouts 1 the heading, 2 the Quick edit's Preview, 3 the
+  % passage a Show marks, 4 the "Helped in our test" chip, 5 the "Stays in your browser" chip, and the old score small beside it.
   \includegraphics[width=\columnwidth]{figures/fig2_workspace.pdf}
-  \Description{A screenshot of the workspace's draft view on the espresso example. Left: the draft as a paper-style page, with its title underlined because the selected tip is about it. Right: the AI-ready score of 37 with the line "A writing checklist, not a forecast", three Start-here fixes (two tips and one ready edit with a Preview button), and the first fix group with the tag "Helps". Top right: a "Stays in your browser" chip. Numbered callouts point to each.}
-  % takeaway rewritten 2026-10-26: since CE 008e68e the draft view shows no grades; a fix group carries at most one chip,
-  % "Helps" or "Not scored" (CE/apps/workspace/components/check-chip.tsx; CE/README.md line 21); grades live on /research.
-  \caption{\figtakeaway{The deployed draft view (espresso example): the author applies one fix at a time; a tag marks the checks our tests found to help.}}
+  \Description{A screenshot of the draft view on the espresso example after two edits. Left: the draft as a paper-style page, with a passage marked. Right: the Start here rail, headed "Questions covered: 2 of 4" with a "Helped in our test" chip; each question has a words-up-top line and an answer line, open lines name the missing words, and a Quick edit card offers one ready edit with a Preview button. Top right: a "Stays in your browser" chip. Numbered callouts point to each; the old checklist score is shown small beside it.}
+  % src (caption): spec section 14 (the capture: 2 of 4 after the two typed edits, checked with the engine on 2026-11-03) and
+  %      section 7.3 (card, chips, Quick edit); CE/README.md line 20
+  \caption{\figtakeaway{The draft view starts from the reader's questions: it counts which ones the draft covers and names the missing words, and shows no score.}
+    Espresso example after two typed edits.}
   \label{fig:workspace}
+\end{figure}
+
+% src: label rule and texts: spec section 6 (TestLabel table and mapping rules; Ruling Q2: ran-but-no-verdict reads Unclear);
+%      CE/docs/evidence.md lines 42 to 50 ("Labels of the eleven checks today: 2 Helped in our test, 4 No effect in our test and
+%      5 Unclear"); CE/packages/engine/src/labels.ts (TEST_LABEL_TEXT, testLabelOf), CE 7b10ad3
+% src: per-input labels after E5 (Ruling Q23, chosen after the results; owner to confirm): keyword = {words: No effect in our test,
+%      answer: May help less}, local-model = {words: Not tested, answer: No effect in our test}, page = Not tested:
+%      .superpowers/sdd/2026-11-03-final-shape/progress.md "E5 results into the tool" and qf-task-e5fill-brief.md; CE/experiments/
+%      RESULTS_E5.md "Reading these lines against the data" ("a copy decision made after the results"; planned readings unchanged)
+\paragraph{Labels, not scores}\label{sec:labels}
+Each check carries one fixed label for what our tests found.
+A check that helped reads \emph{Helped in our test}, one whose interval sat inside $\pm 0.03$ reads \emph{No effect in our test}, and one that ran without a verdict reads \emph{Unclear}, since \emph{Not tested} would be untrue; \emph{Not tested} is kept for inputs our tests never used, such as questions made from the page itself.
+The two question checks read Helped for the reader's own questions; question headings, lists, cited sources and answer first read No effect; the other five read Unclear.
+For a question made from a keyword the answer line reads \emph{May help less} and the words line \emph{No effect in our test}, and for a local model's question the answer line reads \emph{No effect in our test}, label words we chose after seeing the results.
+
+% src (CE 7b10ad3): CE/docs/evidence.md lines 22 to 29 (rubric; the null rule at lines 24 and 29) and line 34 ("No check is graded
+%      strong or moderate today. Nine are mixed and two are untested."); line 3 (sources "opened and read on 2026-10-23"); the
+%      nine sources: "The studies" table
+% src: data/evidence_grades_loose.json (scripts/derive_loose_grades.py): loose rule 0 strong, 5 moderate, 4 mixed, 2 untested;
+%      single-rater coding (notes/FINAL-TOOL-SYNC.md)
+\paragraph{Evidence and the rule for nulls}
+Published studies are graded apart from our labels, on the Research page, under a strict rule: a null or negative result in any study, even in one subgroup, makes a check \emph{mixed}.
+Over the nine sources the tool cites, each opened and read, no draft check is strong or moderate: nine are mixed and two untested (Figure~\ref{fig:evidence}).
+A looser rule, defined after the fact, that counts only a study's own no-effect conclusion or a significant harm makes five mixed checks moderate. \owner{Second rater (Ishan Gupta): agreement pending.}
+
+% src (CE 7b10ad3): CE/docs/architecture.md lines 80 (anchors follow the author's edits; merge preview), 84 (Apply only if the text
+%      is unchanged, else "Out of date"; "There is no bulk action.") and 90 (local model only after a click); spec section 3
+%      (product truths); Suggest wording: spec section 7.3; CE/README.md line 13 ("there is no apply-all")
+% src: AnchoredAI arXiv 2509.16128: within-subjects lab study, more agency and ownership than a chat interface
+\paragraph{Suggest, never rewrite}\label{sec:suggest}
+Comments anchored to spans of text gave writers more agency than a chat interface in a lab study~\cite{lou2025anchoredai}, so every suggestion is anchored to an exact range of the draft and follows the author's edits.
+An edit is previewed and applied only if its text is unchanged; every action has Undo, and there is no ``apply all''.
+An optional local model can propose wording for an answer, applied only on the author's click.
+
+% src (CE 7b10ad3): CE/docs/architecture.md lines 3 (monorepo, no server, static export), 13 (workspace routes), 54 (BM25, top k = 8),
+%      56 (N = 8 seeds, seeded shuffle of the source order), 57 (chance level, exact sign-flip test), 65 (the caveat "It does not
+%      predict live AI engines."), 90 (local model only after a click) and 110 (Playwright: "no request leaving the origin on load")
+% src: CE/samples/README.md lines 39 ("How the test works"), 56 (format failures counted; chance level 0.125) and 98 ("With 4
+%      questions the smallest possible p is 0.125, so these runs can show a direction at most."); GEO's prompt: CE/NOTICE lines 10
+%      to 25; Martinez arXiv 2607.14035 Section 11.2 (randomized context order; failed outputs are outcomes)
+\paragraph{Architecture and the citation test}\label{sec:bench}
+A TypeScript monorepo holds an \emph{engine} of pure check functions (browser and CLI), a \emph{bench} with the citation test, and a \emph{workspace}, a Next.js static export on GitHub Pages with no server; a browser test asserts that no request leaves the origin on load.
+For each question the bench retrieves the top 8 of the draft and its competitor pages with BM25, and a local model (\texttt{llama3.2:3b} through Ollama) answers with numbered citations under GEO's prompt~\cite{aggarwal2024geo}, 8 times with shuffled source orders~\cite[Sec.~11.2]{martinez2026survey}.
+Reports keep apart retrieval, valid answers, citation and word share beside the chance level, and each says \emph{``It does not predict live AI engines.''}
+With a sample's 4 questions the smallest possible $p$ is 0.125, so a laptop run shows a direction at most.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/fig3_evidence.pdf}
+  \Description{A matrix with the eleven draft checks as rows and the nine sources as columns. Each cell marks a controlled gain, an indirect or observational gain, a gain in part with a null in part, a null, a significant harm, an observational negative, survey support or caution, or background only. Two chip columns give each check's grade under the strict shipped rule (9 mixed, 2 untested) and under a looser rule (5 moderate, 4 mixed, 2 untested). A strip below grades the seven site-readiness items.}
+  % src (caption): CE/docs/evidence.md line 34; data/evidence_grades_loose.json tally (strict 0/0/9/2; loose 0/5/4/2);
+  %      readiness_tally 2 strong, 1 moderate, 2 mixed, 2 untested; single-rater coding (data/README.md)
+  % cite order in the caption = the columns, left to right (scripts/figdata.py STUDIES)
+  \caption{\figtakeaway{Every draft check has a null or negative result somewhere, but ``mixed'' spans positive in every model to harmful, and a looser rule, defined after the fact, moves five to moderate.}
+    Columns: \cite{aggarwal2024geo}, \cite{puerto2025cseo}, \cite{vishwakarma2026cited}, \cite{kim2026sageo}, \cite{zhang2026absorption}, \cite{wan2024conflictingqa}, \cite{wu2026autogeo}, \cite{yu2026geosfe}, \cite{martinez2026survey}. One rater.}
+  \label{fig:evidence}
 \end{figure}

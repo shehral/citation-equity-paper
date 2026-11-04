@@ -1,39 +1,44 @@
-% sections/conclusion.tex: Ethics and use of data as its own section (required by the WWW 2027 demo call, notes/VENUE.md), limitations, future work,
-% acknowledgments and the AI-use statement placeholder.
-% Draft 2, 2026-10-24: cut from about 375 to about 210 words (notes/CUTS.md). CE = ../citation-equity (read only).
+% sections/conclusion.tex: limitations and future work, Ethics and use of data as its own section (required by the WWW 2027 demo
+% call, notes/VENUE.md), acknowledgments and the AI-use statement (kept exactly as they were). Final shape 2026-11-03.
+% CE = ../citation-equity (read only).
+
+% src: open models over fixed sources; live engines differ and drift: Martinez arXiv 2607.14035 (survey, Section 11)
+% src: "about 0.03": Section 2 (data/e1_results.json, data/e5_results.json); one rank position = 0.25 score units and 0.03 = 0.12 rank
+%      positions per answer (CE/experiments/PREREG_E1.md lines 119 and 148), so about one position over eight answers
+% src: the keyword = the reader's question's two rarest key words, a stand-in that leaks part of the query on purpose
+%      (CE/experiments/PLAN_E5.md, "Keyword k"; RESULTS_E5.md opening paragraph)
+% src: E1's queries: arm 9 was followed up because it passed there, so its gain there may be overstated (CE/experiments/RESULTS_E5.md
+%      "What the results mean", last bullet; share_kept_e1.caveat in data/e5_results.json)
+% src: sensitivity test: CE/experiments/PREREG_sensitivity.md line 30 (H2 bar +0.10, "Criteria (fixed before running)");
+%      answer_first_minus_before +0.007 to +0.034 on four models, detectable 0.019 to 0.047 (data/sensitivity_derived.json "ranges")
+% src: 320 queries = 260 GEO-bench main (E3 pooled and E5 main) + 60 C-SEO Bench (E1 replication); Gemma-4-31B-it edits all but
+%      E2b's (Qwen3.8-27B, 80 queries, CE/experiments/RESULTS_E2.md); E5's local-model questions are Gemma-4-31B-it's too
+% src: CE/experiments/PREREG_E1.md line 114 (the byte-identity check against --export-prompts is planned for E1 only; the check is
+%      CE/experiments/e1/check_prompt_twin.ts, in CE/experiments/e1/freeze/MANIFEST.md line 39; no recorded run of it is in the tool
+%      repo, so this sentence stays until the owner runs it)
+\section{Limitations and future work}\label{sec:conclusion}
+Every measurement uses open models over fixed sources, not live engines, which differ and drift~\cite{martinez2026survey}.
+The effects are small, about 0.03 on a 0-to-1 score, or about one rank position over eight answers.
+The keyword in our last test is two words of the real query, so it carries part of the query by design; real keywords may share less.
+Our first test's queries are those on which the question section first passed, so estimates that include them may run high; the 180 new queries do not have this bias.
+An earlier sensitivity test of the bench missed its target: a one-sentence answer edit gained $+0.007$ to $+0.034$ against a $+0.10$ bar the harness could detect.
+The tests cover 320 English queries, nearly all edited by one model family, and the harness prompt has not been byte-checked against the bench's.
+Next are a comparison with live engines and a study with writers.
 
 \section{Ethics and use of data}\label{sec:ethics}
 
-% src: CE/README.md line 68 ("The web app has no server"); CE/docs/cli.md line 89 ("Drafts stay on your disk unless you point
-%      `ce bench` at a hosted server"), CE c908431
+% src: CE/README.md line 68 ("The web app has no server"); CE/docs/cli.md line 22 (`ce pack from-urls` "respects robots.txt")
 % src: CE/samples/README.md lines 27 to 31 (packs and pages synthetic, people fictional); CE/NOTICE lines 133 to 145 (C-SEO Bench
-%      "Data used at run time (not redistributed)"); CE/docs/cli.md line 22 (`ce pack from-urls` "respects robots.txt")
-% src: CE/docs/evidence.md lines 456 and 492 (FTC review rule and Endorsement Guides; line numbers at CE c908431)
+%      "Data used at run time (not redistributed)")
 No human participants took part and no user data was collected.
 Sample drafts and competitor pages are invented; C-SEO Bench is downloaded at run time, never redistributed; building competitor pages from URLs respects robots.txt.
-% src: CE/README.md line 3 ("it suggests, you decide"); CE/docs/architecture.md line 84 (Rewrite with local AI only after a
-%      click) and CE/apps/workspace/components/draft/draft-view.tsx lines 683 to 686 ("Nothing is applied here.")
-On dual use, it generates no page text on its own, asks for real and checkable material, and states the FTC's endorsement rules; the bench could test a manipulative edit, but the tool offers none.
-% src: CE/experiments/PREREG_E1.md line 18 (GEO-bench source URLs: research use only, never redistributed; only aggregates
-%      and hashes committed). Owner item (notes/STATUS.md): Prof. Akram confirms this research use before submission.
-% As PREREG_E1.md line 18 planned: no page text, and nothing built from it, is redistributed (2026-10-29).
+% src: CE/README.md line 3 ("it suggests, you decide"); CE/docs/architecture.md lines 84 and 90 (no bulk action; the local model only
+%      after a click); FTC review rule and Endorsement Guides: CE/docs/evidence.md lines 494 and 530 (CE 7b10ad3)
+On dual use, the tool writes no page text on its own, asks for real and checkable material, and states the FTC's endorsement rules; the bench could test a manipulative edit, but the tool offers none.
+% src: CE/experiments/PREREG_E1.md line 18 (GEO-bench source URLs: research use only, never redistributed; only aggregates and
+%      hashes committed); E5 the same (CE/experiments/e5/freeze/MANIFEST.md "Local inputs ... sha256 only"; results/README.md)
 The tests use the public pages GEO-bench lists~\cite{aggarwal2024geo}; their text, and everything built from it, is not redistributed, only URLs, hashes and results.
 A future user study will go through IRB review.
-
-% src: CE/experiments/PREREG_sensitivity.md lines 11 to 20; CE/samples/README.md lines 9 to 12, 27 and 55 ("Write in English");
-%      Martinez Table 5
-% src: 320 queries = 260 GEO-bench (E3 pooled, CE/experiments/RESULTS_E3.md) + 60 C-SEO Bench (CE/experiments/RESULTS_E1.md);
-%      Gemma-4-31B-it edits all but E2b's (Qwen3.8-27B, 80 queries, CE/experiments/RESULTS_E2.md)
-% src: CE/experiments/PREREG_E1.md line 114 (the byte-identity check against --export-prompts is planned for E1 only; the check
-%      is CE/experiments/e1/check_prompt_twin.ts, in the freeze manifest CE/experiments/e1/freeze/MANIFEST.md line 39; no
-%      recorded run of it is in the tool repo, so this sentence stays until the owner runs it)
-% src: smoke test CE/experiments/results/smoke_google__gemma-4-12B-it.json (commit 20e2b3f, 20:09 PDT, before the
-%      pre-registration 3c86c02): planted page cited in 8/8 valid answers, mean share 0.9688; one model, outside the design
-\section{Limitations and future work}\label{sec:conclusion}
-Every measurement uses open models over fixed sources, not live engines, which differ and drift~\cite{martinez2026survey}; the sensitivity test covers two synthetic topics and 8 questions, the one-change tests 320 English queries, nearly all edited by one model family, with no positive control in the sensitivity design.
-% Owner item (notes/STATUS.md): run the 10-prompt --export-prompts byte comparison and drop this sentence, or keep it.
-The harness prompt has not been byte-checked against the bench's.
-Next are a comparison with live engines and a study with writers.
 
 \begin{acks}
 This work was done in Northeastern University's SPARK research program in San Jose; the experiments ran on Northeastern Research Computing's Explorer cluster.

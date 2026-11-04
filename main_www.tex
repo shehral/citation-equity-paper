@@ -1,5 +1,5 @@
 % main_www.tex -- Citation Equity, The Web Conference 2027 (WWW '27) demo track submission build.
-% WORKING DRAFT, 2026-10-24. Owner decisions are marked \owner{...} (blue) and stay visible until he clears them.
+% FINAL SHAPE, 2026-11-03 (framing notes/FRAMING-2026-10-27.md; E5 in). Owner decisions are marked \owner{...} (blue) and stay visible until he clears them.
 %
 % Call (https://www2027.thewebconf.org/demos/, re-read 2026-10-24; notes/VENUE.md):
 %   - at most 4 pages INCLUDING references, double column, English;
@@ -30,8 +30,8 @@
 
 \begin{document}
 
-% Title: the owner picks one of three (notes/OUTLINE.md "Title"); this is the PC critique's suggestion.
-\title{Citation Equity: A Writing Tool for AI Search That Tests Its Own Advice}
+% Title: FRAMING-2026-10-27.md's recommended title (owner's framing choice, 2026-10-27).
+\title{Citation Equity: Testing GEO Writing Advice, and Keeping Only What Moved Citation}
 
 % Byline: five authors in the owner's order (owner update 2026-10-26). Pegah Zargarian is a Northeastern alumna, so her
 % block names the university and country only (no college, no city), as the owner asked.
@@ -88,29 +88,30 @@
 \end{CCSXML}
 \ccsdesc[500]{Information systems~Web searching and information discovery}
 \ccsdesc[300]{Human-centered computing~Interactive systems and tools}
-\keywords{generative engine optimization, answer engines, citation, writing tools, evidence grading, null results}
+\keywords{generative engine optimization, answer engines, citation, writing tools, controlled tests, null results}
 
-% ---- Figure 1: the schematic plus the headline, as the page-1 teaser (sigconf cannot float a figure* onto page 1).
-% src (caption): checklist score 40 -> 69 (+29) and 42 -> 68 (+26), Standard ("foundation") preset: data/scores.json
-%      (scripts/collect_scores.py, rerun at CE c908431; CE/samples/README.md line 100); citation share +8% to +17% and +0.014 to +0.031:
-%      CE/experiments/results/sensitivity/sensitivity_*.json summary.after_minus_before_exploratory and
-%      summary.mean_target_share.before; off-topic share <= 0.0031 (max, Qwen3.5-9B): same files, summary.mean_target_share.offtopic.
+% ---- Figure 1: the result, as the page-1 teaser (sigconf cannot float a figure* onto page 1). scripts/fig_result.py.
+% src (caption): data/e1_results.json ("main", "replication", "e2", "e3"; scripts/derive_e1_results.py) and data/e5_results.json
+%      (scripts/derive_e5.py): 80 main and 60 replication queries (E1), 260 pooled (E3), 180 new (E5, queries.new); the margin 0.03
+%      and the 30-query minimum: settings in every analysis JSON; "loses the gain": readings.retention.9K
 \begin{teaserfigure}
   \centering
-  \input{figures/fig1_overview}
-  \caption{\figtakeaway{On two sample drafts, following the tool's suggestions raised its checklist score by 26 to 29 points but moved mean citation share on four open models by only 1 to 3 points.}
-    \panel{a} Checklist score (the rise is built in). \panel{b} Citation share in the sensitivity test.}
-  \Description{Left, a flow diagram: a draft passes through three stages, Check (a 0 to 100 score from eleven checks, labelled a writing checklist, not a forecast, each with an evidence-grade pip, all mixed or untested), Suggest never rewrite (a card proposing to end a heading with a question mark, with Apply, Undo and Skip buttons and a struck-through Apply all), and Test the advice (the draft and competitor pages, BM25 retrieval of the top 8, an open model, eight seeded runs, then retrieved, cited and share against chance). A strip below shows site readiness and who gets cited, which never change the score. Right, two slope charts: the checklist score rises from 40 to 69 and from 42 to 68; mean citation share on four open models rises by 8 to 17 percent from about 0.15 to 0.18, near the 0.125 chance line.}
-  \label{fig:overview}
+  \includegraphics[width=\textwidth]{figures/fig1_result.pdf}
+  \caption{\figtakeaway{Of eleven GEO checks, only the reader's own words near the top moved citation; the gain held on new queries, and a keyword kept part of it.}
+    Difference in citation score from a same-length placebo or the unedited page ($^{\circ}$), 95\% intervals.
+    \panel{a} Each check alone on 80 GEO-bench queries (260 for checks with too few pages); two rows place the question section's gain in its words.
+    \panel{b} The same edits on 180 new queries, then made from a keyword or a local model's question; the bottom rows compare the exact question with the guesses.}
+  \Description{Two forest plots side by side. Each row is an edit to real web pages, with the mean difference in citation score from its reference, a 95 percent interval, a grey band from minus 0.03 to plus 0.03, and small teal diamonds for the 60-query replication set. Left: your reader's words up top and target questions answered sit to the right of the band, filled in indigo; a question heading did no better than the same text as plain text; question headings, lists, cited sources and direct answer first sit inside the band; attributed quotes is inconclusive; statistics, comparisons and tables have hollow markers with too few pages; all fixes together sit to the right. Right: the exact question on 180 new queries sits clearly right of zero, as does the reader's missing words; a keyword's two words helps but less; the keyword's missing words and a local model's question sit inside the band; two bottom rows show the exact question beating the keyword and beating a section with all its key words.}
+  \label{fig:result}
 \end{teaserfigure}
 
 \maketitle
 
 \input{sections/intro}
-\input{sections/system}
 \input{sections/evidence}
-\input{sections/related}
+\input{sections/system}
 \input{sections/demo}
+\input{sections/related}
 \input{sections/conclusion}
 
 \bibliographystyle{ACM-Reference-Format}

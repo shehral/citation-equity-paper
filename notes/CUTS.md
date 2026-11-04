@@ -194,3 +194,18 @@ margin or spacing change):
     - Section 2: "Beyond the draft." run on in the Suggest paragraph (was a \paragraph); Section 2.3 "An answer takes 14 to 17 s on the authors' laptop;" dropped (Section 5 keeps 64 answers in 15 minutes).
     - Section 5: "with llama3.2:3b" -> "(llama3.2:3b)"; "A live run of the example" -> "A live run"; "and opens the recorded citation test" -> "and the recorded citation test".
     - Section 6: "building a set of competitor pages" -> "building competitor pages". Section 7: "and no user study" dropped (the next sentence names a study with writers); "per-suggestion tests" -> "one-change tests".
+
+## Final-shape rewrite (2026-11-03)
+
+The paper was rewritten around the owner's framing (notes/FRAMING-2026-10-27.md), the question-first redesign and E5. Figure 1
+is now the result (two forest-plot panels); the old Figure 1 (schematic and headline), Figure 4 (moved into Figure 1a) and
+Figure 5 (the reader's-words capture, retired by Ruling Q7) are gone. The first full build ran to 5 pages (one reference
+spilled); these cuts brought it to 4 (no font, margin or spacing change):
+
+80. Section 5 (Related work): "Bajemon and Rochet validate a content score against engines through falsification gates
+    [bajemon2026scoring], a vendor-linked preprint; our tool drops its score instead." Its reference left the list with it.
+81. Figure 1 caption: "(260 where the first test had too few pages)" -> "(260 for checks with too few pages)"; panel (b)
+    "The question section and the missing-words edit on 180 new queries, then made from a keyword or a local model's question
+    from it" -> "The same edits on 180 new queries, then made from a keyword or a local model's question".
+82. Section 2, the guess paragraph: "a keyword, here the question's two rarest key words, which the tool mostly keeps as typed"
+    -> "a keyword, here the question's two rarest key words" (the src comment keeps "kept for 149 of 168").

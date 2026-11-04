@@ -4,7 +4,8 @@
   .venv/bin/python -I -B scripts/fig_all.py --derive     # first rebuild data/ from the tool repo (read only):
                                                          #   dump_grades.mjs, collect_scores.py,
                                                          #   derive_sensitivity.py, derive_loose_grades.py,
-                                                         #   derive_e1_design.py
+                                                         #   derive_e1_design.py, derive_e1_results.py,
+                                                         #   derive_e5.py
   options: --png <dir> (previews), --ce-root <tool repo>, --check-repeat (rerun and require byte-identical PDFs)
 
 Figure scripts are discovered (scripts/fig_*.py except this one), so a new figure joins the build by existing.
@@ -29,6 +30,7 @@ DERIVE = [  # order matters: loose grades need grades.json
     PY + [os.path.join(HERE, "derive_loose_grades.py")],
     PY + [os.path.join(HERE, "derive_e1_design.py")],
     PY + [os.path.join(HERE, "derive_e1_results.py")],
+    PY + [os.path.join(HERE, "derive_e5.py")],
 ]
 
 
