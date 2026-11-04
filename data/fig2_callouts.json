@@ -1,6 +1,6 @@
 {
   "_provenance": {
-    "producer": "scripts/capture_screens.mjs (Figure 2 per spec section 14 of the tool repo, docs/superpowers/specs/2026-11-03-question-first-design.md); `what` and capture_plan are written in the script",
+    "producer": "scripts/capture_screens.mjs (Figure 2 per spec section 14 of the tool repo, docs/superpowers/specs/2026-11-03-question-first-design.md, local feat branch only); `what` and capture_plan are written in the script",
     "note": "ui_string values were read from the build in the same run (captured.strings); xy anchors are measured from element boxes in that run; captured.edits are the two typed edits and draft_sha256 hashes the draft after them; captured.local_build (local URLs only) is the tool commit the build was made from."
   },
   "status": "captured",

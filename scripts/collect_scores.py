@@ -35,7 +35,12 @@ def main():
     ap.add_argument("--ce-root", default=figdata.CE_ROOT_DEFAULT)
     ap.add_argument("--out", default=os.path.join(figdata.DATA, "coverage.json"))
     a = ap.parse_args()
-    if os.path.realpath(a.out) == os.path.realpath(figdata.scores_path()):
+    # samefile catches the case-insensitive spellings macOS accepts (data/SCORES.json) and hard links; realpath
+    # covers an --out that does not exist yet.
+    scores = figdata.scores_path()
+    same = (os.path.exists(a.out) and os.path.exists(scores) and os.path.samefile(a.out, scores)) or \
+        os.path.normcase(os.path.realpath(a.out)) == os.path.normcase(os.path.realpath(scores))
+    if same:
         raise SystemExit("collect_scores: data/scores.json is never written (it records the pre-redesign checklist "
                          "scores the paper cites); write data/coverage.json")
     ce = os.path.abspath(a.ce_root)

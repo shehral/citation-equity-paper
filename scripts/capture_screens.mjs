@@ -1,5 +1,5 @@
 // Figure 2 capture: the question-first draft view of the workspace, on the espresso example after two typed edits.
-// Steps (tool repo docs/superpowers/specs/2026-11-03-question-first-design.md section 14, Ruling Q1):
+// Steps (tool repo docs/superpowers/specs/2026-11-03-question-first-design.md (local feat branch only) section 14, Ruling Q1):
 //   Try it with an example on the home, open /draft/ (it reads "Questions covered: 0 of 4"), type the two edits
 //   (the title gains a second question; the first paragraph under "## Why espresso turns bitter" opens with a
 //   direct answer), wait for exactly "Questions covered: 2 of 4" (any other count fails the run), press Show on
@@ -51,6 +51,8 @@ const START = 'Questions covered: 0 of 4';
 const TARGET = 'Questions covered: 2 of 4';
 const CHIP = 'Helped in our test';
 const PRIVACY = 'Stays in your browser';
+// The card's line under the heading (spec section 7.3, row "Line"; apps/workspace/components/draft/questions-card.tsx).
+const LINE = 'Each needs its key words up top and a section that answers it.';
 
 // The draft editor's CodeMirror view, found from its content element as EditorView.findFromDOM does
 // (the tool's e2e helpers read it the same way).
@@ -143,13 +145,19 @@ try {
   const p0 = await preview.boundingBox();
   if (!h0 || !p0) throw new Error('Questions covered heading or Quick edit Preview not found');
   const need = Math.max(0, p0.y + p0.height - visibleBottom);
-  const fits = h0.y - need >= visibleTop;
-  if (need > 0 && fits) {
+  if (need > 0 && h0.y - need >= visibleTop) {
     await rail.evaluate((el, need) => {
       el.scrollTop += need;
     }, need);
     await page.waitForTimeout(300);
   }
+  // Re-measure after the scroll (it may be clamped, or another element may scroll): callout 1 needs the heading
+  // inside the visible rail, and callout 2 is kept only when Preview is inside it too.
+  const h1 = await heading.boundingBox();
+  const p1 = await preview.boundingBox();
+  if (!h1 || !p1) throw new Error('Questions covered heading or Quick edit Preview lost after the scroll');
+  if (h1.y < visibleTop || h1.y + h1.height > visibleBottom) throw new Error('the Questions covered heading is outside the visible rail');
+  const fits = p1.y >= visibleTop && p1.y + p1.height <= visibleBottom;
 
   // fx, fy pick a point on the element's box; dx, dy (CSS px) move the marker off it so it never hides it.
   const anchorBox = (b, fx, fy, dx = 0, dy = 0) => {
@@ -186,6 +194,7 @@ try {
     privacy: await privacy.first().innerText(),
   };
   if (strings.chip !== CHIP) throw new Error(`the card's chip reads "${strings.chip}", not "${CHIP}"`);
+  if (strings.line !== LINE) throw new Error(`the card's line reads "${strings.line}", not "${LINE}"`);
   const xy = {
     1: await anchor(heading, 0, 0.5, -24, 0),
     2: fits ? await anchor(preview, 1, 0.5, 28, 0) : null,
@@ -193,8 +202,11 @@ try {
     4: await anchor(cardChip, 0.5, 0, 0, -16),
     5: await anchor(privacy, 0, 0.5, -46, 0),
   };
+  // The tool commit (local URLs only) is read before the screenshot is written, so a git failure leaves the old
+  // PNG and JSON together.
+  const localBuild = LOCAL ? { ce_commit: git('rev-parse', 'HEAD'), ce_tree_clean: git('status', '--porcelain') === '' } : null;
   await page.screenshot({ path: join(PAPER, 'data/screens/draft_view.png'), clip: { x: CROP.x, y: CROP.y, width: CROP.w, height: CROP.h } });
-  if (explore) console.log(JSON.stringify({ xy, strings, showName, passage, rail: r, heading: h0, preview: p0, need, fits, marked }, null, 1));
+  if (explore) console.log(JSON.stringify({ xy, strings, showName, passage, rail: r, heading: h1, preview: p1, need, fits, marked }, null, 1));
 
   const CALLOUTS = [
     { n: 1, what: 'Questions covered', ui_string: strings.line },
@@ -205,7 +217,7 @@ try {
   ];
   const co = {
     _provenance: {
-      producer: 'scripts/capture_screens.mjs (Figure 2 per spec section 14 of the tool repo, docs/superpowers/specs/2026-11-03-question-first-design.md); `what` and capture_plan are written in the script',
+      producer: 'scripts/capture_screens.mjs (Figure 2 per spec section 14 of the tool repo, docs/superpowers/specs/2026-11-03-question-first-design.md, local feat branch only); `what` and capture_plan are written in the script',
       note: 'ui_string values were read from the build in the same run (captured.strings); xy anchors are measured from element boxes in that run; captured.edits are the two typed edits and draft_sha256 hashes the draft after them; captured.local_build (local URLs only) is the tool commit the build was made from.',
     },
     status: 'captured',
@@ -220,7 +232,7 @@ try {
       draft_sha256: createHash('sha256').update(edited).digest('hex'),
       show: { button: showName, passage },
       strings,
-      ...(LOCAL ? { local_build: { ce_commit: git('rev-parse', 'HEAD'), ce_tree_clean: git('status', '--porcelain') === '' } } : {}),
+      ...(localBuild ? { local_build: localBuild } : {}),
       ...(xy[2] === null ? { dropped: [{ n: 2, why: 'the Quick edit Preview and the heading do not fit in the rail together' }] } : {}),
     },
   };
