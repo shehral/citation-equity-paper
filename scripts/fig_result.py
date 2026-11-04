@@ -5,7 +5,9 @@ of the same spans, or the unedited page where marked with a ring, or the edit th
 two judges, then over queries; mean and 95% bootstrap interval. Filled: at least 30 queries and a planned reading
 (indigo helps, slate no effect or inconclusive, black the retention reading); hollow: no verdict (too few queries,
 descriptive by design, or reported without a verdict). The grey band is the +-0.03 margin.
-Teal diamonds: the 60-query C-SEO Bench replication set, where the row ran there. Labels to the right: n and result.
+Teal diamonds: the 60-query C-SEO Bench replication set, where the row ran there on at least 30 queries (settings
+min_n; the reader's-words replication had 12, too few for a verdict, so it gets no diamond). Labels to the right: n and
+result.
 
 (a) The eleven checks, one change at a time, plus all fixes together and two rows that test whether the question
     section gains from its heading or its words (heading vs the same text as plain text; heading vs a same-size section
@@ -15,11 +17,13 @@ Teal diamonds: the 60-query C-SEO Bench replication set, where the row ran there
 (b) E5: the reader's exact question on 180 GEO-bench test queries E1 never used, and the same section made from a
     guess, over all 260 main queries (E1's 80 included): a keyword's two rarest key words, or a question a local model
     wrote from that keyword. Every answer is judged against the reader's true question. Source: data/e5_results.json
-    (scripts/derive_e5.py). The two bottom rows are differences between edits, the guess minus the exact question
-    ("9K vs 9" as is, "9 vs 9A" sign flipped), so that the reading attaches to the guess: a negative value means the
-    exact question did better. The first carries the planned retention reading, which the plan calls "loses the gain"
-    and the figure and paper call "falls short" (of the exact question): d(exact - guess) with its 95% CI above 0
-    (PLAN_E5.md r2, Primary analysis item 3).
+    (scripts/derive_e5.py). The three bottom rows are differences between edits, the guess minus the exact question
+    ("9K vs 9" and "9L vs 9" as is, "9 vs 9A" sign flipped), so that the reading attaches to the guess: a negative
+    value means the exact question did better. The first two carry the planned retention reading for each guess the
+    tool offers (PLAN_E5.md r2, Primary analysis item 3, for each G in 9K and 9L; readings.retention.9K and .9L), which
+    the plan calls "loses the gain" and the figure and paper call "falls short" (of the exact question):
+    d(exact - guess) with its 95% CI above 0, so the plotted guess-minus-exact interval lies below 0. The third (all
+    the key words, 9A, not a guess the tool offers) is reported without a verdict.
 
 Row names are the tool's check names (Figure 3, the engine registry), never experiment arm numbers.
 Usage: .venv/bin/python -I -B scripts/fig_result.py [--out figures] [--png <dir>]
@@ -35,6 +39,7 @@ import figstyle as fs  # noqa: E402
 
 PAPER = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 N, C = fs.NEUTRAL, fs.CONCEPT
+MIN_N = 30  # PREREG_E1.md, the 30-query minimum (checked against data/e5_results.json settings.min_n)
 DELTA = 0.03  # PREREG_E1.md, Verdicts 4; PLAN_E5.md reuses it (checked against data/e5_results.json settings.delta)
 WIDTH_IN = 7.0  # acmart sigconf \textwidth: a teaser figure spans both columns
 ROW_IN = 0.125
@@ -76,13 +81,14 @@ B_ROWS = [
     ("main:9L-original:pooled", "Local model's question", False, 1, "replication:9L-original:pooled", None),
     ("main:9L-9P:pooled", "vs a section without the reader's words", True, 1, "replication:9L-9P:pooled", None),
     None,
-    ("main:9K-9:pooled", "Keyword vs the exact question", False, 1, None, "9K"),
-    ("main:9-9A:pooled", "All key words vs the exact question", False, -1, None, None),
+    ("main:9K-9:pooled", "Keyword vs exact question", False, 1, None, "9K"),
+    ("main:9L-9:pooled", "Model's question vs exact question", False, 1, None, "9L"),
+    ("main:9-9A:pooled", "All key words vs exact question", False, -1, None, None),
 ]
 
 
 def mark(ax, y, d, ci, label, n, *, filled=None, color=None):
-    verdict = n >= 30 and label not in ("descriptive", "reported without a verdict") if filled is None else filled
+    verdict = n >= MIN_N and label not in ("descriptive", "reported without a verdict") if filled is None else filled
     if color is None:
         color = C["after"] if label.startswith("helps") else (C["before"] if verdict else N["ink_soft"])
     ax.plot(ci, [y, y], color=color, lw=1.2, solid_capstyle="round", zorder=3)
@@ -90,7 +96,10 @@ def mark(ax, y, d, ci, label, n, *, filled=None, color=None):
     return verdict
 
 
-def rep_mark(ax, y, d, ci):
+def rep_mark(ax, y, d, ci, n, min_n):
+    """The replication set's estimate under the row, only where it had enough queries for a verdict."""
+    if n < min_n:
+        return
     ax.plot(ci, [y - 0.32] * 2, color=C["answer"], lw=0.7, zorder=3)
     ax.scatter([d], [y - 0.32], marker="D", s=8, color=C["answer"], zorder=4, linewidths=0)
 
@@ -152,8 +161,8 @@ def draw_key(fig, x0, y0, step):
         x += 0.014 + w + 0.018
     lines = ["°  vs the unedited page; others vs a same-length placebo, or the edit named",
              "grey band ±0.03: the margin for no effect;  helps*: possibly length or query-word overlap",
-             "falls short (black): the exact question beat the guess, 95% interval above 0, by",
-             "the rule set before the run"]
+             "falls short (black): the guess scored below the exact question, 95% interval below 0,",
+             "by the rule set before the run"]
     for j, text in enumerate(lines, 1):
         fig.text(x0 + 0.002, y0 - step * j, text, ha="left", va="center", fontsize=fsz, color=N["ink_soft"])
 
@@ -167,6 +176,9 @@ def main():
     d5 = json.load(open(p5))
     if abs(d5["settings"]["delta"] - DELTA) > 1e-12:
         raise SystemExit("fig_result: E5's margin differs from E1's")
+    min_n = d5["settings"]["min_n"]
+    if min_n != MIN_N:
+        raise SystemExit("fig_result: E5's minimum n differs from E1's")
 
     main_rows = {("e1", r["arm"], r["ref"]): r for r in d1["main"]["contrasts"]}
     main_rows.update({("e3", r["arm"], r["ref"]): r for r in d1["e3"]["contrasts"]})
@@ -199,7 +211,7 @@ def main():
         verdict = mark(axa, y, r["d"], r["ci95"], r["label"], r["n"])
         rep = rep_rows.get((src, arm, ref))
         if rep:
-            rep_mark(axa, y, rep["d"], rep["ci95"])
+            rep_mark(axa, y, rep["d"], rep["ci95"], rep["n"], min_n)
         row_text(axa, yt, y, name, sub, ref == "original", r["n"], SHORT.get(r["label"], r["label"]), verdict)
     rules(axa, ys, A_ROWS)
 
@@ -216,7 +228,7 @@ def main():
         verdict = mark(axb, y, d, ci, label, r["n"], filled=filled, color=color)
         if rkey:
             rr = E5[rkey]
-            rep_mark(axb, y, rr["d"], rr["ci95"])
+            rep_mark(axb, y, rr["d"], rr["ci95"], rr["n"], min_n)
         row_text(axb, yt, y, name, sub, r["ref"] == "original", r["n"], SHORT.get(label, label), verdict)
     rules(axb, ysb, B_ROWS)
 
