@@ -1,24 +1,25 @@
 # data/: small derived tables behind the figures and the prose
 
 Every file here is either written by a script from the tool repo (`../citation-equity`, "CE", read only, never
-written) or hand-coded with a line reference into CE. No raw third-party page text and no model answer text is
+written) or hand-coded with a line reference into CE. The default build (`bash build.sh`, no `--derive`) reads only
+`data/`; scripts under `scripts/retired/` are not run by it. No raw third-party page text and no model answer text is
 copied here. Rebuild everything with `.venv/bin/python -I -B scripts/fig_all.py --derive` (CE must be present;
 `CE_ROOT` or `--ce-root` points elsewhere). Each JSON carries a `_provenance` block with its producer and the
 SHA-256 of its inputs, so a rebuild against a changed CE is visible in the diff.
 
 | File | Producer | Source in CE | Used by |
 |---|---|---|---|
-| `grades.json` | `scripts/dump_grades.mjs` | `packages/engine/dist/index.js` (built from `src/evidence.ts`, `src/readiness.ts`; the script refuses a stale build) | `derive_loose_grades.py`, `fig_evidence.py` |
-| `evidence_matrix.csv` | hand-coded (single rater), checked by `derive_loose_grades.py` | `docs/evidence.md`, one `source_line` per cell | `derive_loose_grades.py`, `fig_evidence.py` |
-| `evidence_grades_loose.json` | `scripts/derive_loose_grades.py` | the two files above plus `docs/evidence.md` | `fig_evidence.py`, prose (Section 2.2) |
-| `sensitivity_derived.json` | `scripts/derive_sensitivity.py` | `experiments/results/sensitivity/sensitivity_*.json` (`summary`, `per_question` only) and `experiments/explorer/sensitivity.py` (registered thresholds, with line numbers) | `fig_sensitivity.py`, prose (Section 3.2) |
-| `e1_design.json` | `scripts/derive_e1_design.py` | `experiments/PREREG_E1.md` (design values with line and quote; **no results**) | `fig_e1_frame.py` |
+| `grades.json` | `scripts/dump_grades.mjs` | `packages/engine/dist/index.js` (built from `src/evidence.ts`, `src/readiness.ts`; the script refuses a stale build) | `derive_loose_grades.py`, `retired/fig_evidence.py` (unused) |
+| `evidence_matrix.csv` | hand-coded (single rater), checked by `derive_loose_grades.py` | `docs/evidence.md`, one `source_line` per cell | `derive_loose_grades.py`, `retired/fig_evidence.py` (unused) |
+| `evidence_grades_loose.json` | `scripts/derive_loose_grades.py` | the two files above plus `docs/evidence.md` | `retired/fig_evidence.py` (unused; the matrix moved to the Research page) |
+| `sensitivity_derived.json` | `scripts/derive_sensitivity.py` | `experiments/results/sensitivity/sensitivity_*.json` (`summary`, `per_question` only) and `experiments/explorer/sensitivity.py` (registered thresholds, with line numbers) | prose (Sections 3 and 6), checked by `results/verify_numbers.py` against `results/sensitivity/`; `retired/fig_sensitivity.py` (unused) |
+| `e1_design.json` | `scripts/derive_e1_design.py` | `experiments/PREREG_E1.md` (design values with line and quote; **no results**) | no current figure (`fig_e1_frame.py`, the old E1 frame, was removed in 298c735) |
 | `e1_results.json` | `scripts/derive_e1_results.py` | `experiments/results/` aggregates of E1, E2 and E3 (contrasts, labels, CIs, Holm p; no page text) | `fig_result.py` (Figure 1a), prose (Section 2) |
 | `e5_results.json` | `scripts/derive_e5.py` | `experiments/results/e5/{e5_results,analysis_e5,score_summary}.json` (contrasts, readings, share kept, confound CIs, the gate reweighted to E1's query lengths `gate_reweighted_new`, and `tool_covers_q_arm9`, the share of question-section pages the tool counts as covered) | `fig_result.py` (Figure 1b), prose (Sections 2, 3 and 6) |
 | `fig2_callouts.json` (and `screens/draft_view.png`) | `scripts/capture_screens.mjs` (Playwright, headless Chromium; writes the whole file: `_provenance`, `capture_plan`, each callout's `what`, the UI strings read from the page, the measured `xy` anchors and `captured`) | the question-first draft view after Try it with an example and the two typed edits of the redesign spec section 14 (`docs/superpowers/specs/2026-11-03-question-first-design.md`, local feat branch only): "Questions covered: 2 of 4" | `fig_workspace.py` (Figure 2) |
 | `fig2_callouts_before.json` (and `screens/draft_view_before.png`) | byte copies of the pre-redesign `fig2_callouts.json` and `draft_view.png`, made before the Task 16 capture | the old score-based draft view (score ring 37, "AI-ready score") | `fig_workspace.py` (Figure 2's "before" inset: the score card, cropped) |
-| `fig5_callouts.json` (and `screens/reader_words.png`) | `scripts/capture_reader_words.mjs` (live site, Playwright; then the tool repo's engine through tsx) | the deployed draft view after the two reader's-words edits; UI strings, measured anchors and the engine's per-check scores before and after | `fig_reader_words.py` |
-| `scores.json` | frozen; no script writes it now (`collect_scores.py` refuses it) | the checklist scores of `samples/*/{before,after}.md` from `ce analyze --json` at CE c908431, the last score-based build (40 to 69 and 42 to 68) | prose (Section 3), `fig_headline.py` (unused) |
+| `fig5_callouts.json` (and `screens/reader_words.png`) | `scripts/capture_reader_words.mjs` (live site, Playwright; then the tool repo's engine through tsx) | the deployed draft view after the two reader's-words edits; UI strings, measured anchors and the engine's per-check scores before and after | `retired/fig_reader_words.py` (unused) |
+| `scores.json` | frozen; no script writes it now (`collect_scores.py` refuses it) | the checklist scores of `samples/*/{before,after}.md` from `ce analyze --json` at CE c908431, the last score-based build (40 to 69 and 42 to 68) | prose (Section 3), `retired/fig_headline.py` (unused) |
 | `coverage.json` | `scripts/collect_scores.py` (the tool's CLI run from its TypeScript source: `ce analyze <draft> --questions <the sample pack's questions> --json`) | "Questions covered" on `samples/*/{before,after}.md`, with the tool commit, draft and pack hashes | not printed in the paper; a record of the question-first counts (espresso 0 to 1 of 4, RAG 1 to 3 of 4 at CE 3991cc0) |
 
 ## Coding conventions for `evidence_matrix.csv`

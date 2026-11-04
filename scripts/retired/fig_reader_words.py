@@ -1,4 +1,7 @@
-"""Figure 5: following the reader's-words tips raises the score, because that check is scored for having helped.
+"""Retired (2026-11-03, second review round): not in the paper, so it sits outside the scripts/fig_*.py discovery of
+fig_all.py and build.sh; run it by hand (it imports figstyle and figdata from scripts/).
+
+Figure 5: following the reader's-words tips raises the score, because that check is scored for having helped.
 
 The deployed draft view after the author typed the words the reader's-words tips named into the title and the
 opening (espresso example), with numbered callouts at anchors measured in the same capture and a callout list
@@ -6,7 +9,7 @@ under the image. Captured by scripts/capture_reader_words.mjs, which also reran 
 edits (data/fig5_callouts.json "engine": only the reader's-words check changed).
 
 Input: data/fig5_callouts.json and data/screens/reader_words.png. This script writes no number file.
-Usage: .venv/bin/python -I -B scripts/fig_reader_words.py [--out figures] [--png <dir>]
+Usage: .venv/bin/python -I -B scripts/retired/fig_reader_words.py [--out figures] [--png <dir>]
 """
 from __future__ import annotations
 
@@ -14,7 +17,7 @@ import os
 import sys
 import textwrap
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # scripts/
 import figdata  # noqa: E402
 import figstyle as fs  # noqa: E402
 from fig_workspace import callout  # noqa: E402

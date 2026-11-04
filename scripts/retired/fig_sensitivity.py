@@ -1,4 +1,7 @@
-"""Figure 4(a): applying the suggestions moved mean citation share by 1 to 3 points on every model, and the one-sentence
+"""Retired (2026-11-03, second review round): not in the paper, so it sits outside the scripts/fig_*.py discovery of
+fig_all.py and build.sh; run it by hand (it imports figstyle and figdata from scripts/).
+
+Figure 4(a): applying the suggestions moved mean citation share by 1 to 3 points on every model, and the one-sentence
 answer edit stayed far below the pre-registered +0.10 bar.
 
 One row per open model (smallest at the top). Two lanes per row:
@@ -13,7 +16,7 @@ from the harness). Hairline: zero. Row label: the model and the mean number of s
 Input: data/sensitivity_derived.json (scripts/derive_sensitivity.py, from CE/experiments/results/sensitivity/).
 Every plotted value and printed number is read from it.
 
-Usage: .venv/bin/python -I -B scripts/fig_sensitivity.py [--out figures] [--png <dir>]
+Usage: .venv/bin/python -I -B scripts/retired/fig_sensitivity.py [--out figures] [--png <dir>]
 """
 from __future__ import annotations
 
@@ -21,7 +24,7 @@ import os
 import sys
 from decimal import ROUND_HALF_UP, Decimal
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # scripts/
 import figdata  # noqa: E402
 import figstyle as fs  # noqa: E402
 

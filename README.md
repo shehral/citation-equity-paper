@@ -1,6 +1,6 @@
 # Citation Equity: the WWW 2027 demo paper and its evidence
 
-This repo holds the demo-track paper for The Web Conference 2027 (WWW '27), "Citation Equity: A Writing Tool for AI Search That Tests Its Own Advice", together with every result it reports. The paper is a working draft: blue `[OWNER: ...]` marks in the PDF are decisions still open.
+This repo holds the demo-track paper for The Web Conference 2027 (WWW '27), "Citation Equity: Which GEO Writing Advice Moves Citation? A Tool Built From the Answer", together with every result it reports. The paper is a working draft: blue `[OWNER: ...]` marks in the PDF are decisions still open.
 
 - **The tool, live:** https://shehral.github.io/citation-equity/
 - **The tool's code:** https://github.com/shehral/citation-equity (the experiments' code and pipeline READMEs are under `experiments/`)
@@ -12,12 +12,12 @@ This repo holds the demo-track paper for The Web Conference 2027 (WWW '27), "Cit
 
 - Make changes on a branch and open a pull request against `main`, so `build.sh` and `results/verify_numbers.py` can be run before merging. Small text fixes can go straight to `main`.
 - After any edit, run `bash build.sh` (it fails on more than 4 pages) and `.venv/bin/python -I -B results/verify_numbers.py`.
-- **Second rater:** if you are rating the evidence (`notes/second-rater/`), do it before opening `data/grades.json`, `data/evidence_matrix.csv`, `data/evidence_grades_loose.json` or `figures/fig3_evidence.pdf` (the evidence matrix, no longer in the paper), so the rating stays blind.
+- **Second rater:** if you are rating the evidence (`notes/second-rater/`), do it before opening `data/grades.json`, `data/evidence_matrix.csv`, `data/evidence_grades_loose.json` or the evidence matrix figure (`scripts/retired/fig_evidence.py`, no longer in the paper), so the rating stays blind.
 
 ## Build the PDF
 
 ```sh
-bash build.sh            # regenerate the figures from data/, then compile main_www.tex with tectonic
+bash build.sh            # regenerate the figures from data/ alone, then compile main_www.tex with tectonic
 bash build.sh --derive   # first rebuild data/ from a checkout of the tool repo next to this one (read only)
 ```
 
@@ -31,7 +31,7 @@ You need [tectonic](https://tectonic-typesetting.github.io/) (the build calls `/
 | `figures/` | Figure PDFs, rebuilt by `build.sh` from `data/` (`scripts/fig_*.py`). |
 | `data/` | Small derived tables behind the figures and the prose, each with its producer and the sha256 of its inputs (see `data/README.md`). |
 | `results/` | The reproducibility package: plans, every experiment's results, the cluster jobs and GPU-hours, software and model versions, and hashes of the withheld data. Start with `results/README.md`, which maps each section and figure to its results file. |
-| `scripts/` | Derive scripts (`derive_*.py`), figure scripts (`fig_*.py`), and `build_results.py`, which writes `results/`. |
+| `scripts/` | Derive scripts (`derive_*.py`), figure scripts (`fig_*.py`), and `build_results.py`, which writes `results/`. `scripts/retired/` holds figure scripts no longer in the paper; the build does not run them (one, `fig_headline.py`, reads the tool repo). |
 | `notes/` | Working notes: outline, narrative, cuts made to fit 4 pages, claim checks, simulated reviews, status. Drafting aids, not part of the submission. |
 | `STYLE.md`, `smpreprint.sty`, `references.bib` | Writing rules, the shared style package, the bibliography. |
 

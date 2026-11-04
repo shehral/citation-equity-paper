@@ -1,6 +1,6 @@
 """Second-rater packet for Figure 3: build the blind rating sheet, score a filled sheet, self-test.
 
-Figure 3 (scripts/fig_evidence.py) codes each (draft check, study) cell from data/evidence_matrix.csv (single rater).
+Figure 3 (scripts/retired/fig_evidence.py; no longer in the paper) codes each (draft check, study) cell from data/evidence_matrix.csv (single rater).
 This script supports a blind second rating of a sample of those cells.
 
 Modes (stdlib only):
@@ -14,7 +14,7 @@ Modes (stdlib only):
                         perturbed sheet scores below 1 and that blanks / bad labels are rejected). Writes nothing
                         in notes/.
 
-Categories (the rater's labels -> how our coding maps onto them; see fig_evidence.py glyph() for the figure):
+Categories (the rater's labels -> how our coding maps onto them; see retired/fig_evidence.py glyph() for the figure):
   controlled_gain   result gain, design controlled, directness direct          (filled dot)
   indirect_gain     any other result gain (observational, elicited, or near)   (half dot)
   gain_part         gain_part_null or gain_part_harm                           (dot in a ring)

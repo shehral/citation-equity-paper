@@ -1,4 +1,7 @@
-"""Figure 3: the evidence behind each draft check, cell by cell, with its grade under the strict and a looser rule.
+"""Retired (2026-11-03, second review round): not in the paper, so it sits outside the scripts/fig_*.py discovery of
+fig_all.py and build.sh; run it by hand (it imports figstyle and figdata from scripts/).
+
+Figure 3: the evidence behind each draft check, cell by cell, with its grade under the strict and a looser rule.
 
 Rows: the eleven draft checks (the PI's six first, then the four added from the literature and the one added from
 our own test, reader-words), in the engine's order.
@@ -18,7 +21,7 @@ Below: the seven site-readiness items, graded on a different standard (operator 
 
 Inputs: data/evidence_matrix.csv, data/evidence_grades_loose.json, data/grades.json. Nothing is typed.
 
-Usage: .venv/bin/python -I -B scripts/fig_evidence.py [--out figures] [--png <dir>]
+Usage: .venv/bin/python -I -B scripts/retired/fig_evidence.py [--out figures] [--png <dir>]
 """
 from __future__ import annotations
 
@@ -26,7 +29,7 @@ import os
 import sys
 import textwrap
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # scripts/
 import figdata  # noqa: E402
 import figstyle as fs  # noqa: E402
 from matplotlib.patches import FancyBboxPatch  # noqa: E402

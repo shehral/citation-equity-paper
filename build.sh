@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # build.sh -- regenerate every figure from data, then compile the WWW 2027 demo paper with tectonic.
-#   bash build.sh            figures (scripts/fig_all.py, palette check included), then main_www.pdf
+#   bash build.sh            figures (scripts/fig_all.py, palette check included), then main_www.pdf; reads data/ only,
+#                            so it needs no tool repo (scripts/retired/ holds figure scripts the build does not run)
 #   bash build.sh --derive   first rebuild data/ from the tool repo (read only), then as above
 # Only tectonic is used (never pdflatex, xelatex or latexmk). Fails on errors, undefined references or citations,
 # overfull boxes, or a page count above the venue limit (4 pages including references).

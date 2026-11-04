@@ -1,4 +1,7 @@
-"""Figure 1, right: the headline. Following the suggestions raises the checklist score a lot and citation share a little.
+"""Retired (2026-11-03, second review round): not in the paper, so it sits outside the scripts/fig_*.py discovery of
+fig_all.py and build.sh; run it by hand (it imports figstyle and figdata from scripts/).
+
+Figure 1, right: the headline. Following the suggestions raises the checklist score a lot and citation share a little.
 
 (a) Checklist score (foundation preset, 0 to 100), before to after, one hollow slope per sample draft.
     Input: data/scores.json (scripts/collect_scores.py: `ce analyze --json` on CE/samples/*/{before,after}.md).
@@ -10,7 +13,7 @@
 No llama3.2:3b data: the in-tool run reports word share on a different setup (CE/samples/README.md).
 Every plotted value and every printed number is read from the inputs; nothing is typed.
 
-Usage: .venv/bin/python -I -B scripts/fig_headline.py [--out figures] [--png <dir>] [--ce-root <CE>]
+Usage: .venv/bin/python -I -B scripts/retired/fig_headline.py [--out figures] [--png <dir>] [--ce-root <CE>]
 """
 from __future__ import annotations
 
@@ -18,7 +21,7 @@ import math
 import os
 import sys
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # scripts/
 import figdata  # noqa: E402
 import figstyle as fs  # noqa: E402
 

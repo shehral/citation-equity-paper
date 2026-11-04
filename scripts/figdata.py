@@ -78,7 +78,7 @@ def sensitivity_raw(ce: str | None = None):
 
 def sensitivity(ce: str | None = None):
     """The sensitivity results as a list of per-model dicts (keys: id, file, label, name, path, summary,
-    per_question), in MODELS order. Used by fig_headline.py."""
+    per_question), in MODELS order. Used by retired/fig_headline.py."""
     rows, _ = sensitivity_raw(ce)
     return [{**r, "name": r["label"]} for r in rows]
 
