@@ -188,6 +188,10 @@ CONTRASTS += [
     ("E1.main.11-original", "E1 main", "e1:main", "11", "original", E1_JUDGES, "definition under the title (candidate)",
      "no effect larger than"),
 ]
+# Added in the second review round (2026-11-03): the reader's-words check on the replication set, 12 queries, which
+# Section 2 reports as "replication: too few pages" (and Figure 1a draws without a replication mark).
+CONTRASTS.append(("E1.rep.12-P12", "E1 replication", "e1:replication", "12", "P12", E1_JUDGES,
+                  "question words in title and lead", "insufficient n"))
 
 # E5: id, scope, arm, ref, what the paper calls it, the label the paper gives (prefix of the analysis label;
 # None = no label stated), where the row sits in results/e5/analysis_e5.json, its key in data/e5_results.json.
@@ -208,6 +212,9 @@ E5_CONTRASTS = [
      ("family", None), "main:9L-9P:pooled"),
     ("E5.9K-9", "pooled", "9K", "9", "keyword minus exact question (retention)", None, ("retention", "9K"),
      "main:9K-9:pooled"),
+    # second review round: Figure 1b's row for the local model's question (the plan's reading for each guess, 9K and 9L)
+    ("E5.9L-9", "pooled", "9L", "9", "model's question minus exact (retention)", None, ("retention", "9L"),
+     "main:9L-9:pooled"),
     ("E5.12K-P12K", "pooled", "12K", "P12K", "keyword's missing words vs placebo", "no effect larger than",
      ("planned", "arm12"), "main:12K-P12K:pooled"),
     ("E5.9-9A", "pooled", "9", "9A", "exact question vs all its key words", "reported without a verdict",
@@ -405,8 +412,11 @@ ANCHORS = [
      r" Holm \$p = (?P<holm>[\d.]+)\$; replication " + g("rep") + r"\)",
      {"d": ("E1.main.9-original", "d"), "lo": ("E1.main.9-original", "lo"), "hi": ("E1.main.9-original", "hi"),
       "holm": ("E1.main.9-original", "holm"), "rep": ("E1.rep.9-original", "d")}),
-    ("sections/evidence.tex", r"into the title and opening \(" + g("d") + r" against its placebo\)",
+    ("sections/evidence.tex", r"into the title and opening \(" + g("d") + r" against its placebo; replication: too few pages\)",
      {"d": ("E1.main.12-P12", "d")}),
+    # the takeaway box (second review round): the planned tests that hold length fixed
+    ("sections/evidence.tex", r"the reader's words beat same-length controls \(" + g("w") + r"; a keyword " + g("k") + r"\)",
+     {"w": ("E1.main.12-P12", "d"), "k": ("E5.9K-9P", "d")}),
     ("sections/evidence.tex", r"which include the question section, also helped \(" + g("a") + r"\)",
      {"a": ("E1.main.ALL-original", "d")}),
     ("sections/evidence.tex", r"set as plain \(" + g("w") + r"; replication " + g("wr") + r"\)",
@@ -464,6 +474,11 @@ ANCHORS = [
     ("sections/conclusion.tex", r"The (?P<q>\d+) new queries avoid this", {"q": ("q:e5.new", "n")}),
     ("sections/conclusion.tex", r"at the first test's query lengths it is " + g("rw"), {"rw": ("x:reweighted", "x")}),
     ("sections/system.tex", r"met the tool's covered rule on only (?P<c>\d+)\\% of pages", {"c": ("x:covers", "x")}),
+    # the sensitivity test (second review round): Section 3's points and Section 6's shares, from results/sensitivity/
+    ("sections/system.tex", r"rose by (?P<lo>\d+) to (?P<hi>\d+) points from about (?P<b>\d+) in an exploratory run",
+     {"lo": ("x:sens_after_lo", "x"), "hi": ("x:sens_after_hi", "x"), "b": ("x:sens_before", "x")}),
+    ("sections/conclusion.tex", r"raised the page's citation share by (?P<lo>0\.\d+) to (?P<hi>0\.\d+), not the (?P<bar>0\.\d+) required",
+     {"lo": ("x:sens_af_lo", "x"), "hi": ("x:sens_af_hi", "x"), "bar": ("x:sens_bar", "x")}),
     ("main_www.tex", r"on (?P<q>\d+) GEO-bench queries \((?P<p>\d+) for checks with too few pages at (?P<q2>\d+)\)",
      {"q": ("q:e1.main", "n"), "p": ("q:e3.pooled", "n"), "q2": ("q:e1.main", "n")}),
     ("main_www.tex", r"The exact question on (?P<q>\d+) new queries", {"q": ("q:e5.new", "n")}),
@@ -499,6 +514,10 @@ LABEL_ANCHORS = [
     ("sections/evidence.tex", r"held there too", ["E5.12-P12.new"]),
     ("sections/evidence.tex", r"the keyword helped against the unedited page", ["E5.9K-original", "E5.9K-9P"]),
     ("sections/evidence.tex", r"falls short of the exact question", ["E5.9K-9"]),
+    ("sections/evidence.tex", r"replication: too few pages", ["E1.rep.12-P12"]),
+    ("sections/evidence.tex", r"the reader's words beat same-length controls", ["E1.main.12-P12", "E5.9K-9P"]),
+    ("main_www.tex", r"the bottom rows compare each guess, and a section with all key words, with the exact question",
+     ["E5.9K-9", "E5.9L-9", "E5.9-9A"]),
     ("sections/evidence.tex", r"The model's question showed no effect larger than 0\.03", ["E5.9L-original"]),
     ("sections/evidence.tex", r"and neither did the keyword's missing words", ["E5.12K-P12K"]),
     ("sections/evidence.tex", r"both guesses beat a section without the reader's words",
@@ -706,8 +725,8 @@ def main(argv=None) -> int:
             ret = readings["retention"][where[1]]
             label = ret["reading"]
             if label != "loses the gain":
-                problems.append(f"{cid}: the paper says the keyword falls short of the exact question (the plan's "
-                                f"'loses the gain'); the analysis reading is '{label}'")
+                problems.append(f"{cid}: the paper (Figure 1b, and Section 2 for the keyword) says this guess falls short "
+                                f"of the exact question (the plan's 'loses the gain'); the analysis reading is '{label}'")
             if not (ret["n"] == r["n"] and close(ret["d_G_minus_9"], r["d"])):
                 problems.append(f"{cid}: readings.retention differs from the recomputed d")
         ok_p = p is not None and p["n"] == r["n"] and close(p["d"], r["d"])
@@ -776,10 +795,37 @@ def main(argv=None) -> int:
     cov = A5["validity"]["main"]["all"]["9"]["tool_flags"]["tool_covers_q"]
     if cov != P5["tool_covers_q_arm9"]["main"]:
         problems.append("tool covers q (arm 9, main): data/e5_results.json differs from the analysis")
+    # Sensitivity test (Sections 3 and 6): the four registered models' summaries in results/sensitivity/ (the smoke run
+    # excluded), checked against data/sensitivity_derived.json, which the figures and prose notes were built from.
+    sens = [json.loads(f.read_text(encoding="utf-8"))["summary"]
+            for f in sorted((RESULTS / "sensitivity").glob("sensitivity_*.json"))]
+    SD = load_json("data/sensitivity_derived.json")
+    if len(sens) != 4 or len(SD["models"]) != 4:
+        problems.append(f"sensitivity: {len(sens)} model summaries in results/sensitivity, {len(SD['models'])} in data/")
+    after = [x["after_minus_before_exploratory"]["mean"] for x in sens]
+    af = [x["answer_first_minus_before"]["mean"] for x in sens]
+    before = [x["mean_target_share"]["before"] for x in sens]
+    if not (sorted(before) == sorted(m["mean_target_share"]["before"] for m in SD["models"])
+            and abs(min(after) - SD["ranges"]["after_minus_before_mean"][0]) < 1e-3
+            and abs(max(after) - SD["ranges"]["after_minus_before_mean"][1]) < 1e-3
+            and abs(min(af) - SD["ranges"]["answer_first_minus_before_mean"][0]) < 1e-3
+            and abs(max(af) - SD["ranges"]["answer_first_minus_before_mean"][1]) < 1e-3):
+        problems.append("sensitivity: results/sensitivity summaries differ from data/sensitivity_derived.json")
+    bar = SD["thresholds"]["h2_min_gain"]["value"]
+    X_SENS = {
+        "x:sens_after_lo": (f"{round(100 * min(after))}", f"min after-minus-before share x 100 ({min(after):.4f})"),
+        "x:sens_after_hi": (f"{round(100 * max(after))}", f"max after-minus-before share x 100 ({max(after):.4f})"),
+        "x:sens_before": (f"{round(100 * mean(before))}", f"mean before share x 100 over 4 models ({mean(before):.4f}; "
+                                                          f"{min(before):.3f} to {max(before):.3f})"),
+        "x:sens_af_lo": (f"{min(af):.3f}", "min answer-first-minus-before share (registered H2 contrast)"),
+        "x:sens_af_hi": (f"{max(af):.3f}", "max answer-first-minus-before share (registered H2 contrast)"),
+        "x:sens_bar": (f"{bar:.2f}", "H2 bar, thresholds.h2_min_gain (experiments/explorer/sensitivity.py)"),
+    }
     X = {"x:baseline": (f"{baseline:.2f}", f"mean score of {len(base_cells)} E1 main-set cells of the unedited page "
                                            f"({baseline:.4f})"),
          "x:reweighted": (fmt(rw["estimate"]), f"analysis gate.reweighted_new ({rw['estimate']:.4f}, n {rw['n']})"),
-         "x:covers": (f"{round(100 * cov['share'])}", f"analysis validity main 9 tool_covers_q ({cov['true']} of {cov['of']})")}
+         "x:covers": (f"{round(100 * cov['share'])}", f"analysis validity main 9 tool_covers_q ({cov['true']} of {cov['of']})"),
+         **X_SENS}
 
     # (c) the paper's prose
     print()

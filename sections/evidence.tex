@@ -27,7 +27,8 @@ A result needs 30 or more queries, and tests are Holm-corrected within their fam
 
 % src: CE/experiments/RESULTS_E1.md main primary contrasts (data/e1_results.json "main"): arm 12 (your reader's words up top: the
 %      question's missing key words in the title, first heading or first paragraph) +0.035 vs P12, n 33, a candidate check added to
-%      the tool because it helped (CE/docs/evidence.md line 3); replication n 12, "insufficient n"; arm 9 (target questions
+%      the tool because it helped (CE/docs/evidence.md line 3); replication n 12, "insufficient n" ("replication: too few
+%      pages"; Figure 1a draws no replication mark for it); arm 9 (target questions
 %      answered, tested as an H2 that is the query text under the title over the page sentence with the most query key terms,
 %      extractive and deterministic, PREREG_E1.md line 67) vs the unedited page +0.027 [+0.010, +0.043] Holm 0.006 n 54,
 %      replication +0.036 n 52; ALL vs original +0.049 n 78 (Holm < 0.001), "helps, possibly through length or query-term overlap"
@@ -45,7 +46,7 @@ A result needs 30 or more queries, and tests are Holm-corrected within their fam
 %      larger than delta" (data/e1_results.json main)
 \paragraph{Eleven checks}
 Of single changes, only the two that add the reader's own words near the top clearly raised the score (Figure~\ref{fig:result}a).
-\emph{Your reader's words up top}, a candidate check the tool added because it helped, works the question's missing words into the title and opening ($+0.035$ against its placebo).
+\emph{Your reader's words up top}, a candidate check the tool added because it helped, works the question's missing words into the title and opening ($+0.035$ against its placebo; replication: too few pages).
 \emph{Target questions answered} was tested as the reader's question as a heading under the title, over a copy of the page's best-matching sentence, made by rule: the \emph{question section} ($+0.027$ against the unedited page, 95\% CI $[+0.010, +0.043]$, Holm $p = 0.006$; replication $+0.036$).
 All fixes together, which include the question section, also helped ($+0.049$).
 The heading form added nothing: the question as a heading did no better than the same text set as plain ($+0.003$; replication $-0.001$).
@@ -68,14 +69,17 @@ Attributed quotes were inconclusive, and tables, statistics and comparisons stil
 %      ("main:9K-9:pooled" negated), the plan's reading "loses the gain", here "falls short of the exact question"
 %      (readings.retention.9K; the rule, fixed before any answer: PLAN_E5.md r2, Primary analysis item 3, "d(9 - G) > 0 with
 %      its 95% interval above 0", unless the guess also meets "keeps the gain"); share kept on the new queries 0.65, 90% CI 0.41
-%      to 0.93 (share_kept_new.9K.share, "about two thirds"; no verdict); "main:9-9A:pooled" +0.014, reported without a verdict
+%      to 0.93 (share_kept_new.9K.share, "about two thirds"; no verdict); the local model's question has the same planned
+%      reading (PLAN_E5.md r2, Primary analysis item 3, for each G in 9K and 9L): d(exact - 9L) +0.027 [+0.015, +0.039], n 169
+%      ("main:9L-9:pooled" negated; readings.retention.9L "loses the gain"), shown in Figure 1b only, as "falls short";
+%      "main:9-9A:pooled" +0.014, reported without a verdict
 %      (the exact-string echo, RESULTS_E5.md "Reading these lines against the data"); "main:9L-original:pooled" +0.008 "no effect
 %      larger than delta"; "main:12K-P12K:pooled" +0.004 "no effect larger than delta"; replication family (its own Holm family,
 %      PLAN_E5.md line 87): 9K vs 9P +0.025 "helps", 9L vs 9P +0.028 "helps" (noted), 9K and 9L vs original +0.009 and +0.013
 %      "no effect larger than delta" (RESULTS_E5.md "Replication set")
 \paragraph{When the writer has to guess}
 The gain held on new queries, and a keyword helped, but less.
-Every edit above used the reader's exact question, which a writer rarely sees.
+Both gains above used the reader's exact question, which a writer rarely sees.
 A last test reran the question section on those 180 new queries, which the first test never used.
 It then built the section from two guesses the tool offers: a keyword, here the question's two rarest key words, and a question the same editor model wrote from it with the tool's prompt; answers were still judged against the true question.
 The exact question helped on the new queries ($+0.039$, 95\% CI $[+0.023, +0.056]$, $n = 115$; $+0.035$ pooled with the first test's queries, $n = 169$), and the reader's missing words worked into the top held there too ($+0.036$ against their placebo, $n = 74$, shown without a verdict).
@@ -90,11 +94,15 @@ On the 60-query replication set both guesses beat a section without the reader's
 %      E5 gate, step 5, both keyword tests; two replication-set results are plain "helps": E2a 9 vs 9P, E5 9K vs 9P) (PREREG_E1.md line 164;
 %      data/e1_results.json and data/e5_results.json labels); the length and key-term regression's intercepts include 0 (E1 arm 9
 %      [-0.075, +0.018], arm 12 [-0.083, +0.018]; E5 gate [-0.037, +0.051]; data/e1_results.json adjusted_ci95, data/e5_results.json
-%      confound_ci95) but cannot split words from length, since the edits add both; the same-size section without the reader's
-%      words (9P, length ratio 1.034 as arm 9's, RESULTS_E1/E5) gained nothing clear over the unedited page (+0.010; replication
-%      -0.012; E2a, reported without a verdict); "did not clearly move citation": no formatting check helped (Figure 1a)
+%      confound_ci95) but cannot split words from length, since the edits add both, so the box cites the planned tests that hold
+%      length fixed: E1 arm 12 vs P12, the reader's missing words against a same-length rewording of the same spans, +0.035
+%      [+0.008, +0.066], Holm 0.037, n 33, helps (data/e1_results.json "main"; length ratio 1.013 vs 1.000, CE/experiments/RESULTS_E1.md
+%      "Exclusions and edit statistics"); and E5 "main:9K-9P:pooled", the keyword's section against a same-size section without the
+%      reader's words, +0.018 [+0.007, +0.029], Holm 0.006, n 166, helps (data/e5_results.json; length ratio 1.023 vs 1.034,
+%      CE/experiments/RESULTS_E5.md "Edits that passed validation", so the keyword's section is if anything shorter);
+%      "did not clearly move citation": no formatting check helped (Figure 1a)
 \begin{takeaway}
 Each gain on the main set carries the plan's note: possibly through length or query-word overlap.
-Length alone did not do it: a same-size section without the reader's words gained nothing clear.
+Length alone did not do it: the reader's words beat same-length controls ($+0.035$; a keyword $+0.018$).
 For writers that is the point: the formatting they are sold did not clearly move citation, and the reader's vocabulary did.
 \end{takeaway}

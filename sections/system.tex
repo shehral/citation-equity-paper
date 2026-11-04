@@ -15,11 +15,14 @@
 %      3171295), so "the old tool", not "the first version" (review C01)
 % src: citation share +0.014 to +0.031 ("1 to 3 points") on four open models, the page's share of citations among 8 on-topic
 %      sources, after minus before: summary.after_minus_before_exploratory of CE/experiments/results/sensitivity/sensitivity_*.json
-%      (data/sensitivity_derived.json; results/sensitivity/); exploratory, with no criterion (CE/experiments/PREREG_sensitivity.md)
+%      (data/sensitivity_derived.json ranges.after_minus_before_mean; results/sensitivity/); exploratory, with no criterion
+%      (CE/experiments/PREREG_sensitivity.md); "from about 17": the before share, 0.154 to 0.180 on the four models, mean 0.169
+%      (data/sensitivity_derived.json models[].mean_target_share.before), so the rise is 8% to 17% of where it started
+%      (ranges.relative_change_after 0.083 to 0.171); both checked by results/verify_numbers.py
 \paragraph{From a score to questions}
 The tool now shows no total and starts from the reader's questions (Figure~\ref{fig:workspace}).
 The old tool averaged its checks into a 0-to-100 checklist score.
-On two sample drafts, following its suggestions raised that score by 26 to 29 points, while the drafts' share of citations among eight sources rose by only 1 to 3 points in an exploratory run on four open models.
+On two sample drafts, following its suggestions raised that score by 26 to 29 points, while the drafts' share of citations among eight sources rose by 1 to 3 points from about 17 in an exploratory run on four open models.
 Section~\ref{sec:findings} found clear gains for only two checks.
 
 % src: flow and copy: spec section 4 (four steps and routes), 7.2 (home: "What will your readers ask?", type, paste keywords, Import
@@ -51,13 +54,14 @@ Below sit one ready edit, the \emph{Quick edit}, and the other checks as collaps
   % scripts/capture_screens.mjs, Task 16, the local Pages build of CE 3991cc0) with the old build's score card as the inset
   % (data/screens/draft_view_before.png, a byte copy of the pre-redesign capture, score ring 37).
   \includegraphics[width=\columnwidth]{figures/fig2_workspace.pdf}
-  \Description{A screenshot of the draft view on the espresso example after two typed edits. Left: the draft as a paper-style page; its title, now "Why does my espresso taste bitter, and how do I fix it?", is marked. Right: the rail, headed "Questions covered: 2 of 4" with a "Helped in our test" chip; each question has a words-up-top line and an answer line, open lines name the missing words, and a Quick edit card offers one ready edit, "Add ? or reword it", with its own "No effect in our test" chip and a Preview button. Top right: a "Stays in your browser" chip. Numbered callouts point to each, and a list under the image names them. An inset at the lower left shows the old build's rail card: a score ring reading 37, "AI-ready score", "A writing checklist, not a forecast", and "0 of 29 handled".}
+  \Description{A screenshot of the draft view on the espresso example after two typed edits, with the Quick edit not applied. Left: the draft as a paper-style page; its title, now "Why does my espresso taste bitter, and how do I fix it?", is marked. Right: the rail, headed "Questions covered: 2 of 4" with a "Helped in our test" chip; each question has a words-up-top line and an answer line, open lines name the missing words, and a Quick edit card offers one ready edit, "Add ? or reword it", with its own "No effect in our test" chip and a Preview button. Top right: a "Stays in your browser" chip. Numbered callouts point to each, and a list under the image names them. An inset at the lower left shows the old build's rail card: a score ring reading 37, "AI-ready score", "A writing checklist, not a forecast", and "0 of 29 handled".}
   % src (caption): data/fig2_callouts.json (captured.strings.heading "Questions covered: 2 of 4"; captured.edits: the title edit
   %      and the answering sentence under "## Why espresso turns bitter", which sits below the 900 px frame; draft_sha256
-  %      576bcb4e..., the engine test's Figure 2 text); data/fig2_callouts_before.json (the old capture: "AI-ready score", "A writing
+  %      576bcb4e..., the engine test's Figure 2 text; the Quick edit, the heading's "?", is not applied in the capture, while
+  %      Section 4's loop applies it first: "before the Quick edit"); data/fig2_callouts_before.json (the old capture: "AI-ready score", "A writing
   %      checklist, not a forecast."); spec section 14 and 7.3 (local feat branch only); CE/README.md line 20
   \caption{\figtakeaway{The draft view counts which reader questions the draft covers; the old build (inset) led with a checklist score.}
-    Espresso example after two typed edits; the answering sentence sits below the frame.}
+    Espresso example after two typed edits, before the Quick edit; the answering sentence sits below the frame.}
   \label{fig:workspace}
 \end{figure}
 
@@ -93,11 +97,11 @@ Both are rules chosen after the results, in place of the plan's \emph{Not tested
 
 % src: CE/docs/evidence.md lines 22 to 29 (rubric; the null rule at lines 24 and 29) and line 34 ("No check is graded strong or
 %      moderate today. Nine are mixed and two are untested."); line 3 (sources "opened and read on 2026-10-23"); the nine sources:
-%      "The studies" table; the Research page lists each check's grade and the tally (CE/apps/workspace/app/research/page.tsx
-%      lines 358 to 391). The evidence matrix (old Figure 3, scripts/fig_evidence.py) and the looser rule moved out of the paper
+%      "The studies" table (three are preprints and one a survey, so "studies", not "published studies"); the Research page lists each check's grade and the tally (CE/apps/workspace/app/research/page.tsx
+%      lines 358 to 391). The evidence matrix (old Figure 3, scripts/retired/fig_evidence.py) and the looser rule moved out of the paper
 %      (Q26.2; notes/CUTS.md); single-rater coding (data/README.md)
 \paragraph{Evidence}
-The Research page grades each check on the nine published studies the tool cites, apart from our labels, under a strict rule: a null or negative result in any study, even in one subgroup, makes a check \emph{mixed}.
+The Research page grades each check on the nine studies the tool cites, apart from our labels, under a strict rule: a null or negative result in any study, even in one subgroup, makes a check \emph{mixed}.
 By that rule nine checks are mixed and two untested. \owner{Second rater (Ishan Gupta): agreement pending.}
 
 % src (CE 3991cc0): CE/docs/architecture.md lines 80 (anchors follow the author's edits; merge preview), 84 (Apply only if the text

@@ -232,3 +232,33 @@ ran to 5 pages (about 8 lines over); these moves and cuts brought it to 4 (no fo
     title" (review fidelity-22 and fidelity-08; the candidate's n of 30 stays in the src comment).
 87. Section 6, sensitivity: "of the bench", "edit", "among eight sources" (Section 3 names the eight sources) and "two" before
     "judges".
+
+## Second review round (2026-11-03, late evening)
+
+The round-2 fixes added a Figure 1b row, one callout line under Figure 2, "before the Quick edit" in its caption, "from
+about 17" in Section 3 and the code link's "with every test's aggregates in experiments/results" in footnote 2; they removed
+"only", "published" and "common". The build stayed at 4 pages with about 3 free lines at the foot of page 4's right column.
+Cut 83's matrix is no longer built by the paper's build: its script is now `scripts/retired/fig_evidence.py` and
+`figures/fig3_evidence.pdf` was deleted (round-2 item 13; the script still writes it when run by hand).
+
+88. Restored from cut 86: "; replication: too few pages" after the reader's-words +0.035 in Section 2 (round-2 item 4:
+    Figure 1a no longer draws a replication diamond for that row, since its replication had 12 queries, so the text says
+    why).
+89. Figure 1b: the three bottom-row names drop "the" ("Keyword vs exact question", "Model's question vs exact question",
+    "All key words vs exact question"): with the new local-model row, "Local model's question vs the exact question" ran
+    into panel (a)'s "inconclusive".
+
+### Camera-ready: the ACM Reference Format block (round-2 item 14)
+
+The review copy sets `\settopmatter{printacmref=false}`; acmart logs "ACM reference format is mandatory for papers over one
+page", and ACM's camera-ready (TAPS) adds the block. Measured on the round-2 build in a scratch copy (no tool repo beside it) with `printacmref=true`:
+**5 pages**. The end of reference 11 ("long.403") and all of reference 12 (3 lines) spill to page 5, about 4 reference
+lines, and the log has one 1.2 pt overfull vbox. So the camera-ready needs about 4 more reference lines (about 3 body lines) cut
+beyond today's 4-page review build, whose 3 free lines at the foot of page 4 the block already uses. Measured twice in
+this round (before and after the last wording change), with the same spill. Candidates, in order: the Section 6
+byte-check sentence once the check is run; "Station 2" folded into one sentence; the Section 2 E2b sentence ("Re-edited by
+another model ..."); one of the two GEO-agreement clauses in Section 5. Not cut now (no camera-ready yet).
+
+Separately, `\setcopyright{none}` leaves a stray "2027." line under the conference line in the page-1 footnote (an acmart
+artifact). Adding `\renewcommand\footnotetextcopyrightpermission[1]{}` after `\setcopyright{none}` hides it but also removes
+the conference line; that is the owner's call, so it is not applied.
