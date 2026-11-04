@@ -152,7 +152,7 @@ Figure-to-claim map: Claim 1, Figures 1 (left) and 2; Claim 2, Figure 3; Claim 3
 ## Data and helper scripts (written before the figures)
 
 - `scripts/figdata.py`: read-only loaders for S-JSON, CE/samples/*/results/*.json, and `data/*.json`.
-- `scripts/collect_scores.py` writes `data/scores.json`.
+- `scripts/collect_scores.py` writes `data/coverage.json` (the question-first counts); `data/scores.json` is a frozen record from CE c908431 that no script writes (updated 2026-11-03).
 - `scripts/derive_sensitivity.py` writes `data/sensitivity_derived.json`: per-model means, 95% t intervals over 8 questions, per-sample means, questions up, maxima, per-question SD and a post hoc MDE (labelled post hoc in every use).
 - `scripts/derive_loose_grades.py` writes `data/evidence_grades_loose.json` from the coded matrix under the looser rule.
 - `scripts/system_checks.py` writes `data/system_checks.json`.

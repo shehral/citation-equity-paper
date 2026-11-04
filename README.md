@@ -12,7 +12,7 @@ This repo holds the demo-track paper for The Web Conference 2027 (WWW '27), "Cit
 
 - Make changes on a branch and open a pull request against `main`, so `build.sh` and `results/verify_numbers.py` can be run before merging. Small text fixes can go straight to `main`.
 - After any edit, run `bash build.sh` (it fails on more than 4 pages) and `.venv/bin/python -I -B results/verify_numbers.py`.
-- **Second rater:** if you are rating the evidence (`notes/second-rater/`), do it before opening `data/grades.json`, `data/evidence_matrix.csv`, `data/evidence_grades_loose.json` or Figure 3, so the rating stays blind.
+- **Second rater:** if you are rating the evidence (`notes/second-rater/`), do it before opening `data/grades.json`, `data/evidence_matrix.csv`, `data/evidence_grades_loose.json` or `figures/fig3_evidence.pdf` (the evidence matrix, no longer in the paper), so the rating stays blind.
 
 ## Build the PDF
 
