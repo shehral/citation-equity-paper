@@ -9,55 +9,92 @@
 
 % src: CE/experiments/PREREG_E1.md (design; frozen before any page was edited) and CE/experiments/RESULTS_E1.md (data/e1_results.json):
 %      informational GEO-bench test-split queries, 60 C-SEO Bench queries; editor Gemma-4-31B-it edits only the flagged spans,
-%      validators reject edits that add facts or miss the check; reference = a same-length paraphrase of the same spans;
-%      4 sources per prompt, slot rotated; judges Gemma-4-12B-it and Qwen3.8-27B, 8 seeds; score (5 - r)/4 with r = 5 if
-%      uncited (CE/experiments/PREREG_E1.md line 119); 30-query minimum (min_n), Holm within families, "no effect larger than
-%      delta": the 90% CI inside +-0.03 (PREREG_E1.md line 148; analysis settings delta 0.03, min_n 30 in every analysis JSON)
+%      validators reject edits that add facts or miss the check; reference = a same-length paraphrase of the same spans, or the
+%      unedited page for the checks without such a placebo (PREREG_E1.md table lines 59 to 72: arms 1, 4, 9, 11, 14 and ALL vs
+%      original; arm 9 extractive and deterministic, line 67); 4 sources per prompt, the target in each slot twice over seeds 1
+%      to 8, competitors seeded on (query, seed), the same orders for every version (PREREG_E1.md line 113); judges
+%      Gemma-4-12B-it and Qwen3.8-27B, 8 seeds; score (5 - r)/4 with r = 5 if uncited (CE/experiments/PREREG_E1.md line 119);
+%      30-query minimum (min_n), Holm within families, "no effect larger than delta": the 90% CI inside +-0.03 (PREREG_E1.md
+%      line 148; analysis settings delta 0.03, min_n 30 in every analysis JSON); smaller effects stay possible: PREREG_E1.md
+%      "Power" (effects below about 0.02 cannot be ruled out)
 % src: plans, code and data: footnote fn:links (Research page, code, Hugging Face data); results/README.md
 \paragraph{The test}
-For a query and a check, an open model edits only the spans of the target page that the check flags, and validators reject an edit that adds facts or misses the check; the placebo rewords the same spans to the same length.
-Two open judges answer the query from 4 sources, 8 times each with the order shuffled, and the page's \emph{citation score} is $(5-r)/4$ when it is the $r$-th source cited, else 0.
-A result needs 30 or more queries, tests are Holm-corrected within their family, and ``no effect larger than 0.03'' means the 90\% interval lies inside $\pm 0.03$ (plans, code and data: footnote~\ref{fn:links}).
+For a query and a check, an open model (Gemma-4-31B-it) edits only the spans the check flags, and validators reject an edit that adds facts or misses the check.
+The reference rewords the same spans to the same length, or, for checks without such a placebo, is the unedited page ($^{\circ}$ in Figure~\ref{fig:result}).
+Two open judges (Gemma-4-12B-it and Qwen3.8-27B) answer the query from 4 sources, 8 times each with the page in each slot twice, and the page's \emph{citation score} is $(5-r)/4$ when it is the $r$-th source cited, else 0.
+A result needs 30 or more queries, and tests are Holm-corrected within their family.
+``No effect larger than 0.03'' means the 90\% interval lies inside $\pm 0.03$, so smaller effects stay possible (plans, code and data: footnote~\ref{fn:links}).
 
-% src: CE/experiments/RESULTS_E1.md main primary contrasts (data/e1_results.json "main"): arm 9 (target questions answered, done as
-%      a section headed by the question) +0.027 [+0.010, +0.043] Holm 0.006 n 54, replication +0.036 n 52; arm 12 (your reader's
-%      words up top: the question's missing key words in the title, first heading or first paragraph) +0.035 vs P12, n 33
-% src: E2a (CE/experiments/RESULTS_E2.md; data/e1_results.json "e2"."e2a"): 9 vs 9W main +0.003, replication -0.001, both "no effect
-%      larger than delta"; 9W vs original +0.023 (main) and +0.037 (replication), reported without a verdict
-% src: E2b (editor Qwen3.8-27B; judges Gemma-4-12B and Qwen3.5-9B; data/e1_results.json "e2"."e2b"): 12 vs P12 +0.029 n 29
-% src: E3 pooled (CE/experiments/RESULTS_E3.md "Pooled result"; data/e1_results.json "e3"): 260 queries, 180 new; question headings
-%      -0.016 n 57, cited sources -0.010 n 49, direct answer first +0.012 n 66 "no effect larger than delta"; attributed quotes
-%      +0.026 n 62 "inconclusive"; tables, statistics, comparisons n 11, 11, 24 "insufficient n"; lists: E1 arm 3 -0.007 n 33
+% src: CE/experiments/RESULTS_E1.md main primary contrasts (data/e1_results.json "main"): arm 12 (your reader's words up top: the
+%      question's missing key words in the title, first heading or first paragraph) +0.035 vs P12, n 33, a candidate check added to
+%      the tool because it helped (CE/docs/evidence.md line 3); replication n 12, "insufficient n"; arm 9 (target questions
+%      answered, tested as an H2 that is the query text under the title over the page sentence with the most query key terms,
+%      extractive and deterministic, PREREG_E1.md line 67) vs the unedited page +0.027 [+0.010, +0.043] Holm 0.006 n 54,
+%      replication +0.036 n 52; ALL vs original +0.049 n 78 (Holm < 0.001), "helps, possibly through length or query-term overlap"
+% src: E2a (CE/experiments/RESULTS_E2.md; data/e1_results.json "e2"."e2a"): planned 9 vs 9W main +0.003, replication -0.001, both
+%      "no effect larger than delta"; planned 9 vs 9P (the same-size section without the query's words, PLAN_E2 line 28) main
+%      +0.017 [+0.001, +0.033] Holm 0.089 "inconclusive", replication +0.048 "helps"; 9P vs original +0.010 (main) and -0.012
+%      (replication), reported without a verdict
+% src: E2b (editor Qwen3.8-27B; judges Gemma-4-12B and Qwen3.5-9B, so one judge swapped; data/e1_results.json "e2"."e2b"): 12 vs
+%      P12 +0.029 n 29, the plan's sign check, below the 30-query minimum (CE/experiments/RESULTS_E2.md, PLAN_E2)
+% src: E3 pooled (CE/experiments/RESULTS_E3.md "Pooled result"; data/e1_results.json "e3"): 260 queries, 180 new, and one more
+%      editing attempt per edit (CE/experiments/PLAN_E3.md change 3); question headings -0.016 n 57, cited sources -0.010 n 49,
+%      direct answer first +0.012 n 66 "no effect larger than delta"; attributed quotes +0.026 n 62 "inconclusive"; tables,
+%      statistics, comparisons n 11, 11, 24 "insufficient n"; lists: E1 arm 3 -0.007 n 33; the candidate definition check (arm 11,
+%      the page's first "<key term> is/are" sentence copied under the title, PREREG_E1.md line 69): +0.000, n 30, "no effect
+%      larger than delta" (data/e1_results.json main)
 \paragraph{Eleven checks}
-Of single changes, only the two that add the reader's own words near the top clearly raised the score (Figure~\ref{fig:result}a): the reader's question as a section under the title ($+0.027$, 95\% CI $[+0.010, +0.043]$, Holm $p = 0.006$; replication $+0.036$), and the question's missing words worked into the title and opening ($+0.035$ against its placebo).
-The words carry the gain, not the form: the question as a heading did no better than the same text set as plain ($+0.003$; replication $-0.001$), while the plain text beat the untouched page ($+0.023$; $+0.037$).
-With another editor and other judges, the reader's-words gain kept its sign ($+0.029$, $n = 29$).
-A follow-up added 180 queries for the checks with too few pages: over 260, question headings, cited sources and a direct answer first showed no effect larger than 0.03, as did lists over 80; attributed quotes were inconclusive, and tables, statistics and comparisons still had too few pages.
+Of single changes, only the two that add the reader's own words near the top clearly raised the score (Figure~\ref{fig:result}a).
+\emph{Your reader's words up top}, a candidate check the tool added because it helped, works the question's missing words into the title and opening ($+0.035$ against its placebo).
+\emph{Target questions answered} was tested as the reader's question as a heading under the title, over a copy of the page's best-matching sentence, made by rule: the \emph{question section} ($+0.027$ against the unedited page, 95\% CI $[+0.010, +0.043]$, Holm $p = 0.006$; replication $+0.036$).
+All fixes together, which include the question section, also helped ($+0.049$).
+The heading form added nothing: the question as a heading did no better than the same text set as plain ($+0.003$; replication $-0.001$).
+A section of the same size without the reader's words did not clearly beat the unedited page ($+0.010$; replication $-0.012$; shown without a verdict).
+Against that section the question section helped on the replication set ($+0.048$) and was inconclusive on the main set ($+0.017$).
+Re-edited by another model with one judge swapped, the reader's-words gain kept its sign ($+0.029$) on 29 queries, one short of our minimum.
+A follow-up added 180 queries and one more editing attempt for the checks with too few pages.
+Over the 260, question headings, cited sources and a direct answer first showed no effect larger than 0.03, as did lists over the first 80 and a candidate that copied the page's definition under the title.
+Attributed quotes were inconclusive, and tables, statistics and comparisons still had too few pages.
 
 % src: E5 design: CE/experiments/PLAN_E5.md r2 and CE/experiments/RESULTS_E5.md (opening paragraphs): 180 new GEO-bench test queries
 %      (data/e5_results.json queries.new); the keyword = the two rarest key words of the reader's question, which the tool turns
 %      into a heading mostly unchanged (RESULTS_E5.md "kept keyword or template question": kept for 149 of 168); the local-model
-%      question = the tool's local-model path (Gemma-4-31B-it) given that keyword; every answer judged against the true question
+%      question = the tool's local-model prompt sent to Gemma-4-31B-it, the editor model (PLAN_E5.md line 31, q_L), given that
+%      keyword; every answer judged against the true question; the guess rows pool all 260 main queries (E1's 80 included)
 % src: results (data/e5_results.json contrasts; CE/experiments/RESULTS_E5.md "Planned results" and "Reported without a verdict"):
 %      gate "main:9-original:new queries" +0.039 [+0.023, +0.056] n 115 helps (noted); step 5 "main:9-original:all main queries"
 %      +0.035 n 169; "main:12-P12:new queries" +0.036 n 74, reported without a verdict; "main:9K-original:pooled" +0.016 Holm 0.006
 %      and "main:9K-9P:pooled" +0.018 Holm 0.006, both helps (noted); retention 9K: d(exact - keyword) +0.019 [+0.008, +0.031]
-%      ("main:9K-9:pooled" negated), reading "loses the gain" (readings.retention.9K; the rule: RESULTS_E5.md "What the results
-%      mean", margin 0.015 fixed before any answer); share kept on the new queries 0.65 (share_kept_new.9K.share, "about two
-%      thirds"); "main:9-9A:pooled" +0.014 (the exact-string echo, RESULTS_E5.md "Reading these lines against the data");
-%      "main:9L-original:pooled" +0.008 "no effect larger than delta"; "main:12K-P12K:pooled" +0.004 "no effect larger than delta"
+%      ("main:9K-9:pooled" negated), the plan's reading "loses the gain", here "falls short of the exact question"
+%      (readings.retention.9K; the rule, fixed before any answer: PLAN_E5.md r2, Primary analysis item 3, "d(9 - G) > 0 with
+%      its 95% interval above 0", unless the guess also meets "keeps the gain"); share kept on the new queries 0.65, 90% CI 0.41
+%      to 0.93 (share_kept_new.9K.share, "about two thirds"; no verdict); "main:9-9A:pooled" +0.014, reported without a verdict
+%      (the exact-string echo, RESULTS_E5.md "Reading these lines against the data"); "main:9L-original:pooled" +0.008 "no effect
+%      larger than delta"; "main:12K-P12K:pooled" +0.004 "no effect larger than delta"; replication family (its own Holm family,
+%      PLAN_E5.md line 87): 9K vs 9P +0.025 "helps", 9L vs 9P +0.028 "helps" (noted), 9K and 9L vs original +0.009 and +0.013
+%      "no effect larger than delta" (RESULTS_E5.md "Replication set")
 \paragraph{When the writer has to guess}
+The gain held on new queries, and a keyword helped, but less.
 Every edit above used the reader's exact question, which a writer rarely sees.
-A last test reran the question section on those 180 new queries, which the first test never used, then built it from two guesses the tool offers: a keyword, here the question's two rarest key words, and a question a local model wrote from it; answers were still judged against the true question.
+A last test reran the question section on those 180 new queries, which the first test never used.
+It then built the section from two guesses the tool offers: a keyword, here the question's two rarest key words, and a question the same editor model wrote from it with the tool's prompt; answers were still judged against the true question.
 The exact question helped on the new queries ($+0.039$, 95\% CI $[+0.023, +0.056]$, $n = 115$; $+0.035$ pooled with the first test's queries, $n = 169$), and the reader's missing words worked into the top held there too ($+0.036$ against their placebo, $n = 74$, shown without a verdict).
-The keyword helped against the untouched page ($+0.016$) and against a section without the reader's words ($+0.018$; Holm $p = 0.006$ for both), but the exact question beat it by $+0.019$ $[+0.008, +0.031]$, so by the rule we set before the run the keyword loses the gain; on the new queries it kept about two thirds of it.
-Part of that edge is the exact query string, which the judge's prompt also shows: the exact question beat a section with all its key words but not the string by $+0.014$.
-A question a local model wrote from the keyword showed no effect larger than 0.03 ($+0.008$), and neither did the keyword's missing words worked into the top ($+0.004$ against their placebo).
+Over all 260 queries the keyword helped against the unedited page ($+0.016$) and against a section without the reader's words ($+0.018$; Holm $p = 0.006$ for both).
+Yet the exact question beat it by $+0.019$, 95\% CI $[+0.008, +0.031]$; by the rule we set before the run, an interval above zero means the guess \emph{falls short of the exact question}.
+On the new queries alone the keyword kept about two thirds of the gain (shown without a verdict).
+Part of the edge is the exact query string, which the judge's prompt also shows: the exact question beat a section with all its key words but not the string by $+0.014$ (shown without a verdict).
+The model's question showed no effect larger than 0.03 ($+0.008$), and neither did the keyword's missing words worked into the top ($+0.004$ against their placebo).
+On the 60-query replication set both guesses beat a section without the reader's words ($+0.025$, $+0.028$) and showed no effect larger than 0.03 against the unedited page.
 
-% src: confound-adjusted intercepts (the effect at no change in length or key-term count) include 0: E1 arm 9 [-0.075, +0.018],
-%      arm 12 [-0.083, +0.018] (data/e1_results.json main adjusted_ci95); E5 gate [-0.037, +0.051], 9K vs original [-0.016, +0.052]
-%      (data/e5_results.json confound_ci95); labels "helps, possibly through length or query-term overlap"
+% src: every main-set helps carries the plan's note "helps, possibly through length or query-term overlap" (E1 arms 9, 12, ALL;
+%      E5 gate, step 5, both keyword tests; two replication-set results are plain "helps": E2a 9 vs 9P, E5 9K vs 9P) (PREREG_E1.md line 164;
+%      data/e1_results.json and data/e5_results.json labels); the length and key-term regression's intercepts include 0 (E1 arm 9
+%      [-0.075, +0.018], arm 12 [-0.083, +0.018]; E5 gate [-0.037, +0.051]; data/e1_results.json adjusted_ci95, data/e5_results.json
+%      confound_ci95) but cannot split words from length, since the edits add both; the same-size section without the reader's
+%      words (9P, length ratio 1.034 as arm 9's, RESULTS_E1/E5) gained nothing clear over the unedited page (+0.010; replication
+%      -0.012; E2a, reported without a verdict); "did not clearly move citation": no formatting check helped (Figure 1a)
 \begin{takeaway}
-Every gain here tracks the reader's words: once changes in length and in the count of query words are regressed out, what is left includes zero.
-That is the point for writers: the formatting they are sold did not move citation, and the reader's vocabulary did.
+Each gain on the main set carries the plan's note: possibly through length or query-word overlap.
+Length alone did not do it: a same-size section without the reader's words gained nothing clear.
+For writers that is the point: the formatting they are sold did not clearly move citation, and the reader's vocabulary did.
 \end{takeaway}

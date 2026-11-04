@@ -8,7 +8,7 @@
 %   - required: a section on the ethical use of data (sec:ethics, "Ethics and use of data");
 %   - required: how the demonstration is instantiated at the venue (sec:demo);
 %   - external material (code, video, live system) encouraged.
-% Build:  bash build.sh         (figures from data, then /opt/homebrew/bin/tectonic --keep-logs main_www.tex)
+% Build:  bash build.sh         (figures from data, then /opt/homebrew/bin/tectonic --keep-logs --keep-intermediates main_www.tex)
 % Cuts made to fit 4 pages are logged in notes/CUTS.md (cut, never shrink fonts or margins).
 % CE = ../citation-equity (the tool repo, read only). Every number in the sections carries a "% src:" comment.
 \documentclass[sigconf,screen,review]{acmart}
@@ -30,8 +30,10 @@
 
 \begin{document}
 
-% Title: FRAMING-2026-10-27.md's recommended title (owner's framing choice, 2026-10-27).
-\title{Citation Equity: Testing GEO Writing Advice, and Keeping Only What Moved Citation}
+% Title: FRAMING-2026-10-27.md's first alternative, chosen by the controller for the fix pass (Q26.1, 2026-11-03): the old
+% recommended title said the tool keeps only what moved citation, but it keeps every check as a labelled note (review C09),
+% and it named no tool (pc-02). The owner may revert to "Testing GEO Writing Advice, and Keeping Only What Moved Citation".
+\title{Citation Equity: Which GEO Writing Advice Moves Citation? A Tool Built From the Answer}
 
 % Byline: five authors in the owner's order (owner update 2026-10-26). Pegah Zargarian is a Northeastern alumna, so her
 % block names the university and country only (no college, no city), as the owner asked.
@@ -92,16 +94,19 @@
 
 % ---- Figure 1: the result, as the page-1 teaser (sigconf cannot float a figure* onto page 1). scripts/fig_result.py.
 % src (caption): data/e1_results.json ("main", "replication", "e2", "e3"; scripts/derive_e1_results.py) and data/e5_results.json
-%      (scripts/derive_e5.py): 80 main and 60 replication queries (E1), 260 pooled (E3), 180 new (E5, queries.new); the margin 0.03
-%      and the 30-query minimum: settings in every analysis JSON; "loses the gain": readings.retention.9K
+%      (scripts/derive_e5.py): 80 main and 60 replication queries (E1), 260 pooled (E3), 180 new (E5, queries.new); the guess
+%      rows pool all 260 main queries (E5 "pooled", n 166 to 169, E1's 80 included); n = queries where the check applied and its
+%      edit passed validation (CE/experiments/RESULTS_E1.md, RESULTS_E5.md "Edits that passed validation"); the margin 0.03 and
+%      the 30-query minimum: settings in every analysis JSON; "falls short" = the plan's "loses the gain" (readings.retention.9K;
+%      CE/experiments/PLAN_E5.md r2, Primary analysis item 3: d(exact - guess) with its 95% CI above 0)
 \begin{teaserfigure}
   \centering
   \includegraphics[width=\textwidth]{figures/fig1_result.pdf}
-  \caption{\figtakeaway{Of eleven GEO checks, only the reader's own words near the top moved citation; the gain held on new queries, and a keyword kept part of it.}
-    Difference in citation score from a same-length placebo or the unedited page ($^{\circ}$), 95\% intervals.
-    \panel{a} Each check alone on 80 GEO-bench queries (260 for checks with too few pages); two rows place the question section's gain in its words.
-    \panel{b} The same edits on 180 new queries, then made from a keyword or a local model's question; the bottom rows compare the exact question with the guesses.}
-  \Description{Two forest plots side by side. Each row is an edit to real web pages, with the mean difference in citation score from its reference, a 95 percent interval, a grey band from minus 0.03 to plus 0.03, and small teal diamonds for the 60-query replication set. Left: your reader's words up top and target questions answered sit to the right of the band, filled in indigo; a question heading did no better than the same text as plain text; question headings, lists, cited sources and direct answer first sit inside the band; attributed quotes is inconclusive; statistics, comparisons and tables have hollow markers with too few pages; all fixes together sit to the right. Right: the exact question on 180 new queries sits clearly right of zero, as does the reader's missing words; a keyword's two words helps but less; the keyword's missing words and a local model's question sit inside the band; two bottom rows show the exact question beating the keyword and beating a section with all its key words.}
+  \caption{\figtakeaway{Of eleven GEO checks, only the reader's own words near the top clearly moved citation; the gain held on new queries, and a keyword helped less.}
+    Difference in citation score from a same-length placebo or the unedited page ($^{\circ}$), 95\% intervals; n: queries where the check applied and its edit passed validation.
+    \panel{a} Each check alone on 80 GEO-bench queries (260 for checks with too few pages at 80); two italic rows test whether the gain of Target questions answered comes from its heading or its words.
+    \panel{b} The exact question on 180 new queries; then sections made from a keyword or a local model's question, over all 260 queries; the bottom rows compare each guess with the exact question.}
+  \Description{Two forest plots side by side. Each row is an edit to real web pages, with the mean difference in citation score from its reference, a 95 percent interval, a grey band from minus 0.03 to plus 0.03, and small teal diamonds for the 60-query replication set. Left: your reader's words up top and target questions answered sit right of zero with intervals clear of it, filled in indigo; a question heading did no better than the same text as plain text, and scored above a same-size section without its words, inconclusively; question headings, lists, cited sources and direct answer first sit inside the band; attributed quotes is inconclusive; statistics, comparisons and tables have hollow markers with too few pages; standalone paragraphs is descriptive, with no verdict by design, since it needs passage-level retrieval; all fixes together sit to the right. Right: the exact question on 115 new queries sits clearly right of zero; the reader's missing words sit right of zero, without a verdict; a keyword's two words helps, but less; the keyword's missing words and a local model's question sit inside the band; in the two bottom rows the keyword falls short of the exact question, and a section with all the key words sits below the exact question, without a verdict.}
   \label{fig:result}
 \end{teaserfigure}
 

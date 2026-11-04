@@ -5,19 +5,25 @@
 Writers are told that question headings, lists, statistics, quotes and cited sources help AI answer engines cite their pages.
 % src: eleven checks: CE/docs/evidence.md line 3 ("runs eleven checks"); one change at a time against a same-length paraphrase,
 %      open models over fixed sources: CE/experiments/PREREG_E1.md (design) and CE/experiments/RESULTS_E1.md; data/e1_results.json
-We tested eleven such checks by editing real web pages one change at a time, each against a same-length paraphrase or the untouched page, while open models answered from fixed sources.
+We tested eleven such checks by editing real web pages one change at a time, each against a same-length paraphrase or the unedited page, while open models answered from fixed sources.
 % src: "about 0.03": E1 target questions answered (question section) +0.027 and your reader's words up top +0.035 (data/e1_results.json
 %      "main" arms 9 and 12; CE/experiments/RESULTS_E1.md); the 0-to-1 citation score (5 - r)/4: CE/experiments/PREREG_E1.md line 119
-Only one kind of change clearly raised citation: the reader's own words near the top of the page, by about 0.03 on a 0-to-1 citation score.
+Only one kind of single change clearly raised citation: the reader's own words near the top of the page, by about 0.03 on a 0-to-1 citation score.
+% src: "single change": all fixes together, a combination, also helped (data/e1_results.json main ALL vs original +0.049; Figure 1a)
 % src: heading vs the same text as plain text +0.003 (replication -0.001), "no effect larger than delta": CE/experiments/RESULTS_E2.md
 %      (data/e1_results.json "e2"."e2a"); question headings, cited sources, direct answer first over 260 queries (E3 pooled) and lists
 %      over 80 (E1): "no effect larger than delta" with delta = 0.03: CE/experiments/RESULTS_E3.md, RESULTS_E1.md (data/e1_results.json)
-The words mattered, not the heading form; question headings, lists, cited sources and leading with a direct answer showed no effect larger than 0.03.
+The heading form did not matter.
+Question headings, lists, cited sources and a direct answer first showed no effect larger than 0.03.
 % src: E5 (CE/experiments/RESULTS_E5.md; data/e5_results.json): 180 new main queries (queries.new); the exact question vs the unedited
 %      page on the new queries d +0.039, n 115, "helps, possibly through length or query-term overlap" (contrast
 %      "main:9-original:new queries"); a keyword's two words kept 0.65 of the gain on the new queries (share_kept_new.9K) and helps
-%      against both references (+0.016, +0.018); a question a local model wrote from the keyword: "no effect larger than delta", d +0.008
-On 180 queries the first test never used, the gain held ($+0.039$); a keyword's two words kept part of it, and a question a local model wrote from that keyword did not clearly help.
+%      against both references (+0.016, +0.018) but falls short of the exact question (the plan's "loses the gain":
+%      readings.retention.9K), so "helped, but less"; a question a local model wrote from the keyword: "no effect larger than
+%      delta", d +0.008
+On 180 queries the first test never used, the gain held ($+0.039$).
+A keyword's two words helped, but less.
+A question a local model wrote from that keyword showed no effect larger than 0.03.
 % src: the redesign: CE/docs/superpowers/specs/2026-11-03-question-first-design.md sections 2 and 5 to 7 (local feat branch);
 %      CE/README.md lines 3 and 11 to 15 (CE 7b10ad3): questions first, which questions a draft covers, blockers, labels;
 %      offline and in the browser: CE/README.md line 68 ("The web app has no server")

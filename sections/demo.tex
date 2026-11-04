@@ -1,21 +1,37 @@
-% sections/demo.tex: Section 4, the demonstration at the venue (required by the WWW 2027 demo call), final shape 2026-11-03.
+% sections/demo.tex: Section 4, the demonstration at the venue (required by the WWW 2027 demo call), final shape 2026-11-03,
+% fix pass the same evening (Q26.2: what a visitor does and sees, ending on the 2-of-4 count; review pc-01, C18, S23).
 % CE = ../citation-equity (the tool repo, read only). Every number carries a "% src:" comment.
 
 \section{Demonstration at the venue}\label{sec:demo}
 
-% src: CE/samples/README.md line 82 (Apple M4 Pro, 24 GB, Ollama 0.40.9); CE/README.md lines 40 to 47 (Ollama setup), CE 7b10ad3
+% src: CE/samples/README.md line 82 (Apple M4 Pro, 24 GB, Ollama 0.40.9); CE/README.md lines 40 to 47 (Ollama setup), CE 7b10ad3;
+%      the default model: CE/packages/bench/src/types.ts DEFAULT_SETTINGS
 One laptop serves the static build and runs Ollama (\texttt{llama3.2:3b}), so the core demonstration needs no venue network.
 A second screen shows the hosted demo, and a poster carries Figures~\ref{fig:result} and~\ref{fig:workspace}.
 
 % src (Station 1): spec section 7.2.1 (Try it with an example: four pack questions, 0 of 4 covered, 1 blocker, crawler-access, on the
 %      example page) and section 14 (two typed edits, the title and one opening sentence under the first section, give "Questions
-%      covered: 2 of 4", checked with the engine on 2026-11-03); the Quick edit on the example is the question-heading "?" edit,
-%      labelled No effect in our test (spec section 7.3; rank.test.ts); the recorded test: CE/samples/README.md lines 87 to 98
+%      covered: 2 of 4", checked with the engine on 2026-11-03); the Quick edit on the example is the question-heading "?" edit
+%      on "Why espresso turns bitter", labelled No effect in our test (spec section 7.3; CE/packages/engine/test/rank.test.ts
+%      lines 126 to 138); applying it leaves the count at 0 of 4, and after the two typed edits at 2 of 4: the tool's CLI from its
+%      source at CE 3991cc0 (ce analyze --questions <pack> --json) on scratch copies of samples/espresso-bitterness/before.md,
+%      checked 2026-11-03 in this fix pass (paper-fix-log.md; the two-edit draft hashes to 576bcb4e..., as in
+%      data/fig2_callouts.json); the recorded test: CE/samples/README.md lines 87 to 98 (the example's prepared before and after
+%      drafts; the after draft acted once on every suggestion of the score-based first version, samples/README.md step 3)
 % src: 64 answers in 15 minutes: CE/samples/README.md lines 81 and 83 (2 drafts x 4 questions x 8 runs; espresso 18:37 to 18:52 PDT)
-\emph{Station 1, the 90-second loop.} The visitor clicks \emph{Try it with an example}: four reader questions, a draft that covers none of them, and one blocker on the example page.
-Two typed edits, a few words in the title and one answering sentence, take the count to 2 of 4; the visitor then applies the ready edit through Preview, reads its label, and opens the recorded before-and-after test beside its chance line.
+\emph{Station 1, the 90-second loop.}
+The visitor clicks \emph{Try it with an example} and sees four reader questions, a draft that covers none of them, and one blocker on the example page.
+The ready edit adds a question mark to a heading, common GEO advice, and its chip reads \emph{No effect in our test}; applied through Preview, it leaves the count at 0 of 4.
+The visitor then opens the example's recorded before-and-after test beside its chance line; its after draft followed the old checklist.
 A live run (64 answers, 15 minutes) starts each session and fills in while visitors watch.
-\emph{Station 2, your readers' questions (offline).} Visitors type their questions or keywords and paste their own paragraph; they see which questions it covers and which words are missing, and the text never leaves the laptop.
+Last, two typed edits, a few of the reader's words in the title and one answering sentence, take the count to 2 of 4 (Figure~\ref{fig:workspace}).
+
+\emph{Station 2, your readers' questions (offline).}
+Visitors type their questions or keywords and paste their own paragraph.
+They see which questions it covers and which words are missing, and the text never leaves the laptop.
+
 % src: CE/docs/cli.md line 95 (ce site: blockers first); spec section 7.4 (pasted HTML and robots.txt in the browser; "1 check needs
 %      your live site")
-\emph{Station 3, can engines reach your site? (online).} The command-line \texttt{ce site} checks the visitor's URL for blockers over a phone hotspot; offline, pasted HTML and robots.txt run the same checks in the browser, except those that need the live site.
+\emph{Station 3, can engines reach your site? (online).}
+The command-line \texttt{ce site} checks the visitor's URL for blockers over a phone hotspot.
+Offline, pasted HTML and robots.txt run the same checks in the browser, except those that need the live site.

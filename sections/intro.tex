@@ -29,20 +29,32 @@ Of 24 commercial products whose public pages we read, most sell brand tracking a
 % src: eleven checks: CE/docs/evidence.md line 3; 80 GEO-bench queries and 60 C-SEO Bench queries: CE/experiments/RESULTS_E1.md
 %      (data/e1_results.json main.n_queries, replication.n_queries); one change at a time, same-length paraphrase: CE/experiments/PREREG_E1.md;
 %      plans committed before their runs: results/README.md "How each experiment was run" (plan commits before every job);
-%      the words, not the heading: CE/experiments/RESULTS_E2.md (E2a); E5: CE/experiments/RESULTS_E5.md (180 new queries,
-%      data/e5_results.json queries.new; keyword kept part, local-model question no effect larger than delta)
-We built that advice into a writing tool with eleven checks, then tested each check on its own.
-An open model made one check's edit to real web pages, a same-length paraphrase of the same passage served as the placebo, and open models answered from fixed sources (80 GEO-bench queries, with 60 from C-SEO Bench as a replication set).
+%      ten tool checks and candidate checks: CE/experiments/PREREG_E1.md lines 50 to 52 (family A = arms 2 to 10, the tool's
+%      checks, arm 1 descriptive; family B = arms 11, 12 and 14, candidates); the one that helped (arm 12, your reader's words up
+%      top) joined the tool because it helped: CE/docs/evidence.md line 3; edits by a model or by a fixed rule (arm 9 is
+%      extractive and deterministic, reference = the unedited page): PREREG_E1.md line 67;
+%      the heading added nothing: CE/experiments/RESULTS_E2.md (E2a, 9 vs 9W "no effect larger than delta" on both sets);
+%      E5: CE/experiments/RESULTS_E5.md (180 new queries, data/e5_results.json queries.new; the keyword helps against both
+%      references but falls short of the exact question; local-model question no effect larger than delta)
+We built that advice into a writing tool and tested each of its ten checks on its own, beside candidate checks of our own.
+The one candidate that helped became its eleventh.
+An open model or a fixed rule made one check's edit to real web pages, against a same-length paraphrase of the same passage or the unedited page, and open models answered from fixed sources (80 GEO-bench queries, with 60 from C-SEO Bench as a replication set).
 Every test was planned in advance.
-Only the reader's own words near the top of the page clearly raised citation (Figure~\ref{fig:result}a), and a follow-up showed that the words carry the gain, not the heading.
-A last test asked what a writer can know: the gain held on 180 queries the first test never used, a keyword's two words kept part of it, and a question a local model wrote from the keyword did not clearly help (Figure~\ref{fig:result}b).
+Only the reader's own words near the top of the page clearly raised citation (Figure~\ref{fig:result}a).
+A follow-up found that the heading itself added nothing.
+A last test asked what a writer can know.
+The gain held on 180 queries the first test never used.
+A keyword's two words helped, but less.
+A question a local model wrote from the keyword showed no effect larger than 0.03 (Figure~\ref{fig:result}b).
 
 % ---- What we built
 % src: the redesign: CE/docs/superpowers/specs/2026-11-03-question-first-design.md sections 2, 5 and 7 (local feat branch, not on
 %      public main); CE/README.md lines 3, 11 to 15 and 68 (CE 7b10ad3)
 % src: footnote links: demo, code, data and Research page (HTTP 200 on 2026-10-26); video https://youtu.be/kbU9t3ewVUk (2026-10-27,
-%      notes/REDESIGN-AND-E5-PLAN-2026-10-27.md Part 3; re-recorded in Week 10 per that plan)
-We present \emph{Citation Equity}, an open-source writing tool rebuilt around these results (Figure~\ref{fig:workspace}).\footnote{Live demo: \url{https://shehral.github.io/citation-equity/}. Code (MIT): \url{https://github.com/shehral/citation-equity}. Data: \url{https://huggingface.co/datasets/Shehral/citation-equity-experiments}. Research page (plans, results): \url{https://shehral.github.io/citation-equity/research/}.\label{fn:links} Video: \url{https://youtu.be/kbU9t3ewVUk}.}
+%      notes/REDESIGN-AND-E5-PLAN-2026-10-27.md Part 3). That upload shows the old score-based tool (Q26.6): re-record it from the
+%      question-first build and put the new URL here (YouTube gives a new video ID); if the new cut is not checked by submission
+%      day, delete the Video sentence (review pc-12).
+We present \emph{Citation Equity}, an open-source writing tool rebuilt around these results (Figure~\ref{fig:workspace}).\footnote{Live demo: \url{https://shehral.github.io/citation-equity/}. Code (MIT): \url{https://github.com/shehral/citation-equity}. Data: \url{https://huggingface.co/datasets/Shehral/citation-equity-experiments}. Research page (plans, results, evidence grades): \url{https://shehral.github.io/citation-equity/research/}.\label{fn:links} Video: \url{https://youtu.be/kbU9t3ewVUk}. \owner{Re-record for the question-first tool.}}
 It starts from the questions readers ask, counts which ones a draft covers, names the missing words without inserting them, flags settings that keep a page out of answers, and labels the rest of the advice with what our tests found.
-The name says who it is for: it is free, open and offline, so the evidence is not reserved for brands that pay for tracking tools.
-Our contributions are (1)~a controlled test of eleven common GEO checks, with placebos, a replication set, editor and judge swaps, and tests on new queries and on questions a writer can guess; (2)~the finding that vocabulary, not formatting, moved citation; and (3)~an open, offline writing tool rebuilt from that finding, with a live demo, code and data.
+The equity is of access, not of exposure in rankings: the tool is free, open and offline, so the evidence is not reserved for brands that pay for tracking tools.
+Our contributions are (1)~a controlled test of eleven common GEO checks, with placebos, a replication set, an editor swap, and tests on new queries and on questions a writer can guess; (2)~the finding that vocabulary, not formatting, moved citation; and (3)~an open, offline writing tool rebuilt from that finding, with a live demo, code and data.

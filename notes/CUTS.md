@@ -209,3 +209,26 @@ spilled); these cuts brought it to 4 (no font, margin or spacing change):
     from it" -> "The same edits on 180 new queries, then made from a keyword or a local model's question".
 82. Section 2, the guess paragraph: "a keyword, here the question's two rarest key words, which the tool mostly keeps as typed"
     -> "a keyword, here the question's two rarest key words" (the src comment keeps "kept for 149 of 168").
+
+## Fix pass after the consolidated review (2026-11-03 evening)
+
+Rulings Q26 (`../citation-equity/.superpowers/sdd/2026-11-03-final-shape/paper-review-consolidated.md`) moved the evidence
+matrix out and spent the room on Section 4, a before/after Figure 2 and the review's fixes. The first build of the fixed text
+ran to 5 pages (about 8 lines over); these moves and cuts brought it to 4 (no font, margin or spacing change):
+
+83. Moved out (Q26.2): Figure 3 (the evidence matrix, `scripts/fig_evidence.py`, still built into `figures/fig3_evidence.pdf`
+    for reuse) and the paragraph "Evidence and the rule for nulls" (the looser rule, defined after the fact, that moves five
+    mixed checks to moderate). Section 3 keeps one sentence on the strict rule (nine mixed, two untested) and points to the
+    Research page in footnote 2. The references cited only in the figure's caption left the list: Zhang et al.
+    (absorption), Wu et al. (AutoGEO) and Yu et al. (GEO-SFE). SAGEO Arena stays, now cited in Section 6.
+84. Section 5: "What is new here is a writing tool rebuilt from its own controlled tests, including tests of the questions a
+    writer can actually know." (it repeats the contributions; review pc-10's refuter).
+85. Figure 2 caption: "Numbers mark the parts listed under the image." and the two-sentence takeaway folded into one
+    ("The draft view counts which reader questions the draft covers; the old build (inset) led with a checklist score.").
+86. Section 2, eleven checks: "; too few pages in the replication set" after the reader's-words +0.035 (the replication n of
+    12 stays in the src comment); E2b: "(Qwen3.8-27B)" and ", so it carries no verdict" (the model is named once, as a judge,
+    in "The test"; "one short of our minimum" says the rest). Restored after the build showed room: "All fixes together,
+    which include the question section, also helped (+0.049)." and "a candidate that copied the page's definition under the
+    title" (review fidelity-22 and fidelity-08; the candidate's n of 30 stays in the src comment).
+87. Section 6, sensitivity: "of the bench", "edit", "among eight sources" (Section 3 names the eight sources) and "two" before
+    "judges".

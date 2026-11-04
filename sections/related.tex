@@ -10,11 +10,18 @@
 %      stylistic edits did not, and What Gets Cited's "Keyword Gap": the page with the query's terms won the first citation in four
 %      of six models (CE/docs/evidence.md line 249)
 The bench reuses GEO's prompt and word share~\cite{aggarwal2024geo}, and our tests follow the counterfactual style of C-SEO Bench and What Gets Cited, which edit one page and hold the rest fixed~\cite{puerto2025cseo,vishwakarma2026cited}.
-Our vocabulary finding fits earlier ones: edits that made a page more relevant to the question made models side with it more often while stylistic edits did not~\cite{wan2024conflictingqa}, and a page holding the query's terms won the first citation in four of six models~\cite{vishwakarma2026cited}.
+% src: GEO's Keyword Stuffing ("Modifies content to include more keywords from the query, as expected in classical SEO
+%      optimization"): 17.7 vs 19.3 at baseline, "little to no improvement"; it added keywords anywhere in the page, not into the
+%      title and opening (CE/docs/evidence.md line 298; CE/docs/research/evidence-notes.md lines 15 and 162). No test here varied
+%      placement, so the text does not say placement caused the gain (review pc-10).
+Our vocabulary finding fits earlier ones: relevance edits moved models and stylistic edits did not~\cite{wan2024conflictingqa}, and a page holding the query's terms won the first citation in four of six models~\cite{vishwakarma2026cited}.
+GEO's keyword stuffing, a rewrite that added query keywords anywhere in the page, did not help~\cite{aggarwal2024geo}.
+Our reader's-words edit adds only the missing query words, to the title and opening, and is compared with a same-length placebo.
 % Cut 2026-11-03 (notes/CUTS.md 80): "Bajemon and Rochet validate a content score against engines [bajemon2026scoring]; our tool
 % drops its score instead." (src: corpus R39 summary and verifier_note; vendor-linked preprint)
 % src: CE/docs/research/2026-10-23-oss-sweep.json lines 14 and 201 (aiseo-audit FACTOR_REGISTRY with evidence tiers; lists, tables
 %      and answer capsules tagged 'diagnostic'); CE/NOTICE lines 29 to 39 (code adapted from aiseo-audit 2.1.2, commit 6c888aa);
 %      corpus R238 (geo-score keeps citation tracking out of its readiness score)
 Among open tools, aiseo-audit keeps an evidence tier for every factor and demotes lists and tables to unscored diagnostics~\cite{aiseoaudit}, and Citation Equity adapts code from it; geo-score keeps measured citation apart from its readiness score~\cite{geoscore}.
-What is new here is a writing tool rebuilt from its own controlled tests, including tests of the questions a writer can actually know.
+% Cut in the fix pass (review pc-10; notes/CUTS.md): "What is new here is a writing tool rebuilt from its own controlled tests,
+% including tests of the questions a writer can actually know." (it repeats the contributions in Section 1)

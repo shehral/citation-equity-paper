@@ -2,27 +2,41 @@
 % call, notes/VENUE.md), acknowledgments and the AI-use statement (kept exactly as they were). Final shape 2026-11-03.
 % CE = ../citation-equity (read only).
 
-% src: open models over fixed sources; live engines differ and drift: Martinez arXiv 2607.14035 (survey, Section 11)
-% src: "about 0.03": Section 2 (data/e1_results.json, data/e5_results.json); one rank position = 0.25 score units and 0.03 = 0.12 rank
-%      positions per answer (CE/experiments/PREREG_E1.md lines 119 and 148), so about one position over eight answers
+% src: every test puts the target page among 4 fixed sources (CE/experiments/PREREG_E1.md line 113), so it measures citation once
+%      the page is in the prompt, not retrieval; with retrieval back in, rewrites that helped in fixed setups often made pages harder
+%      to find (SAGEO Arena; CE/docs/evidence.md line 9); live engines differ and drift: Martinez arXiv 2607.14035 (Section 11)
+% src: "about 0.03": Section 2 (data/e1_results.json, data/e5_results.json); the unedited page's mean citation score 0.54 = 0.542
+%      over the 160 main-set cells of the original (80 queries x 2 judges; results/e1/cells.jsonl, set main, arm original; checked
+%      by results/verify_numbers.py; other references' baselines run 0.50 to 0.56, hence "about"); one rank position = 0.25 score
+%      units and 0.03 = 0.12 rank positions per answer (CE/experiments/PREREG_E1.md lines 119 and 148), so about one position over
+%      eight answers
 % src: the keyword = the reader's question's two rarest key words, a stand-in that leaks part of the query on purpose
 %      (CE/experiments/PLAN_E5.md, "Keyword k"; RESULTS_E5.md opening paragraph)
 % src: E1's queries: arm 9 was followed up because it passed there, so its gain there may be overstated (CE/experiments/RESULTS_E5.md
-%      "What the results mean", last bullet; share_kept_e1.caveat in data/e5_results.json)
-% src: sensitivity test: CE/experiments/PREREG_sensitivity.md line 30 (H2 bar +0.10, "Criteria (fixed before running)");
-%      answer_first_minus_before +0.007 to +0.034 on four models, detectable 0.019 to 0.047 (data/sensitivity_derived.json "ranges")
+%      "What the results mean", last bullet; share_kept_e1.caveat in data/e5_results.json); E1 took its 80 queries in dataset order
+%      (PREREG_E1.md); the new queries are not a random sample: longer, 108 four-page fallback queries (PLAN_E5.md line 21); arm 9's
+%      gain rose with query length in E1 (PLAN_E5.md line 21); the gate reweighted to E1's key-term-count mix +0.033 [+0.019,
+%      +0.047], n 115, a planned secondary reported without a verdict (data/e5_results.json gate_reweighted_new; RESULTS_E5.md
+%      "Planned contrasts per judge, per stratum and reweighted")
+% src: sensitivity test: CE/experiments/PREREG_sensitivity.md line 25 (the target's share of citations among 8 on-topic sources) and
+%      line 30 (H2 bar +0.10, "Criteria (fixed before running)"); answer_first_minus_before +0.007 to +0.034 on four models
+%      (data/sensitivity_derived.json "ranges"); our two judges were chosen from its exploratory part (PREREG_E1.md lines 127 and 194)
 % src: 320 queries = 260 GEO-bench main (E3 pooled and E5 main) + 60 C-SEO Bench (E1 replication); Gemma-4-31B-it edits all but
-%      E2b's (Qwen3.8-27B, 80 queries, CE/experiments/RESULTS_E2.md); E5's local-model questions are Gemma-4-31B-it's too
-% src: CE/experiments/PREREG_E1.md line 114 (the byte-identity check against --export-prompts is planned for E1 only; the check is
-%      CE/experiments/e1/check_prompt_twin.ts, in CE/experiments/e1/freeze/MANIFEST.md line 39; no recorded run of it is in the tool
-%      repo, so this sentence stays until the owner runs it)
+%      E2b's (Qwen3.8-27B, 80 queries, CE/experiments/RESULTS_E2.md) and writes E5's local-model questions; Gemma-4-12B-it, a judge,
+%      is of the same family (CE/experiments/RESULTS_E1.md line 269: "The editor and the primary judge are both Gemma models.")
+% src: CE/experiments/PREREG_E1.md line 114 (the byte-identity check against --export-prompts on 10 prompts is planned for E1); the
+%      check is CE/experiments/e1/check_prompt_twin.ts, in CE/experiments/e1/freeze/MANIFEST.md line 39; no recorded run of it is in
+%      the tool repo, so this sentence stays until the owner runs it
 \section{Limitations and future work}\label{sec:conclusion}
-Every measurement uses open models over fixed sources, not live engines, which differ and drift~\cite{martinez2026survey}.
-The effects are small, about 0.03 on a 0-to-1 score, or about one rank position over eight answers.
+Our one-change tests put the page among four fixed sources, so they measure citation, not whether the page is found.
+With retrieval back in, such gains can reverse~\cite{kim2026sageo}, and live engines differ and drift~\cite{martinez2026survey}.
+The effects are small, about 0.03 on a 0-to-1 score on which the unedited page averages 0.54, or about one rank position over eight answers.
 The keyword in our last test is two words of the real query, so it carries part of the query by design; real keywords may share less.
-Our first test's queries are those on which the question section first passed, so estimates that include them may run high; the 180 new queries do not have this bias.
-An earlier sensitivity test of the bench missed its target: a one-sentence answer edit gained $+0.007$ to $+0.034$ against a $+0.10$ bar the harness could detect.
-The tests cover 320 English queries, nearly all edited by one model family, and the harness prompt has not been byte-checked against the bench's.
+We followed up the question section because it passed on our first test's queries, so estimates that include them may run high.
+The 180 new queries avoid this but are longer, and the gain rose with query length; at the first test's query lengths it is $+0.033$.
+An earlier sensitivity test missed its preset bar: a one-sentence answer raised the page's citation share by 0.007 to 0.034, not the 0.10 required; our judges come from its exploratory part.
+The tests cover 320 English queries, nearly all edited by one model, from the same family as one of the judges.
+The planned byte check of the harness prompt against the bench's has not been run.
 Next are a comparison with live engines and a study with writers.
 
 \section{Ethics and use of data}\label{sec:ethics}
