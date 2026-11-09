@@ -10,13 +10,16 @@
 % src: CE/NOTICE lines 10 to 25 (CE/packages/bench/src/prompt.ts and metrics.ts adapted from GEO-optim/GEO, Apache-2.0);
 %      C-SEO Bench and What Gets Cited edit one page and hold the rest fixed (R2, R4); ConflictingQA: relevance edits moved models,
 %      stylistic edits did not, and What Gets Cited's "Keyword Gap": the page with the query's terms won the first citation in four
-%      of six models (CE/docs/evidence.md line 249)
+%      of six models (CE/docs/evidence.md line 249); What Gets Cited's formatting-only matched pairs (dense paragraphs versus
+%      organized sections, 252,000 trials over six LLMs): no consistent effect on the first citation (CE/docs/evidence.md lines 131,
+%      158 and 165; second review 2026-11-08, item 1, the optional Section 5 clause, placed in the sentence that already carries
+%      the study's other finding so the attribution is plain)
 The bench reuses GEO's prompt and word share~\cite{aggarwal2024geo}; our tests follow C-SEO Bench and What Gets Cited, which edit one page and hold the rest fixed~\cite{puerto2025cseo,vishwakarma2026cited}.
 % src: GEO's Keyword Stuffing ("Modifies content to include more keywords from the query, as expected in classical SEO
 %      optimization"): 17.7 vs 19.3 at baseline, "little to no improvement"; it added keywords anywhere in the page, not into the
 %      title and opening (CE/docs/evidence.md line 298; CE/docs/research/evidence-notes.md lines 15 and 162). No test here varied
 %      placement, so the text does not say placement caused the gain (review pc-10).
-Our vocabulary finding fits earlier ones: relevance edits moved models and stylistic edits did not~\cite{wan2024conflictingqa}, and a page holding the query's terms won the first citation in four of six models~\cite{vishwakarma2026cited}.
+Our vocabulary finding fits earlier ones: relevance edits moved models and stylistic edits did not~\cite{wan2024conflictingqa}; a page holding the query's terms won the first citation in four of six models, and formatting-only matched pairs had no consistent effect~\cite{vishwakarma2026cited}.
 GEO's keyword stuffing added query keywords anywhere in the page and did not help~\cite{aggarwal2024geo}; our edit adds only the missing words, to the title and opening.
 % src: GEO-SFE (arXiv 2603.29979): CE/docs/evidence.md line 174 ("restructured 200 articles, changing headings, chunking, lists,
 %      tables and emphasis together, and reported citation rate rising from 45.0% to 52.8% across six engines; lists were not

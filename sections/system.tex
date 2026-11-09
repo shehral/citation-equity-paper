@@ -122,7 +122,7 @@ By that rule, coded by one author, nine checks are mixed and two untested.
 % src: AnchoredAI arXiv 2509.16128: within-subjects lab study, more agency and ownership than a chat interface
 \paragraph{Suggest, never rewrite}\label{sec:suggest}
 Comments anchored to spans of text gave writers more agency than a chat interface in a lab study~\cite{lou2025anchoredai}, so every suggestion is anchored to an exact range of the draft and follows the author's edits.
-An edit is previewed and applied only if its text is unchanged, every action has Undo, there is no ``apply all'', and an optional local model proposes wording only on the author's click.
+An edit is previewed and applied only if its text is unchanged, every action has Undo, there is no ``apply all'', and an optional local model proposes wording only when asked.
 
 % src (CE 7b10ad3): CE/docs/architecture.md lines 3 (monorepo, no server, static export), 13 (workspace routes), 54 (BM25, top k = 8),
 %      56 (N = 8 seeds, seeded shuffle of the source order), 57 (chance level, exact sign-flip test), 65 (the caveat "It does not
@@ -134,4 +134,4 @@ An edit is previewed and applied only if its text is unchanged, every action has
 A TypeScript monorepo holds an \emph{engine} of pure check functions (browser and CLI), a \emph{bench} with the citation test, and a \emph{workspace}, a static export on GitHub Pages with no server; a browser test asserts that no request leaves the origin on load.
 For each question the bench retrieves the top 8 of the draft and its competitor pages with BM25, and a local model (\texttt{llama3.2:3b} through Ollama, the default) answers with numbered citations under GEO's prompt~\cite{aggarwal2024geo}, 8 times with shuffled source orders~\cite[Sec.~11.2]{martinez2026survey}.
 Reports show the chance level and say \emph{``It does not predict live AI engines.''}
-With a sample's 4 questions the smallest possible $p$ is 0.125, so a laptop run shows a direction at most.
+With a sample's 4 questions the smallest $p$ is 0.125, so a laptop run shows only a direction.
