@@ -1,18 +1,20 @@
-"""Figure 2: the draft view now and before. The question-first draft view, with the old build's score card as an inset.
+"""Figure 2: the draft view now and before. The Questions covered card at native resolution, the full window small,
+and the old build's score card as the before.
 
-Two modes, chosen by what exists in data/:
-  * data/screens/draft_view.png present (captured by scripts/capture_screens.mjs, Task 16: the espresso example after
-    the two typed edits, "Questions covered: 2 of 4") (now): the screenshot at its own aspect ratio with numbered
-    callouts at the anchors measured in the same capture (data/fig2_callouts.json `xy`, fractions from the image's
-    top-left), and, as the "before", the score card of the pre-redesign capture (data/screens/draft_view_before.png,
-    a byte copy of the old draft_view.png, score ring 37; its callouts in data/fig2_callouts_before.json) set as an
-    inset over the lower left of the draft body, where no callout sits;
-  * otherwise: a marked PLACEHOLDER frame, a wireframe of the planned capture with the numbered callouts where they
-    will sit, and the callout list. Nothing in the wireframe is data; it shows layout only.
+Layout (column width 3.33 in):
+  * right: the right rail of data/screens/draft_view.png (captured by scripts/capture_screens.mjs, Task 16: the
+    espresso example after the two typed edits, "Questions covered: 2 of 4") cropped to the Questions covered card
+    (RAIL_CROP, image pixels, with the draft sheet's right edge in view) and drawn about 2 in wide, so the card's UI
+    text prints at 5 to 7 pt instead of the 2 pt it had at the full-window scale (review of 2026-11-08, Figure 2
+    legibility). Numbered callouts sit at the anchors of data/fig2_callouts.json (`xy`, fractions of the full image);
+    every one points to text a reader can read in the crop;
+  * left, top to bottom: the full window (2500 x 1800) small, with the crop outlined; the old build's score card
+    (data/screens/draft_view_before.png, a byte copy of the pre-redesign capture, score ring 37; BEFORE_CROP) as the
+    before; the callout list.
 
-Input: data/fig2_callouts.json and the two screenshots. Both images are drawn with interpolation "none", so the PDF
-embeds the capture's own 2500 x 1800 pixels (and the crop's) instead of a resampled copy; the UI text prints small at
-the column width, so the callout list repeats the strings a reader needs (the count, the Quick edit's chip).
+Both screenshots are drawn with interpolation "none", so the PDF embeds the captures' own pixels, never a resampled
+copy. The script fails if a screenshot or a kept callout is missing (the build reads data/ only, where both are
+committed).
 
 Usage: .venv/bin/python -I -B scripts/fig_workspace.py [--out figures] [--png <dir>]
 """
@@ -25,87 +27,44 @@ import textwrap
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import figdata  # noqa: E402
 import figstyle as fs  # noqa: E402
-from matplotlib.patches import FancyBboxPatch  # noqa: E402
+from matplotlib.patches import FancyBboxPatch, Rectangle  # noqa: E402
 
-W_IN, H_IN = fs.COLUMN_IN, 2.75
+W_IN = fs.COLUMN_IN
+PAD, GAP, LABEL_H = 0.04, 0.07, 0.10   # inches: outer margin, gap between the columns, a label line above an image
+RAIL_W_IN = 2.02                        # the card crop's printed width; LEFT_W_IN takes the rest
+LEFT_W_IN = W_IN - 2 * PAD - GAP - RAIL_W_IN
 BEFORE = "data/screens/draft_view_before.png"
-# The old score card in BEFORE, in image pixels (2500 x 1800 capture): the card ("37", "AI-ready score", "A writing
-# checklist, not a forecast. Why?") and the "0 of 29 handled" line under it. Callout 1 of fig2_callouts_before.json
-# (xy 0.6832, 0.1578, i.e. pixel 1708, 284) marks the card's left edge.
+# The Questions covered card in the capture, in image pixels (2500 x 1800): the card spans x 1724 to 2471 and
+# y 162 to 1380; the draft sheet's right edge is at x 1664, kept in view (measured 2026-11-08 with PIL, logged in
+# the tool repo's .superpowers/sdd/2026-11-03-final-shape/final-paper-log.md).
+RAIL_CROP = (1616, 2496, 120, 1400)  # x0, x1, y0, y1
+# The old score card in BEFORE, in image pixels: the card ("37", "AI-ready score", "A writing checklist, not a
+# forecast. Why?") and the "0 of 29 handled" line under it. Callout 1 of fig2_callouts_before.json (xy 0.6832,
+# 0.1578, i.e. pixel 1708, 284) marks the card's left edge.
 BEFORE_CROP = (1708, 2484, 160, 540)  # x0, x1, y0, y1
-INSET = (0.025, 0.37, 0.055)  # left edge, width (fractions of the image width), bottom margin (fraction of its height)
-TEXT = fs.FS["small"] - 0.6   # 6.2 pt: the callout list and the inset label (STYLE.md section 6; review S5)
-# Callouts drawn and listed, by their number in data/fig2_callouts.json, renumbered 1, 2, 3 in the figure: the count, the
-# Quick edit and the card's label. The "Show" passage (3) and the privacy chip (5) stay in the data and the capture but are
-# not called out (review demo:F03 refuter: the list is what a reader can read, so it carries the UI strings and nothing else).
-KEEP = (1, 2, 4)
+TEXT = fs.FS["small"] - 0.6   # 6.2 pt: the labels and the callout list (STYLE.md section 6; review S5)
+# Callouts drawn and listed, by their number in data/fig2_callouts.json, renumbered 1, 2, 3 in the figure: the count
+# (1), the card's label chip (4) and an open row that names the missing words (6, hand-measured on the committed
+# screenshot). The Quick edit (2) is below the card, outside the crop, so it is no longer called out (Section 4
+# describes it); the Show passage (3) and the privacy chip (5) stay in the data only.
+KEEP = (1, 4, 6)
 N, S, C = fs.NEUTRAL, fs.SURFACE, fs.CONCEPT
-OWN = N["owner"]
 
 
-def box(ax, x, y, w, h, fc, ec=None, lw=0.6, r=0.012, z=2, ls="-"):
-    ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle=f"round,pad=0,rounding_size={r}", fc=fc,
-                                ec=ec or "none", lw=lw, zorder=z, ls=ls))
+def frame(ax, x, y, w, h, lw=0.6, r=0.006, z=2):
+    ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle=f"round,pad=0,rounding_size={r}", fc="none",
+                                ec=N["rule"], lw=lw, zorder=z, clip_on=False))
 
 
 def callout(ax, x, y, n):
-    ax.scatter([x], [y], s=34, facecolor=C["after"], edgecolor="white", linewidths=0.8, zorder=10)
-    ax.text(x, y - 0.002, str(n), ha="center", va="center", fontsize=fs.FS["small"] - 2.2, color="white",
+    ax.scatter([x], [y], s=34, facecolor=C["after"], edgecolor="white", linewidths=0.8, zorder=10, clip_on=False)
+    ax.text(x, y, str(n), ha="center", va="center", fontsize=fs.FS["small"] - 2.2, color="white",
             fontweight="bold", zorder=11)
 
 
-def wireframe(ax):
-    """Layout of the planned capture (redesign mockup, state 3). Grey blocks only; no text from the app."""
-    ink = fs.tint(N["ink_soft"], 0.55)
-    line = fs.tint(N["ink_soft"], 0.78)
-    box(ax, 0.0, 0.0, 1.0, 1.0, "white", N["rule"], lw=0.7, r=0.02, z=1)
-    box(ax, 0.0, 0.905, 1.0, 0.095, S["sunken"], None, r=0.0, z=2)                  # header
-    box(ax, 0.03, 0.932, 0.16, 0.04, ink, z=3)                                        # brand
-    box(ax, 0.73, 0.925, 0.20, 0.055, S["brand_soft"], C["after"], lw=0.5, r=0.025, z=3)  # privacy chip
-    # draft sheet (left)
-    box(ax, 0.03, 0.05, 0.55, 0.82, S["paper"], S["paper_rule"], lw=0.6, z=2)
-    y = 0.80
-    widths = [0.40, 0.47, 0.45, 0.30, None, 0.32, 0.48, 0.46, 0.44, 0.21, None, 0.36, 0.47, 0.42, 0.25]
-    for w in widths:
-        if w is None:
-            y -= 0.035
-            continue
-        ax.plot([0.07, 0.07 + w], [y, y], color=line, lw=2.0, solid_capstyle="round", zorder=3)
-        y -= 0.045
-    ax.plot([0.07, 0.40], [0.664, 0.664], color=S["mark"], lw=0.9, ls=(0, (1, 1.2)), zorder=4)  # flagged span
-    # right rail
-    box(ax, 0.62, 0.70, 0.35, 0.17, "white", S["paper_rule"], z=2)                    # score card
-    box(ax, 0.65, 0.80, 0.10, 0.045, C["after"], z=3)
-    box(ax, 0.65, 0.745, 0.28, 0.018, S["sunken"], z=3)
-    box(ax, 0.65, 0.745, 0.18, 0.018, fs.tint(C["after"], 0.35), z=4)
-    box(ax, 0.62, 0.47, 0.35, 0.19, S["brand_soft"], C["after"], lw=0.6, z=2)         # Start-here fix (active)
-    ax.plot([0.65, 0.90], [0.62, 0.62], color=ink, lw=1.6, solid_capstyle="round", zorder=3)
-    ax.plot([0.65, 0.86], [0.585, 0.585], color=line, lw=1.4, solid_capstyle="round", zorder=3)
-    box(ax, 0.65, 0.495, 0.12, 0.045, C["after"], z=3)                                # Apply
-    box(ax, 0.79, 0.495, 0.10, 0.045, "white", N["rule"], z=3)                        # Undo / skip
-    for k, yy in enumerate((0.385, 0.31)):                                           # fix groups
-        box(ax, 0.62, yy, 0.35, 0.06, "white", S["paper_rule"], z=2)
-        ax.plot([0.65, 0.80], [yy + 0.03] * 2, color=line, lw=1.4, solid_capstyle="round", zorder=3)
-        box(ax, 0.83, yy + 0.014, 0.11, 0.032, fs.tint(C["mixed"], 0.8), C["mixed"], lw=0.5, r=0.016, z=3)
-    box(ax, 0.62, 0.17, 0.35, 0.10, "white", S["paper_rule"], z=2)                    # Test it
-    ax.plot([0.65, 0.76], [0.235, 0.235], color=ink, lw=1.4, solid_capstyle="round", zorder=3)
-    ax.plot([0.65, 0.93], [0.195, 0.195], color=line, lw=1.2, solid_capstyle="round", zorder=3)
-    return {1: (0.62, 0.86), 2: (0.62, 0.64), 3: (0.97, 0.415), 4: (0.97, 0.26), 5: (0.73, 0.952)}
-
-
-def inset_before(ax, img_w_in, img_h_in):
-    """The old build's score card, small, over the lower left of the draft body, labelled as the before."""
-    x0p, x1p, y0p, y1p = BEFORE_CROP
-    crop = fs.plt.imread(os.path.join(figdata.PAPER, BEFORE))[y0p:y1p, x0p:x1p]
-    left, width, bottom = INSET
-    height = width * img_w_in * (crop.shape[0] / crop.shape[1]) / img_h_in
-    pad_x, pad_top = 0.012, 0.075
-    box(ax, left - pad_x, bottom - pad_x * img_w_in / img_h_in, width + 2 * pad_x,
-        height + pad_top + pad_x * img_w_in / img_h_in, "white", N["ink_soft"], lw=0.7, r=0.01, z=6)
-    ax.imshow(crop, extent=(left, left + width, bottom, bottom + height), aspect="auto", zorder=7,
-              interpolation="none")
-    ax.text(left, bottom + height + pad_top / 2, "Before: the old build", ha="left", va="center",
-            fontsize=TEXT, color=N["ink"], fontweight="semibold", zorder=8)
+def label(fig, x_in, y_in, fig_h, text):
+    fig.text(x_in / W_IN, y_in / fig_h, text, ha="left", va="center", fontsize=TEXT, color=N["ink"],
+             fontweight="semibold")
 
 
 def main():
@@ -113,70 +72,87 @@ def main():
     fs.apply()
     co, cpath = figdata.fig2_callouts()
     shot = os.path.join(figdata.PAPER, co["screenshot"])
-    inputs = [cpath]
-    captured = os.path.exists(shot) and all(c.get("xy") for c in co["callouts"])
-    img = fs.plt.imread(shot) if captured else None
-
-    # Layout in inches: the image keeps its own aspect ratio, the callout list sits under it.
-    pad, img_w = 0.06, W_IN - 0.12
-    img_h = img_w * img.shape[0] / img.shape[1] if captured else 0.585 * H_IN
-    # The list says what the screenshot's small UI text says: callout 1 the count and the card's line, callout 2 the
-    # Quick edit's chip (their `text`, built by the capture from strings read in the same run); the others
-    # `what: "ui_string"`.
-    items = []
-    heading = co.get("captured", {}).get("strings", {}).get("heading")
+    before = os.path.join(figdata.PAPER, BEFORE)
+    for p in (shot, before):
+        if not os.path.exists(p):
+            raise SystemExit(f"fig_workspace: {os.path.relpath(p, figdata.PAPER)} is missing")
     kept = [c for c in co["callouts"] if c["n"] in KEEP]
-    if [c["n"] for c in kept] != list(KEEP):
-        raise SystemExit(f"fig_workspace: callouts {KEEP} missing or out of order in {cpath}")
+    if [c["n"] for c in kept] != list(KEEP) or not all(c.get("xy") for c in kept):
+        raise SystemExit(f"fig_workspace: callouts {KEEP} missing, out of order or without xy in {cpath}")
     shown = {c["n"]: k for k, c in enumerate(kept, 1)}  # data number -> number printed in the figure
-    for c in kept:
-        text = c.get("text") or c["what"] + (f": \u201c{c['ui_string']}\u201d" if c.get("ui_string") else "")
-        if captured and c["n"] == 1 and not (heading and text.startswith(heading)):
-            raise SystemExit("fig_workspace: callout 1 must print the captured count (captured.strings.heading)")
-        items.append((shown[c["n"]], textwrap.wrap(text, 74)))
-    line_h, gap = 0.092, 0.03
-    list_h = sum(len(lines) * line_h + gap for _, lines in items) + 0.05
-    note_h = 0.0 if captured else 0.1
-    fig_h = pad + img_h + 0.06 + list_h + note_h
+    heading = co.get("captured", {}).get("strings", {}).get("heading")
+    img = fs.plt.imread(shot)
+    old = fs.plt.imread(before)
+    ih, iw = img.shape[0], img.shape[1]
+
+    # Geometry in inches; axes use image pixel coordinates (y down), so the callout anchors need no flip.
+    x0, x1, y0, y1 = RAIL_CROP
+    rail_h = RAIL_W_IN * (y1 - y0) / (x1 - x0)
+    fig_h = PAD + LABEL_H + rail_h + PAD
     fig = fs.plt.figure(figsize=(W_IN, fig_h))
-    ax = fig.add_axes([pad / W_IN, (fig_h - pad - img_h) / fig_h, img_w / W_IN, img_h / fig_h])
-    ax.axis("off")
 
-    if captured:
-        ax.set_xlim(0, 1)
-        ax.set_ylim(0, 1)
-        ax.imshow(img, extent=(0, 1, 0, 1), aspect="auto", zorder=1, interpolation="none")
-        ax.add_patch(FancyBboxPatch((0, 0), 1, 1, boxstyle="round,pad=0,rounding_size=0.006", fc="none",
-                                    ec=N["rule"], lw=0.6, zorder=2))
-        anchors = {shown[c["n"]]: (c["xy"][0], 1 - c["xy"][1]) for c in kept}
-        left, width, _ = INSET
-        if any(left - 0.02 <= x <= left + width + 0.02 and y <= 0.5 for x, y in anchors.values()):
-            raise SystemExit("fig_workspace: a callout falls under the before inset; move INSET")
-        inset_before(ax, img_w, img_h)
-        inputs += [shot, os.path.join(figdata.PAPER, BEFORE)]
-    else:
-        ax.set_xlim(-0.01, 1.01)
-        ax.set_ylim(-0.01, 1.01)
-        anchors = {shown[n]: xy for n, xy in wireframe(ax).items() if n in shown}
-        ax.text(0.305, 0.43, "[PLACEHOLDER]\nscreenshot of the\ndraft view of the\nshipped dashboard", ha="center",
-                va="center", fontsize=fs.FS["small"] - 0.6, color=OWN, fontweight="semibold", zorder=12,
-                linespacing=1.15, bbox=dict(boxstyle="round,pad=0.35", fc="white", ec=OWN, lw=0.7))
-    for n, (x, y) in anchors.items():
-        callout(ax, x, y, n)
+    def axes_in(x, y, w, h):
+        ax = fig.add_axes([x / W_IN, y / fig_h, w / W_IN, h / fig_h])
+        ax.axis("off")
+        return ax
 
-    # callout list under the image
-    y = fig_h - pad - img_h - 0.10
+    # ---- right: the Questions covered card, cropped, at native resolution
+    rail_x, rail_y = W_IN - PAD - RAIL_W_IN, PAD
+    ax = axes_in(rail_x, rail_y, RAIL_W_IN, rail_h)
+    ax.set_xlim(x0, x1)
+    ax.set_ylim(y1, y0)
+    ax.imshow(img[y0:y1, x0:x1], extent=(x0, x1, y1, y0), aspect="auto", zorder=1, interpolation="none")
+    frame(ax, x0, y0, x1 - x0, y1 - y0, r=8)
+    label(fig, rail_x, rail_y + rail_h + LABEL_H / 2, fig_h, "The Questions covered card (the right rail), enlarged")
+    for c in kept:
+        px, py = c["xy"][0] * iw, c["xy"][1] * ih
+        if not (x0 < px < x1 and y0 < py < y1):
+            raise SystemExit(f"fig_workspace: callout {c['n']} at pixel ({px:.0f}, {py:.0f}) falls outside RAIL_CROP")
+        callout(ax, px, py, shown[c["n"]])
+
+    # ---- left, top: the full window, small, with the crop outlined
+    lx, y = PAD, fig_h - PAD
+    thumb_h = LEFT_W_IN * ih / iw
+    label(fig, lx, y - LABEL_H / 2, fig_h, "The draft view, full window")
+    y -= LABEL_H + thumb_h
+    axt = axes_in(lx, y, LEFT_W_IN, thumb_h)
+    axt.set_xlim(0, iw)
+    axt.set_ylim(ih, 0)
+    axt.imshow(img, extent=(0, iw, ih, 0), aspect="auto", zorder=1, interpolation="none")
+    frame(axt, 0, 0, iw, ih, r=12)
+    axt.add_patch(Rectangle((x0, y0), x1 - x0, y1 - y0, fc="none", ec=C["after"], lw=0.8, zorder=3))
+
+    # ---- left, middle: the old build's score card
+    bx0, bx1, by0, by1 = BEFORE_CROP
+    before_h = LEFT_W_IN * (by1 - by0) / (bx1 - bx0)
+    y -= 0.10
+    label(fig, lx, y - LABEL_H / 2, fig_h, "Before: the old build's card")
+    y -= LABEL_H + before_h
+    axb = axes_in(lx, y, LEFT_W_IN, before_h)
+    axb.set_xlim(bx0, bx1)
+    axb.set_ylim(by1, by0)
+    axb.imshow(old[by0:by1, bx0:bx1], extent=(bx0, bx1, by1, by0), aspect="auto", zorder=1, interpolation="none")
+    frame(axb, bx0, by0, bx1 - bx0, by1 - by0, r=8)
+
+    # ---- left, bottom: the callout list (what each number points at; the strings as the capture read them)
+    items = []
+    for c in kept:
+        text = c.get("text") or c["what"] + (f": “{c['ui_string']}”" if c.get("ui_string") else "")
+        if c["n"] == 1 and not (heading and text.startswith(heading)):
+            raise SystemExit("fig_workspace: callout 1 must print the captured count (captured.strings.heading)")
+        items.append((shown[c["n"]], textwrap.wrap(text, 27)))
+    line_h, gap, indent = 0.092, 0.035, 0.15
+    y -= 0.14
     for n, lines in items:
-        fig.text(0.11 / W_IN, y / fig_h, str(n), ha="center", va="top", fontsize=TEXT - 0.4,
+        fig.text((lx + 0.04) / W_IN, y / fig_h, str(n), ha="center", va="top", fontsize=TEXT - 0.4,
                  color="white", fontweight="bold", bbox=dict(boxstyle="circle,pad=0.18", fc=C["after"], ec="none"))
-        fig.text(0.24 / W_IN, (y + 0.012) / fig_h, "\n".join(lines), ha="left", va="top",
+        fig.text((lx + indent) / W_IN, (y + 0.012) / fig_h, "\n".join(lines), ha="left", va="top",
                  fontsize=TEXT, color=N["ink"], linespacing=1.1)
         y -= len(lines) * line_h + gap
-    if not captured:
-        fig.text(0.035, 0.004, "Wireframe of the redesign mockup, state 3; wording to be checked on the deployed build.",
-                 ha="left", va="bottom", fontsize=fs.FS["small"] - 1.8, color=OWN)
+    if y < PAD:
+        raise SystemExit(f"fig_workspace: the callout list runs {PAD - y:.2f} in past the figure's bottom; shorten it")
 
-    fs.save(fig, args, "fig2_workspace", inputs=inputs, script=__file__)
+    fs.save(fig, args, "fig2_workspace", inputs=[cpath, shot, before], script=__file__)
 
 
 if __name__ == "__main__":

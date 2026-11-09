@@ -2,7 +2,8 @@
   "_provenance": {
     "producer": "scripts/capture_screens.mjs (Figure 2 per spec section 14 of the tool repo, docs/superpowers/specs/2026-11-03-question-first-design.md, local feat branch only); `what` and capture_plan are written in the script",
     "note": "ui_string values were read from the build in the same run (captured.strings), and so were the strings in callouts 1 and 2 `text` (the line the figure prints); xy anchors are measured from element boxes in that run; captured.edits are the two typed edits and draft_sha256 hashes the draft after them; captured.local_build (local URLs only) is the tool commit the build was made from.",
-    "hand_synced": "2026-11-03, second review round: callouts 1 and 2 gained `text` and callout 2 its ui_string, and captured.strings gained quick_chip, to match scripts/capture_screens.mjs. The capture was not rerun (it needs a served build of the tool): quick_chip was read off data/screens/draft_view.png, whose Quick edit card shows the chip \"No effect in our test\"; the next capture reads and asserts it."
+    "hand_synced": "2026-11-03, second review round: callouts 1 and 2 gained `text` and callout 2 its ui_string, and captured.strings gained quick_chip, to match scripts/capture_screens.mjs. The capture was not rerun (it needs a served build of the tool): quick_chip was read off data/screens/draft_view.png, whose Quick edit card shows the chip \"No effect in our test\"; the next capture reads and asserts it.",
+    "hand_measured": "2026-11-08, Figure 2 relaid for legibility (the card cropped at native resolution): callout 6 added by hand. Its ui_string is the first open row of question 3 as data/screens/draft_view.png prints it, and its xy was measured on that file with PIL (the row's circle is centred at pixel 1817, 831 of 2500 x 1800; the anchor sits at 1780, 831, left of the circle). The next capture should read the row and assert it."
   },
   "status": "captured",
   "screenshot": "data/screens/draft_view.png",
@@ -53,6 +54,16 @@
       "xy": [
         0.7323,
         0.0311
+      ]
+    },
+    {
+      "n": 6,
+      "what": "An open row names the missing words and never inserts them",
+      "ui_string": "Missing up top: \"water\", \"temperature\"",
+      "text": "Open rows name the missing words (“water”, “temperature”); the tool never inserts them.",
+      "xy": [
+        0.712,
+        0.4617
       ]
     }
   ],
