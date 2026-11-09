@@ -441,7 +441,7 @@ ANCHORS = [
     ("sections/conclusion.tex", r"on which the unedited page averages (?P<b>0\.\d+)", {"b": ("x:baseline", "x")}),
     # E5
     ("sections/abstract.tex", r"On queries the first test never used, the gain held \(" + g("d") + r"\)", {"d": ("E5.gate", "d")}),
-    ("sections/intro.tex", r"On the (?P<q>\d+) new queries \((?P<n>\d+) where the edit applied\) the gain held",
+    ("sections/intro.tex", r"[Oo]n the (?P<q>\d+) new queries \((?P<n>\d+) where the edit applied\) the gain held",
      {"q": ("q:e5.new", "n"), "n": ("E5.gate", "n")}),
     ("sections/evidence.tex", r"reran the question section on (?P<q>\d+) new queries", {"q": ("q:e5.new", "n")}),
     ("sections/evidence.tex",
@@ -451,19 +451,27 @@ ANCHORS = [
      {"d": ("E5.12-P12.new", "d"), "n": ("E5.12-P12.new", "n")}),
     ("sections/evidence.tex",
      r"Over all (?P<q>\d+) queries the keyword helped against the unedited page \(" + g("a")
-     + r"\) and against a section without the reader's words \(" + g("b") + r"; Holm \$p = (?P<holm>[\d.]+)\$ for both\)",
+     + r"\) and against a section without the reader's words \(" + g("b") + r"; Holm \$p = (?P<holm>[\d.]+)\$ for both\)"
+     + r"; the first gain rests mainly on the second judge \(Qwen3.8-27B " + g("jq") + r"; Gemma-4-12B alone " + g("jg")
+     + r", not significant\)",
      {"q": ("q:e5.main", "n"), "a": ("E5.9K-original", "d"), "b": ("E5.9K-9P", "d"),
-      "holm": ("E5.9K-original|E5.9K-9P", "holm")}),
+      "holm": ("E5.9K-original|E5.9K-9P", "holm"), "jq": ("x:judge_qwen_9K", "x"), "jg": ("x:judge_gemma_9K", "x")}),
     ("sections/evidence.tex",
      r"the exact question beat it by " + g("rd") + r", 95\\% CI \$\[(?P<rlo>[+-][\d.]+), (?P<rhi>[+-][\d.]+)\]\$",
      {"rd": ("E5.9K-9", "rd"), "rlo": ("E5.9K-9", "rlo"), "rhi": ("E5.9K-9", "rhi")}),
     ("sections/evidence.tex",
      r"the keyword kept about (?P<share>two thirds) of the gain \(90\\% CI (?P<slo>0\.\d+) to (?P<shi>0\.\d+); no verdict\)",
      {"share": ("E5.9K-9", "share"), "slo": ("E5.9K-9", "slo"), "shi": ("E5.9K-9", "shi")}),
-    ("sections/evidence.tex", r"all its key words but not the string by " + g("x"), {"x": ("E5.9-9A", "d")}),
+    # The +0.014 of the all-key-words contrast (E5.9-9A) left the prose on 2026-11-08 (Figure 1b's bottom row carries it); the
+    # contrast is still recomputed above and checked against the analysis JSON and data/e5_results.json.
     ("sections/conclusion.tex", r"[Tt]he (?P<q>\d+) new queries avoid this", {"q": ("q:e5.new", "n")}),
     ("sections/conclusion.tex", r"at the first test's query lengths it is " + g("rw"), {"rw": ("x:reweighted", "x")}),
-    ("sections/system.tex", r"met it on only (?P<c>\d+)\\% of pages", {"c": ("x:covers", "x")}),
+    ("sections/system.tex", r"a stricter bar than the question section met \((?P<c>\d+)\\% of pages\)", {"c": ("x:covers", "x")}),
+    # validity exclusions (Section 2, The test; 2026-11-08): the flag threshold, the reader's-words check's kept pairs (the
+    # recomputed n of 12 vs P12) and its applicable pages (results/e1/analysis.json main.exclusions)
+    ("sections/evidence.tex",
+     r"lost over (?P<pct>\d+)\\% of their pairs to them \(\\emph\{Your reader's words up top\} kept (?P<k>\d+) of (?P<a>\d+) applicable pages\)",
+     {"pct": ("x:flag_pct", "x"), "k": ("E1.main.12-P12", "n"), "a": ("x:applicable_12", "x")}),
     # the example's recorded citation test (Section 4, Station 1): results/samples/espresso_test.json
     ("sections/demo.tex",
      r"cited in (?P<c0>\d+)\\% then (?P<c1>\d+)\\% of answers; share (?P<s0>0\.\d+) then (?P<s1>0\.\d+) against (?P<ch>0\.\d+), "
@@ -471,13 +479,13 @@ ANCHORS = [
      {"c0": ("x:sample_cited_before", "x"), "c1": ("x:sample_cited_after", "x"), "s0": ("x:sample_share_before", "x"),
       "s1": ("x:sample_share_after", "x"), "ch": ("x:sample_chance", "x"), "p": ("x:sample_p", "x")}),
     # the sensitivity test (second review round): Section 3's points and Section 6's shares, from results/sensitivity/
-    ("sections/system.tex", r"rose by (?P<lo>\d+) to (?P<hi>\d+) points from about (?P<b>\d+) in an exploratory run",
+    ("sections/system.tex", r"rose by (?P<lo>\d+) to (?P<hi>\d+) points from about (?P<b>\d+) \(an exploratory run",
      {"lo": ("x:sens_after_lo", "x"), "hi": ("x:sens_after_hi", "x"), "b": ("x:sens_before", "x")}),
     ("sections/conclusion.tex", r"raised the page's citation share by (?P<lo>0\.\d+) to (?P<hi>0\.\d+), not the (?P<bar>0\.\d+) required",
      {"lo": ("x:sens_af_lo", "x"), "hi": ("x:sens_af_hi", "x"), "bar": ("x:sens_bar", "x")}),
     ("main_www.tex", r"on (?P<q>\d+) GEO-bench queries \((?P<p>\d+) for checks with too few pages at (?P<q2>\d+)\)",
      {"q": ("q:e1.main", "n"), "p": ("q:e3.pooled", "n"), "q2": ("q:e1.main", "n")}),
-    ("main_www.tex", r"The exact question on (?P<q>\d+) new queries", {"q": ("q:e5.new", "n")}),
+    ("main_www.tex", r"The question section on (?P<q>\d+) new queries", {"q": ("q:e5.new", "n")}),
     ("main_www.tex", r"over all (?P<m>\d+) queries; the bottom rows", {"m": ("q:e5.main", "n")}),
 ]
 
@@ -489,8 +497,8 @@ LABEL_ANCHORS = [
     ("sections/abstract.tex", r"A keyword's two words helped, but less", ["E5.9K-original", "E5.9K-9P", "E5.9K-9"]),
     ("sections/abstract.tex", r"A question a local model wrote from that keyword showed no effect larger than 0\.03",
      ["E5.9L-original"]),
-    ("sections/intro.tex", r"A keyword's two words helped, but less", ["E5.9K-original", "E5.9K-9P", "E5.9K-9"]),
-    ("sections/intro.tex", r"A question a local model wrote from the keyword showed no effect larger than 0\.03",
+    ("sections/intro.tex", r"[Aa] keyword's two words helped, but less", ["E5.9K-original", "E5.9K-9P", "E5.9K-9"]),
+    ("sections/intro.tex", r"[Aa] question a local model wrote from the keyword showed no effect larger than 0\.03",
      ["E5.9L-original"]),
     ("sections/intro.tex", r"A follow-up found that the heading itself added nothing", ["E2a.main.9-9W", "E2a.rep.9-9W"]),
     ("sections/intro.tex", r"Only the reader's own words near the top of the page clearly raised citation",
@@ -506,7 +514,7 @@ LABEL_ANCHORS = [
      ["E3.2-P2", "E3.7-P7", "E3.8-P8", "E1.main.3-P3", "E1.main.11-original"]),
     ("sections/evidence.tex", r"quotes were inconclusive, and three checks still had too few pages",
      ["E3.6-P6", "E3.4-original", "E3.5-P5", "E3.10-P10"]),
-    ("sections/evidence.tex", r"The exact question helped on the new queries", ["E5.gate", "E5.step5"]),
+    ("sections/evidence.tex", r"The question section helped on the new queries", ["E5.gate", "E5.step5"]),
     ("sections/evidence.tex", r"held there too", ["E5.12-P12.new"]),
     ("sections/evidence.tex", r"the keyword helped against the unedited page", ["E5.9K-original", "E5.9K-9P"]),
     ("sections/evidence.tex", r"falls short of the exact question", ["E5.9K-9"]),
@@ -516,8 +524,8 @@ LABEL_ANCHORS = [
      ["E5.9K-9", "E5.9L-9", "E5.9-9A"]),
     ("sections/evidence.tex", r"The model's question showed no effect larger than 0\.03", ["E5.9L-original"]),
     ("sections/evidence.tex", r"and neither did the keyword's missing words up top against their placebo", ["E5.12K-P12K"]),
-    ("sections/evidence.tex", r"both guesses beat only the section without the reader's words",
-     ["E5.rep.9K-9P", "E5.rep.9L-9P", "E5.rep.9K-original", "E5.rep.9L-original"]),
+    # The replication-set sentence ("both guesses beat only the section without the reader's words") left the prose on
+    # 2026-11-08 for space; Figure 1b's diamonds carry it, and the four E5.rep contrasts are still recomputed and checked above.
     ("sections/system.tex", r"The two question checks read Helped for the reader's own questions",
      ["E1.main.9-original", "E1.main.12-P12"]),
     ("sections/system.tex", r"Question headings, lists, cited sources and a direct answer first read No effect; the other five read Unclear",
@@ -602,8 +610,9 @@ def write_claims(path: Path, verified: dict[tuple[str, int], list[str]]) -> int:
         "Each src names its results file; `results/README.md` maps the paper's sections to `results/`.",
         "",
         "**check**: \"verified by verify_numbers.py\" lists the numbers on that line that the script recomputes from",
-        "`results/*/cells.jsonl` (contrast d and n, query counts) or checks against the analysis JSONs (95%",
-        "intervals, Holm p, E5's retention reading and share kept) and data/e1_results.json or data/e5_results.json;",
+        "`results/*/cells.jsonl` (contrast d and n, per-judge d, query counts) or checks against the analysis JSONs (95%",
+        "intervals, Holm p, E5's retention reading and share kept, E1's exclusion counts) and data/e1_results.json or",
+        "data/e5_results.json;",
         "\"labels\" marks a verdict stated in words (no effect larger than 0.03, inconclusive, kept its sign, helped,",
         "falls short of the exact question) that the script checks against the analysis labels. Unmarked",
         "numbers (the sensitivity test, the system, the literature) are checked by their src only.",
@@ -860,6 +869,46 @@ def main(argv=None) -> int:
          "x:reweighted": (fmt(rw["estimate"]), f"analysis gate.reweighted_new ({rw['estimate']:.4f}, n {rw['n']})"),
          "x:covers": (f"{round(100 * cov['share'])}", f"analysis validity main 9 tool_covers_q ({cov['true']} of {cov['of']})"),
          **X_SENS, **X_SAMPLE}
+    # Per-judge split of the keyword's gain over the unedited page (Section 2; reviews geo:F17 and 2026-11-08 item 4): each
+    # judge's d is recomputed from results/e5/cells.jsonl alone and compared with analysis_e5.json main.splits.9K.all.per_judge.
+    # The prose's "rests mainly on the second judge" and "not significant" (Gemma alone) are checked with a normal 95% interval
+    # over the per-query differences; the analysis's own sign-flip p (0.004 and 0.116) and bootstrap intervals are in
+    # CE experiments/RESULTS_E5.md line 40, not in the JSON.
+    pj = A5["main"]["splits"]["9K"]["all"]["per_judge"]
+    judge = {}
+    for j in E1_JUDGES:
+        rj = contrast(pools5["pooled"], "9K", "original", (j,))
+        if not (rj["n"] == pj[j]["n"] and close(rj["d"], pj[j]["mean_d"])):
+            problems.append(f"E5 9K vs original, judge {j}: cells give n={rj['n']} d={rj['d']!r}, analysis per_judge gives {pj[j]}")
+        xs = list(rj["d_q"].values())
+        sd = (sum((x - rj["d"]) ** 2 for x in xs) / (len(xs) - 1)) ** 0.5
+        half = 1.96 * sd / len(xs) ** 0.5
+        judge[j] = (rj["d"], rj["d"] - half, rj["d"] + half, rj["n"])
+    qw, ge = judge["qwen3.8-27b"], judge["gemma-4-12b"]
+    if not (qw[1] > 0 and ge[1] <= 0 <= ge[2] and qw[0] > ge[0]):
+        problems.append("E5 9K vs original per judge: the prose says the gain rests mainly on Qwen3.8-27B and that Gemma-4-12B "
+                        f"alone is not significant; recomputed Qwen {qw[0]:+.4f} [{qw[1]:+.4f}, {qw[2]:+.4f}], "
+                        f"Gemma {ge[0]:+.4f} [{ge[1]:+.4f}, {ge[2]:+.4f}]")
+    X["x:judge_qwen_9K"] = (fmt(qw[0]), f"E5 9K vs original, Qwen3.8-27B alone, from the cells (n {qw[3]}; normal 95% CI "
+                                        f"{qw[1]:+.3f} to {qw[2]:+.3f})")
+    X["x:judge_gemma_9K"] = (fmt(ge[0]), f"E5 9K vs original, Gemma-4-12B alone, from the cells (n {ge[3]}; normal 95% CI "
+                                         f"{ge[1]:+.3f} to {ge[2]:+.3f}, includes 0)")
+    # Validity exclusions (Section 2, The test; 2026-11-08 item 5): results/e1/analysis.json main.exclusions. The flag rule (more
+    # than 20% of applicable pairs excluded, PREREG_E1.md line 101) is checked against every arm's rate and flag; "several
+    # model-edited checks" needs at least two flagged among the model-edited arms; the reader's-words check's 63 applicable
+    # pages come from the block, and its 50 valid edits and 33 valid placebos chain to the recomputed n of 12 vs P12.
+    ex = A["e1"]["main"]["exclusions"]
+    if any((v["exclusion_rate"] > 0.2) != v["flagged"] for v in ex.values()):
+        problems.append("E1 exclusions: a flag disagrees with the 20% rule (exclusion_rate > 0.2)")
+    flagged_model = [k for k in ("2", "3", "4", "5", "6", "7", "8", "10", "12") if ex[k]["flagged"]]
+    if len(flagged_model) < 2:
+        problems.append(f"E1 exclusions: only {flagged_model} flagged among the model-edited arms; 'several' is wrong")
+    if ex["12"]["valid"] != ex["P12"]["applicable"] or ex["P12"]["valid"] != R["E1.main.12-P12"]["n"]:
+        problems.append("E1 exclusions: arm 12 valid, P12 applicable and P12 valid do not chain to the n of 12 vs P12")
+    X["x:flag_pct"] = ("20", "the flag threshold: every arm's flag equals exclusion_rate > 0.2 (PREREG_E1.md line 101); flagged "
+                             "model-edited arms " + ", ".join(flagged_model))
+    X["x:applicable_12"] = (str(ex["12"]["applicable"]), f"E1 main exclusions, arm 12 applicable (valid {ex['12']['valid']}; "
+                                                        f"P12 valid {ex['P12']['valid']} = the contrast's n)")
 
     # (c) the paper's prose
     print()
