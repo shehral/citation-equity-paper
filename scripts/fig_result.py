@@ -46,7 +46,8 @@ WIDTH_IN = 7.0  # acmart sigconf \textwidth: a teaser figure spans both columns
 ROW_IN = 0.125
 XLIM = (-0.065, 0.12)
 AX_W = 0.18  # each panel's plot width, figure fraction
-AX_A, AX_B = 0.214, 0.706  # left edge of each panel's plot, figure fraction (names sit to its left)
+AX_A, AX_B = 0.214, 0.714  # left edge of each panel's plot, figure fraction (names sit to its left; (b) 4 pt right of
+# 0.706 since 2026-11-08, third round, so its row 2 name does not run into panel (a)'s result column)
 SHORT = {"helps, possibly through length or query-term overlap": "helps*", "no effect larger than δ": "no effect",
          "insufficient n": "too few", "descriptive": "descriptive", "inconclusive": "inconclusive", "helps": "helps",
          "reported without a verdict": "no verdict", "loses the gain": "falls short"}
@@ -73,11 +74,11 @@ A_ROWS = [
 ]
 # Panel (b): (key in data/e5_results.json "contrasts", name, sub-row, sign, replication key, retention guess).
 B_ROWS = [
-    # Row names (2026-11-08, one name per edit): the arm 9 edit is "the question section" and the arm 12 edit "the reader's
-    # missing words up top" here and in the prose; panel (a) names the tool's checks (Target questions answered, Your
-    # reader's words up top). "Exact question" is kept for the bottom rows, where it is the input being compared with a guess.
+    # Row names (2026-11-08, one name per edit): the arm 9 edit is "the question section" here and in the prose; the
+    # arm 12 edit keeps the tool's check name, "Your reader's words up top", in both panels and the prose (third round:
+    # one name for arm 12). "Exact question" is kept for the bottom rows, where it is the input compared with a guess.
     ("main:9-original:new queries", "Question section, new queries", False, 1, None, None),
-    ("main:12-P12:new queries", "Reader's missing words up top, new queries", False, 1, None, None),
+    ("main:12-P12:new queries", "Your reader's words up top, new queries", False, 1, None, None),
     None,
     ("main:9K-original:pooled", "A keyword's two words", False, 1, "replication:9K-original:pooled", None),
     ("main:9K-9P:pooled", "vs a section without the reader's words", True, 1, "replication:9K-9P:pooled", None),
