@@ -35,6 +35,10 @@ BEFORE = "data/screens/draft_view_before.png"
 BEFORE_CROP = (1708, 2484, 160, 540)  # x0, x1, y0, y1
 INSET = (0.025, 0.37, 0.055)  # left edge, width (fractions of the image width), bottom margin (fraction of its height)
 TEXT = fs.FS["small"] - 0.6   # 6.2 pt: the callout list and the inset label (STYLE.md section 6; review S5)
+# Callouts drawn and listed, by their number in data/fig2_callouts.json, renumbered 1, 2, 3 in the figure: the count, the
+# Quick edit and the card's label. The "Show" passage (3) and the privacy chip (5) stay in the data and the capture but are
+# not called out (review demo:F03 refuter: the list is what a reader can read, so it carries the UI strings and nothing else).
+KEEP = (1, 2, 4)
 N, S, C = fs.NEUTRAL, fs.SURFACE, fs.CONCEPT
 OWN = N["owner"]
 
@@ -121,11 +125,15 @@ def main():
     # `what: "ui_string"`.
     items = []
     heading = co.get("captured", {}).get("strings", {}).get("heading")
-    for c in co["callouts"]:
+    kept = [c for c in co["callouts"] if c["n"] in KEEP]
+    if [c["n"] for c in kept] != list(KEEP):
+        raise SystemExit(f"fig_workspace: callouts {KEEP} missing or out of order in {cpath}")
+    shown = {c["n"]: k for k, c in enumerate(kept, 1)}  # data number -> number printed in the figure
+    for c in kept:
         text = c.get("text") or c["what"] + (f": \u201c{c['ui_string']}\u201d" if c.get("ui_string") else "")
         if captured and c["n"] == 1 and not (heading and text.startswith(heading)):
             raise SystemExit("fig_workspace: callout 1 must print the captured count (captured.strings.heading)")
-        items.append((c["n"], textwrap.wrap(text, 74)))
+        items.append((shown[c["n"]], textwrap.wrap(text, 74)))
     line_h, gap = 0.092, 0.03
     list_h = sum(len(lines) * line_h + gap for _, lines in items) + 0.05
     note_h = 0.0 if captured else 0.1
@@ -140,7 +148,7 @@ def main():
         ax.imshow(img, extent=(0, 1, 0, 1), aspect="auto", zorder=1, interpolation="none")
         ax.add_patch(FancyBboxPatch((0, 0), 1, 1, boxstyle="round,pad=0,rounding_size=0.006", fc="none",
                                     ec=N["rule"], lw=0.6, zorder=2))
-        anchors = {c["n"]: (c["xy"][0], 1 - c["xy"][1]) for c in co["callouts"]}
+        anchors = {shown[c["n"]]: (c["xy"][0], 1 - c["xy"][1]) for c in kept}
         left, width, _ = INSET
         if any(left - 0.02 <= x <= left + width + 0.02 and y <= 0.5 for x, y in anchors.values()):
             raise SystemExit("fig_workspace: a callout falls under the before inset; move INSET")
@@ -149,7 +157,7 @@ def main():
     else:
         ax.set_xlim(-0.01, 1.01)
         ax.set_ylim(-0.01, 1.01)
-        anchors = wireframe(ax)
+        anchors = {shown[n]: xy for n, xy in wireframe(ax).items() if n in shown}
         ax.text(0.305, 0.43, "[PLACEHOLDER]\nscreenshot of the\ndraft view of the\nshipped dashboard", ha="center",
                 va="center", fontsize=fs.FS["small"] - 0.6, color=OWN, fontweight="semibold", zorder=12,
                 linespacing=1.15, bbox=dict(boxstyle="round,pad=0.35", fc="white", ec=OWN, lw=0.7))

@@ -1,7 +1,8 @@
 """Figure 1: what moved citation. A two-panel forest plot at the text width (the page-1 teaser).
 
-Every row is a per-query difference in citation score (5 - r) / 4, edit minus its reference (a same-length paraphrase
-of the same spans, or the unedited page where marked with a ring, or the edit the row names), averaged over 8 seeds and
+Every row is a per-query difference in citation score (5 - r) / 4, edit minus its reference (a paraphrase of the same
+spans: same length for rewrites, nothing inserted for the additive checks; or the unedited page where marked with a ring;
+or the edit the row names), averaged over 8 seeds and
 two judges, then over queries; mean and 95% bootstrap interval. Filled: at least 30 queries and a planned reading
 (indigo helps, slate no effect or inconclusive, black the retention reading); hollow: no verdict (too few queries,
 descriptive by design, or reported without a verdict). The grey band is the +-0.03 margin.
@@ -159,7 +160,7 @@ def draw_key(fig, x0, y0, step):
         t = fig.text(x + 0.014, y0, text, ha="left", va="center", fontsize=fsz, color=N["ink_soft"])
         w = t.get_window_extent(renderer).width / fig.bbox.width
         x += 0.014 + w + 0.018
-    lines = ["°  vs the unedited page; others vs a same-length placebo, or the edit named",
+    lines = ["°  vs the unedited page; others vs a placebo that rewords the same spans, or the edit named",
              "grey band ±0.03: the margin for no effect;  helps*: possibly length or query-word overlap",
              "falls short (black): the guess scored below the exact question, 95% interval below 0,",
              "by the rule set before the run"]

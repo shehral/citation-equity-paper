@@ -1,11 +1,13 @@
-% sections/abstract.tex -- Citation Equity, WWW 2027 demo track (final shape, 2026-11-03).
+% sections/abstract.tex -- Citation Equity, WWW 2027 demo track (final shape, 2026-11-03; Fable writing pass 2026-11-08).
 % Structure per notes/FRAMING-2026-10-27.md "Abstract draft" (post-redesign), with one E5 sentence (brief-paper-rewrite.md).
-% About 170 words, six numbers. Every number carries a % src: comment. CE = ../citation-equity (read only).
+% About 170 words, five numbers. Every number carries a % src: comment. CE = ../citation-equity (read only).
 \begin{abstract}
 Writers are told that question headings, lists, statistics, quotes and cited sources help AI answer engines cite their pages.
-% src: eleven checks: CE/docs/evidence.md line 3 ("runs eleven checks"); one change at a time against a same-length paraphrase,
-%      open models over fixed sources: CE/experiments/PREREG_E1.md (design) and CE/experiments/RESULTS_E1.md; data/e1_results.json
-We tested eleven such checks by editing real web pages one change at a time, each against a same-length paraphrase or the unedited page, while open models answered from fixed sources.
+% src: ten tool checks and one candidate of ours: CE/experiments/PREREG_E1.md lines 50 to 52 (family A = the tool's checks, family
+%      B = candidates; the one that helped joined the tool, CE/docs/evidence.md line 3); one change at a time against a paraphrase
+%      of the same spans (same length for rewrites; nothing inserted for the additive checks, PREREG_E1.md line 75), open models
+%      over fixed sources: CE/experiments/PREREG_E1.md (design) and CE/experiments/RESULTS_E1.md; data/e1_results.json
+We tested ten such checks and one of our own by editing real web pages one change at a time, each against a paraphrase of the same spans or the unedited page, while open models answered from fixed sources.
 % src: "about 0.03": E1 target questions answered (question section) +0.027 and your reader's words up top +0.035 (data/e1_results.json
 %      "main" arms 9 and 12; CE/experiments/RESULTS_E1.md); the 0-to-1 citation score (5 - r)/4: CE/experiments/PREREG_E1.md line 119
 Only one kind of single change clearly raised citation: the reader's own words near the top of the page, by about 0.03 on a 0-to-1 citation score.
@@ -15,13 +17,14 @@ Only one kind of single change clearly raised citation: the reader's own words n
 %      over 80 (E1): "no effect larger than delta" with delta = 0.03: CE/experiments/RESULTS_E3.md, RESULTS_E1.md (data/e1_results.json)
 The heading form did not matter.
 Question headings, lists, cited sources and a direct answer first showed no effect larger than 0.03.
-% src: E5 (CE/experiments/RESULTS_E5.md; data/e5_results.json): 180 new main queries (queries.new); the exact question vs the unedited
-%      page on the new queries d +0.039, n 115, "helps, possibly through length or query-term overlap" (contrast
+% src: E5 (CE/experiments/RESULTS_E5.md; data/e5_results.json): 180 new main queries (queries.new), of which the edit applied and
+%      passed on 115 (so "queries the first test never used", no count: review demo:F09); the exact question vs the unedited page
+%      on the new queries d +0.039, n 115, "helps, possibly through length or query-term overlap" (contrast
 %      "main:9-original:new queries"); a keyword's two words kept 0.65 of the gain on the new queries (share_kept_new.9K) and helps
 %      against both references (+0.016, +0.018) but falls short of the exact question (the plan's "loses the gain":
 %      readings.retention.9K), so "helped, but less"; a question a local model wrote from the keyword: "no effect larger than
 %      delta", d +0.008
-On 180 queries the first test never used, the gain held ($+0.039$).
+On queries the first test never used, the gain held ($+0.039$).
 A keyword's two words helped, but less.
 A question a local model wrote from that keyword showed no effect larger than 0.03.
 % src: the redesign: CE/docs/superpowers/specs/2026-11-03-question-first-design.md sections 2 and 5 to 7 (local feat branch);

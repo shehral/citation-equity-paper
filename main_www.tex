@@ -1,5 +1,6 @@
 % main_www.tex -- Citation Equity, The Web Conference 2027 (WWW '27) demo track submission build.
-% FINAL SHAPE, 2026-11-03 (framing notes/FRAMING-2026-10-27.md; E5 in). Owner decisions are marked \owner{...} (blue) and stay visible until he clears them.
+% FINAL SHAPE, 2026-11-03 (framing notes/FRAMING-2026-10-27.md; E5 in); Fable writing pass 2026-11-08. Owner decisions are marked \owner{...} (blue) and
+% stay visible until he clears them; bash build.sh --final fails while one is printed.
 %
 % Call (https://www2027.thewebconf.org/demos/, re-read 2026-10-24; notes/VENUE.md):
 %   - at most 4 pages INCLUDING references, double column, English;
@@ -24,6 +25,14 @@
 %      (about 4 reference lines over): notes/CUTS.md, "Camera-ready".
 \setcopyright{none}
 \settopmatter{printacmref=false}
+% With \setcopyright{none}, acmart prints "\@copyrightyear." under the conference line (a stray "2027."). The review copy keeps the
+% conference line and drops that line (reviews ir:m8, demo:F10, geo:F15). Remove this block for the camera-ready, where ACM's
+% rights data fill the footnote. bash build.sh --final also fails while an OWNER mark is printed.
+\makeatletter
+\let\sm@copyrightfootnote\footnotetextcopyrightpermission
+\renewcommand\footnotetextcopyrightpermission[1]{\sm@copyrightfootnote{\parindent\z@\parskip0.1\baselineskip
+  {\itshape \acmConference@shortname, \acmConference@date, \acmConference@venue}\par}}
+\makeatother
 % Dates and place from https://www2027.thewebconf.org/ (read 2026-10-24): main conference 12 to 14 May 2027, Dublin, Ireland.
 \acmConference[WWW '27]{The ACM Web Conference 2027}{May 12--14, 2027}{Dublin, Ireland}
 \acmYear{2027}
@@ -96,8 +105,11 @@
 % ---- Figure 1: the result, as the page-1 teaser (sigconf cannot float a figure* onto page 1). scripts/fig_result.py.
 % src (caption): data/e1_results.json ("main", "replication", "e2", "e3"; scripts/derive_e1_results.py) and data/e5_results.json
 %      (scripts/derive_e5.py): 80 main and 60 replication queries (E1), 260 pooled (E3), 180 new (E5, queries.new); the guess
-%      rows pool all 260 main queries (E5 "pooled", n 166 to 169, E1's 80 included); n = queries where the check applied and its
-%      edit passed validation (CE/experiments/RESULTS_E1.md, RESULTS_E5.md "Edits that passed validation"); the margin 0.03 and
+%      rows pool all 260 main queries (E5 "pooled", n 166 to 169, E1's 80 included); n = queries with a valid cell of the edit and
+%      of its reference for both judges, i.e. the check applied and the edit and its placebo passed validation
+%      (CE/experiments/RESULTS_E1.md, RESULTS_E5.md "Edits that passed validation"; results/verify_numbers.py contrast()); "a
+%      placebo that rewords the same spans": PREREG_E1.md line 75 (same length for rewrites; nothing inserted for the additive
+%      checks); "eleven checks" (not "GEO checks"): ten are the tool's and one a candidate of ours (review demo:F11); the margin 0.03 and
 %      the 30-query minimum: settings in every analysis JSON (replication diamonds only where the replication had 30 or more
 %      queries: the reader's-words replication had 12, "insufficient n"); "falls short" = the plan's "loses the gain" for
 %      each guess the tool offers (CE/experiments/PLAN_E5.md r2, Primary analysis item 3, for each G in 9K and 9L:
@@ -108,9 +120,9 @@
 \begin{teaserfigure}
   \centering
   \includegraphics[width=\textwidth]{figures/fig1_result.pdf}
-  \caption{\figtakeaway{Of eleven GEO checks, only the reader's own words near the top clearly moved citation; the gain held on new queries, and a keyword helped less.}
-    Difference in citation score from a same-length placebo or the unedited page ($^{\circ}$), 95\% intervals; n: queries where the check applied and its edit passed validation.
-    \panel{a} Each check alone on 80 GEO-bench queries (260 for checks with too few pages at 80); two italic rows test whether the gain of Target questions answered comes from its heading or its words.
+  \caption{\figtakeaway{Of eleven checks, only the reader's own words near the top clearly moved citation; the gain held on new queries, and a keyword helped less.}
+    Difference in citation score from a placebo that rewords the same spans, or from the unedited page ($^{\circ}$), 95\% intervals; n: queries where the check applied and its edit (and placebo) passed validation.
+    \panel{a} Each check alone on 80 GEO-bench queries (260 for checks with too few pages at 80); two italic rows test whether Target questions answered gains from its heading or its words.
     \panel{b} The exact question on 180 new queries; then sections made from a keyword or a local model's question, over all 260 queries; the bottom rows compare each guess, and a section with all key words, with the exact question.}
   \Description{Two forest plots side by side. Each row is an edit to real web pages, with the mean difference in citation score from its reference, a 95 percent interval, a grey band from minus 0.03 to plus 0.03, and small teal diamonds for the 60-query replication set where it had 30 or more queries. Left: your reader's words up top and target questions answered sit right of zero with intervals clear of it, filled in indigo; a question heading did no better than the same text as plain text, and scored above a same-size section without its words, inconclusively; question headings, lists, cited sources and direct answer first sit inside the band; attributed quotes is inconclusive; statistics, comparisons and tables have hollow markers with too few pages; standalone paragraphs is descriptive, with no verdict by design, since it needs passage-level retrieval; all fixes together sit to the right. Right: the exact question on 115 new queries sits clearly right of zero; the reader's missing words sit right of zero, without a verdict; a keyword's two words helps, but less; the keyword's missing words and a local model's question sit inside the band; in the three bottom rows the keyword and the model's question each fall short of the exact question, and a section with all the key words sits below the exact question, without a verdict.}
   \label{fig:result}

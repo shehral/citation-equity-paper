@@ -1,4 +1,4 @@
-% sections/intro.tex -- Citation Equity, WWW 2027 demo track (final shape, 2026-11-03).
+% sections/intro.tex -- Citation Equity, WWW 2027 demo track (final shape, 2026-11-03; Fable writing pass 2026-11-08).
 % Four paragraphs per notes/FRAMING-2026-10-27.md (stakes, gap, what we did and found, what we built), contributions once.
 % Every number carries a % src: comment. CE = ../citation-equity (read only);
 % LS = our internal landscape review (not public; never cited, product facts cite the product pages);
@@ -14,36 +14,38 @@ Writers respond with generative engine optimization (GEO): advice and products f
 
 % ---- Gap
 % src: "up to 40%", five sources, one model: R1 summary; CE/docs/evidence.md (GEO row of "The studies": "Top five Google results
-%      pasted into GPT-3.5-turbo"; "this is where 'up to 40%' comes from")
+%      pasted into GPT-3.5-turbo"; "this is where 'up to 40%' comes from"); "chiefly" because GEO also reports a Perplexity.ai
+%      check beyond that setup (review geo:F11)
 % src: 45 studies and "Rejected as a general claim": Martinez arXiv 2607.14035, Table 5 (PDF p. 12, row "GEO increases visibility by 40%")
-% src: 19 of 24 settings: CE/docs/evidence.md ("decreases rankings in 19 out of 24 evaluated settings", quoting C-SEO Bench)
+% src: 19 of 24 settings: CE/docs/evidence.md line 193 (quoting C-SEO Bench: "decreases rankings in 19 out of 24 evaluated settings";
+%      the paper's own statement, not a table, evidence.md line 188)
 % src: 24 products, most selling tracking, 7 marked "Yes" for generating or rewriting content (Profound, Evertune, Scrunch,
 %      Gauge, Promptwatch, AirOps, Writesonic; Goodie "suggests actions" and Surfer "scores content" not counted):
 %      LS lines 473 to 498 (product table), pages read 2026-10-04 (LS line 471);
-%      footnote URLs re-opened 2026-10-24 (Evertune, Writesonic).
+%      footnote URLs re-opened 2026-10-24 (Evertune, Writesonic). The footnote is the only public source for the rewriters (review ir:M7 refuter), so it stays.
 Most of that advice is untested.
-Its best-known figure, gains of up to 40\%, comes from one setup with five sources in one model's prompt~\cite{aggarwal2024geo}; a survey of 45 studies rejects it as a general claim~\cite{martinez2026survey}, and adding statistics lowered citation rank in 19 of 24 C-SEO Bench settings~\cite{puerto2025cseo}.
+Its best-known figure, gains of up to 40\%, comes chiefly from one setup with five sources in one model's prompt~\cite{aggarwal2024geo}; a survey of 45 studies rejects it as a general claim~\cite{martinez2026survey}, and adding statistics lowered citation rank in 19 of 24 C-SEO Bench settings~\cite{puerto2025cseo}.
 Of 24 commercial products whose public pages we read, most sell brand tracking and seven also rewrite the text,\footnote{For example \url{https://www.evertune.ai/pricing} and \url{https://writesonic.com/pricing}, opened 24 October 2026.} yet writers feel less ownership of text an AI writes for them~\cite{draxler2024ghostwriter,dhillon2024scaffolding}.
 
 % ---- What we did and found
-% src: eleven checks: CE/docs/evidence.md line 3; 80 GEO-bench queries and 60 C-SEO Bench queries: CE/experiments/RESULTS_E1.md
-%      (data/e1_results.json main.n_queries, replication.n_queries); one change at a time, same-length paraphrase: CE/experiments/PREREG_E1.md;
-%      plans committed before their runs: results/README.md "How each experiment was run" (plan commits before every job);
-%      ten tool checks and candidate checks: CE/experiments/PREREG_E1.md lines 50 to 52 (family A = arms 2 to 10, the tool's
+% src: ten tool checks and candidate checks: CE/experiments/PREREG_E1.md lines 50 to 52 (family A = arms 2 to 10, the tool's
 %      checks, arm 1 descriptive; family B = arms 11, 12 and 14, candidates); the one that helped (arm 12, your reader's words up
-%      top) joined the tool because it helped: CE/docs/evidence.md line 3; edits by a model or by a fixed rule (arm 9 is
-%      extractive and deterministic, reference = the unedited page): PREREG_E1.md line 67;
+%      top) joined the tool because it helped: CE/docs/evidence.md line 3; 80 GEO-bench queries and 60 C-SEO Bench queries:
+%      CE/experiments/RESULTS_E1.md (data/e1_results.json main.n_queries, replication.n_queries); one change at a time, a
+%      paraphrase of the same spans or the unedited page: CE/experiments/PREREG_E1.md (line 75: placebos; the table at lines
+%      59 to 72: which arms are compared with the original); plans committed before their runs: results/README.md "How each
+%      experiment was run" (plan commits before every job); edits by a model or by a fixed rule (arm 9 is extractive and
+%      deterministic): PREREG_E1.md line 67;
 %      the heading added nothing: CE/experiments/RESULTS_E2.md (E2a, 9 vs 9W "no effect larger than delta" on both sets);
-%      E5: CE/experiments/RESULTS_E5.md (180 new queries, data/e5_results.json queries.new; the keyword helps against both
-%      references but falls short of the exact question; local-model question no effect larger than delta)
-We built that advice into a writing tool and tested each of its ten checks on its own, beside candidate checks of our own.
-The one candidate that helped became its eleventh.
-An open model or a fixed rule made one check's edit to real web pages, against a same-length paraphrase of the same passage or the unedited page, and open models answered from fixed sources (80 GEO-bench queries, with 60 from C-SEO Bench as a replication set).
-Every test was planned in advance.
+%      E5: CE/experiments/RESULTS_E5.md (180 new queries, data/e5_results.json queries.new; the gate "main:9-original:new queries"
+%      n 115 = the new queries where the edit applied and passed validation; the keyword helps against both references but falls
+%      short of the exact question; local-model question no effect larger than delta)
+We built that advice into a writing tool and tested each of its ten checks on its own, beside candidate checks of our own; the one candidate that helped became its eleventh.
+For each check, an open model or a fixed rule made that one edit to real web pages, and open models answered from fixed sources (80 GEO-bench queries, with 60 from C-SEO Bench as a replication set); every test was planned in advance.
 Only the reader's own words near the top of the page clearly raised citation (Figure~\ref{fig:result}a).
 A follow-up found that the heading itself added nothing.
 A last test asked what a writer can know.
-The gain held on 180 queries the first test never used.
+On the 180 new queries (115 where the edit applied) the gain held.
 A keyword's two words helped, but less.
 A question a local model wrote from the keyword showed no effect larger than 0.03 (Figure~\ref{fig:result}b).
 
@@ -53,13 +55,15 @@ A question a local model wrote from the keyword showed no effect larger than 0.0
 % src: footnote links: demo, code, data and Research page (HTTP 200 on 2026-10-26); video https://youtu.be/kbU9t3ewVUk (2026-10-27,
 %      notes/REDESIGN-AND-E5-PLAN-2026-10-27.md Part 3). That upload shows the old score-based tool (Q26.6): re-record it from the
 %      question-first build and put the new URL here (YouTube gives a new video ID); if the new cut is not checked by submission
-%      day, delete the Video sentence (review pc-12).
-% src: every test's aggregates in the code: experiments/results/{e1,e2,e3,e5,sensitivity} on the code repo's public main
-%      (0dd41fa; git ls-remote, and HTTP 200 for experiments/results/e5, on 2026-11-03); its three E5 aggregates are
-%      byte-identical to results/e5/ here. The Hugging Face dataset still holds E1 to E3 only (E5 is staged in
-%      ../citation-equity-hf/public, not uploaded), so the code link is where a reader finds the last test's numbers
-% src: "eleven GEO checks", not "common": ten were the tool's and the eleventh a candidate of ours (lines 39 and 40)
-We present \emph{Citation Equity}, an open-source writing tool rebuilt around these results (Figure~\ref{fig:workspace}).\footnote{Live demo: \url{https://shehral.github.io/citation-equity/}. Code (MIT), with every test's aggregates in \texttt{experiments/results}: \url{https://github.com/shehral/citation-equity}. Data: \url{https://huggingface.co/datasets/Shehral/citation-equity-experiments}. Research page (plans, results, evidence grades): \url{https://shehral.github.io/citation-equity/research/}.\label{fn:links} Video: \url{https://youtu.be/kbU9t3ewVUk}. \owner{Re-record for the question-first tool.}}
-It starts from the questions readers ask, counts which ones a draft covers, names the missing words without inserting them, flags settings that keep a page out of answers, and labels the rest of the advice with what our tests found.
-The equity is of access, not of exposure in rankings: the tool is free, open and offline, so the evidence is not reserved for brands that pay for tracking tools.
-Our contributions are (1)~a controlled test of eleven GEO checks, with placebos, a replication set, an editor swap, and tests on new queries and on questions a writer can guess; (2)~the finding that vocabulary, not formatting, moved citation; and (3)~an open, offline writing tool rebuilt from that finding, with a live demo, code and data.
+%      day, delete the Video sentence and its mark (review pc-12). Never ship the old URL without the mark (review ir:B1 refuter).
+%      bash build.sh --final fails while an OWNER mark is printed.
+% src: "Data (all tests)": the Hugging Face dataset at sha 4c0c7e4 (2026-11-09 01:43 UTC; HF tree API read 2026-11-08) holds
+%      analysis/e5, data/results_e5 and plans/PLAN_E5.md beside E1 to E3 (93 files), so the dataset covers every test; the code
+%      repo's public main (0dd41fa) also holds every test's aggregates under experiments/results
+% src: "ten GEO checks and one of our own": ten were the tool's and the eleventh a candidate of ours (the paragraph above)
+% src: contribution (2) "clearly": the hedge used in the abstract, Figure 1 and the takeaway box; four formatting checks (quotes,
+%      tables, statistics, comparisons) have no verdict, hence "any formatting check we could judge" (review geo:F4 refuter)
+We present \emph{Citation Equity}, an open-source writing tool rebuilt around these results (Figure~\ref{fig:workspace}).\footnote{Live demo: \url{https://shehral.github.io/citation-equity/}. Code (MIT): \url{https://github.com/shehral/citation-equity}. Data (all tests): \url{https://huggingface.co/datasets/Shehral/citation-equity-experiments}. Research page: \url{https://shehral.github.io/citation-equity/research/}.\label{fn:links} Video: \url{https://youtu.be/kbU9t3ewVUk}. \owner{Re-record for the question-first tool.}}
+It starts from the questions readers ask, names the words a draft lacks near the top without inserting them, and labels the rest of the advice with what our tests found.
+The equity is of access, not of rankings: the tool is free, open and offline, so the evidence is not reserved for brands that pay for tracking tools.
+Our contributions are (1)~a controlled test of ten GEO checks and one of our own, with placebos, a replication set, an editor swap, new queries and guessed questions; (2)~the finding that the reader's vocabulary, not any formatting check we could judge, clearly moved citation; and (3)~an open, offline writing tool rebuilt from that finding, with a live demo, code and data.
