@@ -11,7 +11,7 @@ This repo holds the demo-track paper for The Web Conference 2027 (WWW '27), "Cit
 ## Working on it together
 
 - Make changes on a branch and open a pull request against `main`, so `build.sh` and `results/verify_numbers.py` can be run before merging. Small text fixes can go straight to `main`.
-- After any edit, run `bash build.sh` (it fails on more than 4 pages) and `.venv/bin/python -I -B results/verify_numbers.py`.
+- After any edit, run `bash build.sh` (it fails on more than 4 pages) and `.venv/bin/python -I -B results/verify_numbers.py`. Before uploading a submission copy, run `bash build.sh --final`: it also fails while a blue `[OWNER: ...]` mark is printed.
 - **Second rater:** if you are rating the evidence (`notes/second-rater/`), do it before opening `data/grades.json`, `data/evidence_matrix.csv`, `data/evidence_grades_loose.json` or the evidence matrix figure (`scripts/retired/fig_evidence.py`, no longer in the paper), so the rating stays blind.
 
 ## Build the PDF
@@ -19,6 +19,7 @@ This repo holds the demo-track paper for The Web Conference 2027 (WWW '27), "Cit
 ```sh
 bash build.sh            # regenerate the figures from data/ alone, then compile main_www.tex with tectonic
 bash build.sh --derive   # first rebuild data/ from a checkout of the tool repo next to this one (read only)
+bash build.sh --final    # as the default, then fail if an owner mark is still printed (run before uploading)
 ```
 
 You need [tectonic](https://tectonic-typesetting.github.io/) (the build calls `/opt/homebrew/bin/tectonic`; edit `TECTONIC` in `build.sh` if yours is elsewhere), `pdfinfo` (poppler), and a Python 3.12 virtualenv at `.venv/` with matplotlib and numpy (`python3 -m venv .venv && .venv/bin/pip install matplotlib numpy`). The build fails on undefined references, overfull boxes, or more than 4 pages.
