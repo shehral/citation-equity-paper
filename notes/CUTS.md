@@ -262,3 +262,53 @@ another model ..."); one of the two GEO-agreement clauses in Section 5. Not cut 
 Separately, `\setcopyright{none}` leaves a stray "2027." line under the conference line in the page-1 footnote (an acmart
 artifact). Adding `\renewcommand\footnotetextcopyrightpermission[1]{}` after `\setcopyright{none}` hides it but also removes
 the conference line; that is the owner's call, so it is not applied.
+
+## Fable writing pass (2026-11-08)
+
+Target: apply the surviving review findings (a Related-work sentence with a new reference, the recorded test's numbers in
+Station 1, the two-thirds share's 90% CI, "no verdict" defined once) and still fit 4 pages with room for the ACM reference
+block. Result: 4 pages, page 4's right column ends at margin line 459 of 464 (5 free lines); a scratch build with
+`printacmref=true` fits in 4 pages with no overfull box. No claim was strengthened; every number that stayed keeps its src.
+
+90. Section 2, numbers Figure 1 plots: "(replication +0.036)" after the question section's Holm p; "(replication -0.001)"
+    after +0.003; the same-size-section-vs-unedited-page clause ("+0.010; replication -0.012; shown without a verdict"), so
+    the sentence reads "Against a same-size section without the reader's words, the question section helped on the
+    replication set (+0.048) and was inconclusive on the main set (+0.017)" (the takeaway box carries the planned
+    same-length tests); "+0.035 pooled with the first test's queries, n = 169"; the digits +0.008 and +0.004 (the verdicts
+    stay); the replication +0.025 and +0.028 (the sentence now says both guesses beat only the section without the reader's
+    words, Figure 1b). Added: the two-thirds share's 90% CI 0.41 to 0.93.
+91. Section 2: "Attributed quotes were inconclusive, and tables, statistics and comparisons still had too few pages." folded
+    into the follow-up sentence ("quotes were inconclusive, and three checks still had too few pages (Figure 1a)"); "Both
+    gains above used ..." and "A last test reran ..." merged; "shown without a verdict" at four sites -> "no verdict", defined
+    once in The test; "by the rule we set before the run, an interval above zero means the guess falls short" -> "by the rule
+    set before the run, the guess falls short".
+92. Section 1: "the reference was a paraphrase of the same spans or the unedited page," dropped from the what-we-did sentence
+    (the abstract and Section 2 say it); the what-we-built sentence shortened to the questions, the missing words and the
+    labels; "tests on new queries and on questions a writer can guess" -> "new queries and guessed questions"; "not of
+    exposure in rankings" -> "not of rankings"; footnote 2: "Code (MIT), with every test's aggregates in experiments/results"
+    -> "Code (MIT)" and "Research page (plans, results, evidence grades)" -> "Research page" (the Hugging Face dataset now
+    holds every test, so "Data (all tests)").
+93. Section 3: "It replaces a 0-to-100 checklist score." merged into the sample-draft sentence; "Section 2 found clear gains
+    for only two checks" dropped (the first sentence says the labels come from Section 2); "or loads an example with one
+    click" -> "or loads an example"; the three label-definition sentences became one; the last four Labels sentences became
+    two (the 27% and the 31B-vs-3B disclosure kept; review demo:F06); "Next.js" dropped from the architecture sentence; the
+    Reports sentence shortened; the Suggest paragraph's last two sentences merged; the Evidence sentence reordered, with
+    "coded by one author" added.
+94. Section 4: the laptop and second-screen sentences merged; Station 2 and Station 3 one sentence each; "starts each session
+    and fills in while visitors watch" -> "fills in during each session"; "except those that need the live site" -> "every
+    check that does not need the live site". Added: what the recorded test shows (review demo:F07).
+95. Section 5: the first sentence shortened ("our tests follow C-SEO Bench and What Gets Cited"); the keyword-stuffing and
+    reader's-words sentences merged; the open-tools sentence shortened ("per factor", "diagnostics", "(we adapt code from
+    it)"). Added: the GEO-SFE sentence (review ir:M7).
+96. Section 6: the fixed-sources pair and the follow-up pair merged; a per-judge clause (review geo:F17) written and then cut
+    for space (the src comment keeps it). Added: the stalled Gemini-judge check (geo:F13). Section 7: the IRB sentence joined
+    to the first.
+97. Figure 1 caption: "whether the gain of Target questions answered comes from" -> "whether Target questions answered gains
+    from". Figure 2: callouts 3 (the Show passage) and 5 (the privacy chip) no longer drawn or listed (two list lines;
+    `KEEP` in `scripts/fig_workspace.py`; the data file is unchanged).
+98. References: the C-SEO Bench OpenReview URL dropped (the eprint prints the arXiv id), by the 2026-10-24 rule.
+
+Camera-ready: the "Camera-ready" note above is superseded. Measured on this build in a scratch copy with `printacmref=true`:
+4 pages, 0 overfull boxes, the references ending on the last line of page 4. The stray "2027." footer line is handled in
+`main_www.tex` (the copyright footnote macro now prints the conference line only); remove that block for TAPS, where ACM's
+rights data fill the footnote.
