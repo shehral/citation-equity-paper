@@ -441,13 +441,13 @@ ANCHORS = [
     ("sections/conclusion.tex", r"on which the unedited page averages (?P<b>0\.\d+)", {"b": ("x:baseline", "x")}),
     # E5
     ("sections/abstract.tex", r"On queries the first test never used, the gain held \(" + g("d") + r"\)", {"d": ("E5.gate", "d")}),
-    ("sections/intro.tex", r"[Oo]n the (?P<q>\d+) new queries \((?P<n>\d+) where the edit applied\) the gain held",
+    ("sections/intro.tex", r"[Oo]n the (?P<q>\d+) new queries \((?P<n>\d+) where it applied and passed validation\) the gain held",
      {"q": ("q:e5.new", "n"), "n": ("E5.gate", "n")}),
     ("sections/evidence.tex", r"reran the question section on (?P<q>\d+) new queries", {"q": ("q:e5.new", "n")}),
     ("sections/evidence.tex",
      r"helped on the new queries \(" + g("d") + r", 95\\% CI \$\[(?P<lo>[+-][\d.]+), (?P<hi>[+-][\d.]+)\]\$, " + gn("n") + r"\)",
      {"d": ("E5.gate", "d"), "lo": ("E5.gate", "lo"), "hi": ("E5.gate", "hi"), "n": ("E5.gate", "n")}),
-    ("sections/evidence.tex", r"held there too \(" + g("d") + r" against their placebo, " + gn("n") + r", no verdict\)",
+    ("sections/evidence.tex", r"held there too \(" + g("d") + r" against its placebo, " + gn("n") + r", no verdict\)",
      {"d": ("E5.12-P12.new", "d"), "n": ("E5.12-P12.new", "n")}),
     ("sections/evidence.tex",
      r"Over all (?P<q>\d+) queries the keyword helped against the unedited page \(" + g("a")
