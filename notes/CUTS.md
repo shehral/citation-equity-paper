@@ -336,3 +336,20 @@ rights data fill the footnote.
     (Section 1), the Questions covered bridge (Section 3, Labels), the verdict-order clause (Figure 1 caption) and the relaid
     Figure 2 (the card crop; 224.5 pt tall against 218.2). Build after: 4 pages, 0 overfull, 0 undefined; page 4's right
     column ends about 4 lines above the margin.
+
+## Second round after the Fable re-score (2026-11-08, 23:02 PST)
+
+101. Cuts to pay for the prior-work clause below (the first build after it ran to 5 pages: the last reference entry's three
+    lines spilled, with two overfull page boxes from the balanced last page). Section 1, paragraph 1: "systems that answer a
+    question in prose and cite web sources" -> "systems that answer in prose and cite web sources". Section 3, Suggest, never
+    rewrite: "an optional local model proposes wording only on the author's click" -> "proposes wording only when asked" (the
+    src, architecture.md line 90, still reads "local model only after a click"). Section 3, Architecture and the citation
+    test: "the smallest possible p is 0.125, so a laptop run shows a direction at most" -> "the smallest p is 0.125, so a
+    laptop run shows only a direction". Each paragraph's last line held one or two words, so each trim saved a full line
+    (three lines, about 33 pt).
+102. Added in the same round, which the cuts above paid for: Section 1, paragraph 2, the second clause now names the two prior
+    tests that touch the structural advice (tested as a formatting bundle, no consistent effect, vishwakarma2026cited; against
+    the unedited page, puerto2025cseo) in place of "had not been tested one change at a time against a same-length placebo"
+    (two more lines); Section 5, "and formatting-only matched pairs had no consistent effect" on the What Gets Cited finding
+    (fit in the paragraph's last line, no new line). Build after: 4 pages, 0 overfull, 0 undefined; page 4's right column ends
+    26.6 pt (three reference lines) above the margin, as before the round.
