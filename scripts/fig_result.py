@@ -73,8 +73,11 @@ A_ROWS = [
 ]
 # Panel (b): (key in data/e5_results.json "contrasts", name, sub-row, sign, replication key, retention guess).
 B_ROWS = [
-    ("main:9-original:new queries", "Exact question, new queries", False, 1, None, None),
-    ("main:12-P12:new queries", "Missing words up top, new queries", False, 1, None, None),
+    # Row names (2026-11-08, one name per edit): the arm 9 edit is "the question section" and the arm 12 edit "the reader's
+    # missing words up top" here and in the prose; panel (a) names the tool's checks (Target questions answered, Your
+    # reader's words up top). "Exact question" is kept for the bottom rows, where it is the input being compared with a guess.
+    ("main:9-original:new queries", "Question section, new queries", False, 1, None, None),
+    ("main:12-P12:new queries", "Reader's missing words up top, new queries", False, 1, None, None),
     None,
     ("main:9K-original:pooled", "A keyword's two words", False, 1, "replication:9K-original:pooled", None),
     ("main:9K-9P:pooled", "vs a section without the reader's words", True, 1, "replication:9K-9P:pooled", None),

@@ -23,9 +23,16 @@ Writers respond with generative engine optimization (GEO): advice and products f
 %      Gauge, Promptwatch, AirOps, Writesonic; Goodie "suggests actions" and Surfer "scores content" not counted):
 %      LS lines 473 to 498 (product table), pages read 2026-10-04 (LS line 471);
 %      footnote URLs re-opened 2026-10-24 (Evertune, Writesonic). The footnote is the only public source for the rewriters (review ir:M7 refuter), so it stays.
-Most of that advice is untested.
-Its best-known figure, gains of up to 40\%, comes chiefly from one setup with five sources in one model's prompt~\cite{aggarwal2024geo}; a survey of 45 studies rejects it as a general claim~\cite{martinez2026survey}, and adding statistics lowered citation rank in 19 of 24 C-SEO Bench settings~\cite{puerto2025cseo}.
-Of 24 commercial products whose public pages we read, most sell brand tracking and seven also rewrite the text,\footnote{For example \url{https://www.evertune.ai/pricing} and \url{https://writesonic.com/pricing}, opened 24 October 2026.} yet writers feel less ownership of text an AI writes for them~\cite{draxler2024ghostwriter,dhillon2024scaffolding}.
+% src: what was tested before: GEO-bench's nine methods (Aggarwal et al. 2024: Keyword Stuffing, Statistics Addition, Cite Sources,
+%      Quotation Addition, Authoritative, Fluency, Easy-to-Understand, Unique Words, Technical Terms) and C-SEO Bench's content
+%      methods (statistics, citations, quotes among them; CE/docs/evidence.md "The studies", C-SEO Bench row) edit the page's
+%      content, with no same-length placebo and, in GEO-bench, five sources in one prompt; none tests question headings, lists,
+%      tables or an answer-first lead one change at a time against a same-length placebo (CE/docs/evidence.md "The studies"; our
+%      placebo: PREREG_E1.md line 75), hence "had not been tested" for the structural advice only (review 2026-11-08, item 6;
+%      replaces "Most of that advice is untested")
+GEO-bench and C-SEO Bench tested content rewrites (statistics, quotes, citations; keyword stuffing in GEO-bench)~\cite{aggarwal2024geo,puerto2025cseo}; the structural advice (question headings, lists, tables, an answer first) had not been tested one change at a time against a same-length placebo.
+The best-known figure, gains of up to 40\%, comes chiefly from one setup with five sources in one model's prompt~\cite{aggarwal2024geo}; a survey of 45 studies rejects it as a general claim~\cite{martinez2026survey}, and adding statistics lowered citation rank in 19 of 24 C-SEO Bench settings~\cite{puerto2025cseo}.
+Of 24 commercial products whose public pages we read, most sell brand tracking and seven also rewrite the text,\footnote{For example \url{https://www.evertune.ai/pricing} and \url{https://writesonic.com/pricing}, opened 24 October 2026.} yet writers feel less ownership of text an AI writes for them~\cite{draxler2024ghostwriter}.
 
 % ---- What we did and found
 % src: ten tool checks and candidate checks: CE/experiments/PREREG_E1.md lines 50 to 52 (family A = arms 2 to 10, the tool's
@@ -44,10 +51,7 @@ We built that advice into a writing tool and tested each of its ten checks on it
 For each check, an open model or a fixed rule made that one edit to real web pages, and open models answered from fixed sources (80 GEO-bench queries, with 60 from C-SEO Bench as a replication set); every test was planned in advance.
 Only the reader's own words near the top of the page clearly raised citation (Figure~\ref{fig:result}a).
 A follow-up found that the heading itself added nothing.
-A last test asked what a writer can know.
-On the 180 new queries (115 where the edit applied) the gain held.
-A keyword's two words helped, but less.
-A question a local model wrote from the keyword showed no effect larger than 0.03 (Figure~\ref{fig:result}b).
+A last test asked what a writer can know: on the 180 new queries (115 where the edit applied) the gain held, a keyword's two words helped, but less, and a question a local model wrote from the keyword showed no effect larger than 0.03 (Figure~\ref{fig:result}b).
 
 % ---- What we built
 % src: the redesign: CE/docs/superpowers/specs/2026-11-03-question-first-design.md sections 2, 5 and 7 (local feat branch, not on

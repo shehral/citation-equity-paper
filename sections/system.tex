@@ -21,7 +21,7 @@
 %      (ranges.relative_change_after 0.083 to 0.171); both checked by results/verify_numbers.py
 \paragraph{From a score to questions}
 The tool shows no total: it starts from the reader's questions, counts which ones a draft covers, and labels every check with what Section~\ref{sec:findings} found (Figure~\ref{fig:workspace}).
-It replaces a 0-to-100 checklist score: on two sample drafts, following the old tool's suggestions raised that score by 26 to 29 points, while the drafts' share of citations among eight sources rose by 1 to 3 points from about 17 in an exploratory run on four open models.
+It replaces a 0-to-100 checklist score: on two sample drafts, the old tool's suggestions raised that score by 26 to 29 points while the drafts' share of citations among eight sources rose by 1 to 3 points from about 17 (an exploratory run on four open models).
 
 % src: flow and copy: spec section 4 (four steps and routes), 7.2 (home: "What will your readers ask?", type, paste keywords, Import
 %      CSV from Search Console or Bing Webmaster, Try it with an example), 7.3 (draft rail: Questions covered card, Quick edit,
@@ -37,7 +37,6 @@ It replaces a 0-to-100 checklist score: on two sample drafts, following the old 
 % src: blockers rest on operators' documentation: CE/docs/evidence.md lines 306 to 309 (readiness rubric) and the crawler-access and
 %      indexing grades (strong); CE/docs/cli.md line 95 ("Blockers can keep a page out of AI answers; the other items are notes")
 \paragraph{The flow}\label{sec:flow}
-Four screens follow the writer's work.
 \emph{Your questions} asks ``What will your readers ask?'': the writer types questions, pastes keywords, imports a Search Console or Bing Webmaster export, or loads an example.
 \emph{Your draft} leads with ``Questions covered: N of M''.
 A question is covered when its key words appear in the title, first heading or first paragraph, and a section opens with a plain sentence that uses most of them.
@@ -48,17 +47,20 @@ Below sit one ready edit, the \emph{Quick edit}, and the other checks as collaps
 
 \begin{figure}[t]
   \centering
-  % Figure 2 (Q26.3): scripts/fig_workspace.py from data/screens/draft_view.png and data/fig2_callouts.json (capture:
-  % scripts/capture_screens.mjs, Task 16, the local Pages build of CE 3991cc0) with the old build's score card as the inset
-  % (data/screens/draft_view_before.png, a byte copy of the pre-redesign capture, score ring 37).
+  % Figure 2 (Q26.3; relaid 2026-11-08 for legibility): scripts/fig_workspace.py from data/screens/draft_view.png and
+  % data/fig2_callouts.json (capture: scripts/capture_screens.mjs, Task 16, the local Pages build of CE 3991cc0). Right: the
+  % Questions covered card cropped at native resolution (its UI text prints at 5 to 7 pt; at the full-window scale it printed
+  % at about 2 pt); left: the full window small with the crop outlined, the old build's score card (data/screens/
+  % draft_view_before.png, a byte copy of the pre-redesign capture, score ring 37) and the callout list.
   \includegraphics[width=\columnwidth]{figures/fig2_workspace.pdf}
-  \Description{A screenshot of the draft view on the espresso example after two typed edits, with the Quick edit not applied. Left: the draft as a paper-style page; its title, now "Why does my espresso taste bitter, and how do I fix it?", is marked. Right: the rail, headed "Questions covered: 2 of 4" with a "Helped in our test" chip; each question has a words-up-top line and an answer line, open lines name the missing words, and a Quick edit card offers one ready edit, "Add ? or reword it", with its own "No effect in our test" chip and a Preview button. Top right: a "Stays in your browser" chip. Three numbered callouts point to the count, the Quick edit and the card's label, and a list under the image names them. An inset at the lower left shows the old build's rail card: a score ring reading 37, "AI-ready score", "A writing checklist, not a forecast", and "0 of 29 handled".}
+  \Description{Right: the Questions covered card of the draft view, enlarged, on the espresso example after two typed edits. It is headed "Questions covered: 2 of 4" with a green "Helped in our test" chip and the line "Each needs its key words up top and a section that answers it." Two questions are ticked, each with a "Words up top" and an "Answered" line; two are open: "What water temperature should I use for espresso?" shows "Missing up top: water, temperature" and "No direct answer yet", and "How long should an espresso shot take?" shows "Missing up top: long" and "No direct answer yet", each with a Show button and a note on the matching section's first sentence. Three numbered callouts mark the count, the chip and the first open row. Left, top: the full window small, the draft page with its new title "Why does my espresso taste bitter, and how do I fix it?" on the left, the card outlined on the right and the Quick edit card below it. Left, middle: the old build's card, a score ring reading 37, "AI-ready score", "A writing checklist, not a forecast", and "0 of 29 handled". Left, bottom: the callout list.}
   % src (caption): data/fig2_callouts.json (captured.strings.heading "Questions covered: 2 of 4"; captured.edits: the title edit
   %      and the answering sentence under "## Why espresso turns bitter", which sits below the 900 px frame; draft_sha256
   %      576bcb4e..., the engine test's Figure 2 text; the Quick edit, the heading's "?", is not applied in the capture, while
-  %      Section 4's loop applies it first: "before the Quick edit"); data/fig2_callouts_before.json (the old capture: "AI-ready score", "A writing
-  %      checklist, not a forecast."); spec section 14 and 7.3 (local feat branch only); CE/README.md line 20
-  \caption{\figtakeaway{The draft view counts which reader questions the draft covers; the old build (inset) led with a checklist score.}
+  %      Section 4's loop applies it first: "before the Quick edit"; callout 6, the open row that names the missing words, was
+  %      hand-measured on the committed screenshot, _provenance.hand_measured); data/fig2_callouts_before.json (the old capture:
+  %      "AI-ready score", "A writing checklist, not a forecast."); spec section 14 and 7.3 (local feat branch only); CE/README.md line 20
+  \caption{\figtakeaway{The draft view counts which reader questions the draft covers and names the missing words; the old build led with a checklist score.}
     Espresso example after two typed edits, before the Quick edit; the answering sentence sits below the frame.}
   \label{fig:workspace}
 \end{figure}
@@ -75,6 +77,12 @@ Below sit one ready edit, the \emph{Quick edit}, and the other checks as collaps
 %      question (replication 24 of 52, 46%): CE/experiments/RESULTS_E5.md "Edits that passed validation", column "Tool: covers q"
 %      (data/e5_results.json tool_covers_q_arm9); arm 9 never had to meet the covered rule (CE/experiments/PREREG_E1.md line 220);
 %      the covered count itself was not tested (CE/docs/evidence.md line 61)
+% src: the covered rule's two parts: CE/packages/engine/src/checks/question-coverage.ts lines 196 to 198 (the matching section's
+%      first sentence: 8 to 40 words, not a question, at least 60% of the question's content terms) and registry.ts line 80
+%      ("a plain sentence of 8 to 40 words that uses most of the question's key words"); the words-up-top part: spec section 5
+%      (a); "each part was tested on its own": the reader's missing words up top (arm 12 vs P12) and the question section (arm 9
+%      vs the unedited page), Section 2; "a stricter bar": the question section met the whole rule on 27% of pages (above);
+%      "not a predictor": the count itself was not tested (CE/docs/evidence.md line 61) (review 2026-11-08, item 9)
 % src: per-input labels after E5, a rule chosen after the results (Ruling Q23; merged at CE cbbdeea): keyword = {words: No effect in
 %      our test, answer: May help less}, local-model = {words: Not tested, answer: No effect in our test}:
 %      CE/packages/engine/src/labels.ts deriveInputLabels (lines 95 to 108) and CE/docs/evidence.md line 123; the plan's tool line
@@ -89,7 +97,7 @@ Each check carries one fixed label for what our tests found: \emph{Helped in our
 \emph{Not tested} is kept for inputs no test judged, such as questions made from the page itself, only a placebo in our last test.
 The two question checks read Helped for the reader's own questions, typed or imported, though our tests used only full questions.
 Question headings, lists, cited sources and a direct answer first read No effect; the other five read Unclear.
-The \emph{Questions covered} count is a rule no test judged; the section we tested met it on only 27\% of pages.
+The \emph{Questions covered} count asks for both measured parts at once, the words up top and an opening sentence of 8 to 40 words that answers, a stricter bar than the question section met (27\% of pages): each part was tested on its own, and the count makes the writer do both, so it is a to-do list built from what helped, not a predictor.
 A keyword's question reads \emph{May help less} for its answer and \emph{No effect} for its words, and a local model's question \emph{No effect}, measured with the 31B editor model, not the tool's 3B default; both are rules chosen after the results (Research page, footnote~\ref{fn:links}).
 
 % src: CE/docs/evidence.md lines 22 to 29 (rubric; the null rule at lines 24 and 29) and line 34 ("No check is graded strong or
@@ -98,14 +106,15 @@ A keyword's question reads \emph{May help less} for its answer and \emph{No effe
 %      lines 358 to 391). The evidence matrix (old Figure 3, scripts/retired/fig_evidence.py) and the looser rule moved out of the paper
 %      (Q26.2; notes/CUTS.md); "coded by one author": single-rater coding (data/README.md line 13, evidence_matrix.csv), said in
 %      the body so that deleting the owner mark drops no disclosure (reviews ir:B1, demo:F01, geo:F1, geo:F18)
-% OWNER: second rating. The blind sheet is notes/second-rater/rating_sheet.csv (0 of 74 filled on 2026-11-08). If it comes back
-%      by Nov 15: python3 -I -B scripts/rater_agreement.py score <sheet>.csv, then replace the sentence below with the variant
-%      "By that rule nine checks are mixed and two untested; a second author rated 74 of the 99 cells blind: agreement N\%,
-%      Cohen's kappa K (coded cells only K2)." (notes/second-rater/HOW-TO-REPORT.md: report the pre-discussion numbers; quote
-%      the coded-cells-only kappa beside the headline). If not, delete the \owner mark and keep "coded by one author".
+% Second rating: the owner mark ("Second rating pending.") was deleted on 2026-11-08 at his decision; the single-rater
+%      disclosure "coded by one author" stays in the body. The blind sheet is notes/second-rater/rating_sheet.csv (0 of 74
+%      filled on 2026-11-08). If it comes back: python3 -I -B scripts/rater_agreement.py score <sheet>.csv, then replace the
+%      sentence below with the variant "By that rule nine checks are mixed and two untested; a second author rated 74 of the
+%      99 cells blind: agreement N\%, Cohen's kappa K (coded cells only K2)." (notes/second-rater/HOW-TO-REPORT.md: report the
+%      pre-discussion numbers; quote the coded-cells-only kappa beside the headline).
 \paragraph{Evidence}
 Apart from our labels, the Research page grades each check on the nine studies the tool cites under a strict rule: a null or negative result in any study, even in one subgroup, makes it \emph{mixed}.
-By that rule, coded by one author, nine checks are mixed and two untested. \owner{Second rating pending.}
+By that rule, coded by one author, nine checks are mixed and two untested.
 
 % src (CE 3991cc0): CE/docs/architecture.md lines 80 (anchors follow the author's edits; merge preview), 84 (Apply only if the text
 %      is unchanged, else "Out of date"; "There is no bulk action.") and 90 (local model only after a click); spec section 3
@@ -124,5 +133,5 @@ An edit is previewed and applied only if its text is unchanged, every action has
 \paragraph{Architecture and the citation test}\label{sec:bench}
 A TypeScript monorepo holds an \emph{engine} of pure check functions (browser and CLI), a \emph{bench} with the citation test, and a \emph{workspace}, a static export on GitHub Pages with no server; a browser test asserts that no request leaves the origin on load.
 For each question the bench retrieves the top 8 of the draft and its competitor pages with BM25, and a local model (\texttt{llama3.2:3b} through Ollama, the default) answers with numbered citations under GEO's prompt~\cite{aggarwal2024geo}, 8 times with shuffled source orders~\cite[Sec.~11.2]{martinez2026survey}.
-Reports separate retrieval, valid answers, citation and word share, show the chance level, and say \emph{``It does not predict live AI engines.''}
+Reports show the chance level and say \emph{``It does not predict live AI engines.''}
 With a sample's 4 questions the smallest possible $p$ is 0.125, so a laptop run shows a direction at most.

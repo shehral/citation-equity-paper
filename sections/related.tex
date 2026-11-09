@@ -17,7 +17,7 @@ The bench reuses GEO's prompt and word share~\cite{aggarwal2024geo}; our tests f
 %      title and opening (CE/docs/evidence.md line 298; CE/docs/research/evidence-notes.md lines 15 and 162). No test here varied
 %      placement, so the text does not say placement caused the gain (review pc-10).
 Our vocabulary finding fits earlier ones: relevance edits moved models and stylistic edits did not~\cite{wan2024conflictingqa}, and a page holding the query's terms won the first citation in four of six models~\cite{vishwakarma2026cited}.
-GEO's keyword stuffing, a rewrite that added query keywords anywhere in the page, did not help~\cite{aggarwal2024geo}; our edit adds only the missing query words, to the title and opening, against a same-length placebo.
+GEO's keyword stuffing added query keywords anywhere in the page and did not help~\cite{aggarwal2024geo}; our edit adds only the missing words, to the title and opening.
 % src: GEO-SFE (arXiv 2603.29979): CE/docs/evidence.md line 174 ("restructured 200 articles, changing headings, chunking, lists,
 %      tables and emphasis together, and reported citation rate rising from 45.0% to 52.8% across six engines; lists were not
 %      tested on their own"); all fixes together: data/e1_results.json main ALL vs original +0.049, helps (Figure 1a); the
@@ -26,8 +26,9 @@ A preprint that restructured 200 articles (headings, chunking, lists and tables 
 % Cut 2026-11-03 (notes/CUTS.md 80): "Bajemon and Rochet validate a content score against engines [bajemon2026scoring]; our tool
 % drops its score instead." (src: corpus R39 summary and verifier_note; vendor-linked preprint)
 % src: CE/docs/research/2026-10-23-oss-sweep.json lines 14 and 201 (aiseo-audit FACTOR_REGISTRY with evidence tiers; lists, tables
-%      and answer capsules tagged 'diagnostic'); CE/NOTICE lines 29 to 39 (code adapted from aiseo-audit 2.1.2, commit 6c888aa);
-%      corpus R238 (geo-score keeps citation tracking out of its readiness score)
-Among open tools, aiseo-audit keeps an evidence tier per factor and demotes lists and tables to diagnostics~\cite{aiseoaudit} (we adapt code from it); geo-score keeps measured citation apart from its readiness score~\cite{geoscore}.
+%      and answer capsules tagged 'diagnostic'); CE/NOTICE lines 29 to 39 (code adapted from aiseo-audit 2.1.2, commit 6c888aa).
+%      Cut 2026-11-08 for space (notes/CUTS.md 99): "; geo-score keeps measured citation apart from its readiness score
+%      [geoscore]" (corpus R238); the bib entry stays, uncited.
+Among open tools, aiseo-audit keeps an evidence tier per factor and demotes lists and tables to diagnostics~\cite{aiseoaudit}; we adapt code from it.
 % Cut in the fix pass (review pc-10; notes/CUTS.md): "What is new here is a writing tool rebuilt from its own controlled tests,
 % including tests of the questions a writer can actually know." (it repeats the contributions in Section 1)

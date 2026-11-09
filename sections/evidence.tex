@@ -30,6 +30,14 @@ The reference rewords the same spans, at the same length for a rewrite and with 
 Two open judges (Gemma-4-12B-it and Qwen3.8-27B) answer the query from 4 sources, 8 times each with the page in each slot twice, and the page's \emph{citation score} is $(5-r)/4$ when it is the $r$-th source cited, else 0.
 A result needs 30 or more queries, and tests are Holm-corrected within their family.
 ``No effect larger than 0.03'' means the 90\% interval lies inside $\pm 0.03$, so smaller effects stay possible; contrasts the plan left unjudged read \emph{no verdict} (plans, code and data: footnote~\ref{fn:links}).
+% src: validity exclusions: CE/experiments/PREREG_E1.md line 101 (a failing edit is regenerated once, then the (query, arm) pair is
+%      excluded; an arm with more than 20% validity exclusions is flagged) and RESULTS_E1.md "Exclusions and edit statistics"
+%      (results/e1/analysis.json main.exclusions): flagged on the main set, the model-edited arms 2, 4, 5, 6, 7, 8, 10 and 12 and
+%      the placebos P2, P5, P6, P12 and P_ALL (the rule-built arms 9 and 11 lost 1 and 0 pairs); Your reader's words up top
+%      (arm 12): 63 applicable pages, 50 valid edits, its placebo P12 valid on 33 of those, so the contrast's n is 33 ("kept 33
+%      of 63 applicable pages"; verify_numbers.py recomputes the 33 from the cells and reads the 63 and the flags from the
+%      analysis JSON); "pages where the edits were clean": every estimate conditions on passing validation (review 2026-11-08, item 5)
+Each contrast uses the pages where the edit, and its placebo when it has one, passed the validators; several model-edited checks lost over 20\% of their pairs to them (\emph{Your reader's words up top} kept 33 of 63 applicable pages), so the estimates hold for pages where the edits were clean.
 
 % src: CE/experiments/RESULTS_E1.md main primary contrasts (data/e1_results.json "main"): arm 12 (your reader's words up top: the
 %      question's missing key words in the title, first heading or first paragraph) +0.035 vs P12, n 33, a candidate check added to
@@ -60,7 +68,7 @@ All fixes together, which include the question section, also helped ($+0.049$).
 The heading form added nothing: the question as a heading did no better than the same text set as plain ($+0.003$).
 Against a same-size section without the reader's words, the question section helped on the replication set ($+0.048$) and was inconclusive on the main set ($+0.017$).
 Re-edited by another model with one judge swapped, the reader's-words gain kept its sign ($+0.029$) on 29 queries, one short of our minimum.
-A follow-up added 180 queries and one more editing attempt for the checks with too few pages: over the 260, question headings, cited sources and a direct answer first showed no effect larger than 0.03, as did lists over the first 80 and a candidate that copied the page's definition under the title; quotes were inconclusive, and three checks still had too few pages (Figure~\ref{fig:result}a).
+A follow-up added 180 queries and one more editing attempt for the checks with too few pages: over the 260, question headings, cited sources and a direct answer first showed no effect larger than 0.03, as did lists over the first 80 and a candidate definition sentence under the title; quotes were inconclusive, and three checks still had too few pages (Figure~\ref{fig:result}a).
 
 % src: E5 design: CE/experiments/PLAN_E5.md r2 and CE/experiments/RESULTS_E5.md (opening paragraphs): 180 new GEO-bench test queries
 %      (data/e5_results.json queries.new); the keyword = the two rarest key words of the reader's question, which the tool turns
@@ -71,7 +79,11 @@ A follow-up added 180 queries and one more editing attempt for the checks with t
 %      gate "main:9-original:new queries" +0.039 [+0.023, +0.056] n 115 helps (noted); step 5 "main:9-original:all main queries"
 %      +0.035 n 169 (not printed: Section 6 says estimates that include the first test's queries may run high, review ir:M6);
 %      "main:12-P12:new queries" +0.036 n 74, reported without a verdict; "main:9K-original:pooled" +0.016 Holm 0.006
-%      and "main:9K-9P:pooled" +0.018 Holm 0.006, both helps (noted); retention 9K: d(exact - keyword) +0.019 [+0.008, +0.031]
+%      and "main:9K-9P:pooled" +0.018 Holm 0.006, both helps (noted); per judge for "main:9K-original:pooled"
+%      (results/e5/analysis_e5.json main.splits.9K.all.per_judge; CE/experiments/RESULTS_E5.md line 40): Qwen3.8-27B +0.021
+%      [+0.007, +0.036] p 0.004 and Gemma-4-12B +0.010 [-0.002, +0.023] p 0.116, so "rests mainly on the second judge" and
+%      "not significant" (reviews geo:F17 and 2026-11-08 item 4; verify_numbers.py recomputes both d from the cells and checks
+%      that only Qwen's interval clears zero); retention 9K: d(exact - keyword) +0.019 [+0.008, +0.031]
 %      ("main:9K-9:pooled" negated), the plan's reading "loses the gain", here "falls short of the exact question"
 %      (readings.retention.9K; the rule, fixed before any answer: PLAN_E5.md r2, Primary analysis item 3, "d(9 - G) > 0 with
 %      its 95% interval above 0", unless the guess also meets "keeps the gain"); share kept on the new queries 0.65, 90% CI 0.41
@@ -87,13 +99,14 @@ A follow-up added 180 queries and one more editing attempt for the checks with t
 \paragraph{When the writer has to guess}
 The gain held on new queries, and a keyword helped, but less.
 Both gains above used the reader's exact question, which a writer rarely sees, so a last test reran the question section on 180 new queries, which the first test never used, and then built the section from two guesses the tool offers: a keyword, here the question's two rarest key words, and a question the same editor model wrote from it with the tool's prompt; answers were still judged against the true question.
-The exact question helped on the new queries ($+0.039$, 95\% CI $[+0.023, +0.056]$, $n = 115$), and the reader's missing words up top held there too ($+0.036$ against their placebo, $n = 74$, no verdict).
-Over all 260 queries the keyword helped against the unedited page ($+0.016$) and against a section without the reader's words ($+0.018$; Holm $p = 0.006$ for both).
+The question section helped on the new queries ($+0.039$, 95\% CI $[+0.023, +0.056]$, $n = 115$), and the reader's missing words up top held there too ($+0.036$ against their placebo, $n = 74$, no verdict).
+Over all 260 queries the keyword helped against the unedited page ($+0.016$) and against a section without the reader's words ($+0.018$; Holm $p = 0.006$ for both); the first gain rests mainly on the second judge (Qwen3.8-27B $+0.021$; Gemma-4-12B alone $+0.010$, not significant).
 Yet the exact question beat it by $+0.019$, 95\% CI $[+0.008, +0.031]$: by the rule set before the run, the guess \emph{falls short of the exact question}.
 On the new queries alone the keyword kept about two thirds of the gain (90\% CI 0.41 to 0.93; no verdict).
-Part of the edge is the exact query string, which the judge's prompt also shows: the exact question beat a section with all its key words but not the string by $+0.014$ (no verdict).
+Part of the edge is the query string itself, which the judge's prompt also shows (Figure~\ref{fig:result}b, bottom row, no verdict).
 The model's question showed no effect larger than 0.03, and neither did the keyword's missing words up top against their placebo.
-On the replication set both guesses beat only the section without the reader's words (Figure~\ref{fig:result}b).
+% Cut 2026-11-08 for space (notes/CUTS.md 99): "On the replication set both guesses beat only the section without the reader's
+% words (Figure 1b)." (the diamonds in Figure 1b carry it) and the +0.014 of the all-key-words contrast (Figure 1b's bottom row).
 
 % src: every main-set helps carries the plan's note "helps, possibly through length or query-term overlap" (E1 arms 9, 12, ALL;
 %      E5 gate, step 5, both keyword tests; two replication-set results are plain "helps": E2a 9 vs 9P, E5 9K vs 9P) (PREREG_E1.md line 164;
