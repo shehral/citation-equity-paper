@@ -11,6 +11,8 @@ What it does
   (b) Checks each recomputed (d, n) against the analysis JSON in results/ (e1/analysis.json,
       e2/analysis_e2.json, e3/pooled/analysis_e3.json, e5/analysis_e5.json) to within 1e-9, and against
       the paper's data/e1_results.json and data/e5_results.json, which the figures and prose are built from.
+  (b2) Checks Section 4's recorded laptop test (results/samples/espresso_test.json): cited counts, mean shares and
+      the share's sign-flip p recomputed from the per-run rows.
   (c) Reads the rendered prose of sections/*.tex (comments, \\owner marks and \\Description text
       removed) and checks every printed number of these contrasts: d and n against the recomputed
       values (printed to 3 decimals), intervals, Holm p and labels against the analysis JSONs (which
@@ -409,9 +411,9 @@ def gn(name):
 ANCHORS = [
     ("sections/evidence.tex",
      r"question section\} \(" + g("d") + r" against the unedited page, 95\\% CI \$\[(?P<lo>[+-][\d.]+), (?P<hi>[+-][\d.]+)\]\$,"
-     r" Holm \$p = (?P<holm>[\d.]+)\$; replication " + g("rep") + r"\)",
+     r" Holm \$p = (?P<holm>[\d.]+)\$\)",
      {"d": ("E1.main.9-original", "d"), "lo": ("E1.main.9-original", "lo"), "hi": ("E1.main.9-original", "hi"),
-      "holm": ("E1.main.9-original", "holm"), "rep": ("E1.rep.9-original", "d")}),
+      "holm": ("E1.main.9-original", "holm")}),
     ("sections/evidence.tex", r"into the title and opening \(" + g("d") + r" against its placebo; replication: too few pages\)",
      {"d": ("E1.main.12-P12", "d")}),
     # the takeaway box (second review round): the planned tests that hold length fixed
@@ -419,11 +421,7 @@ ANCHORS = [
      {"w": ("E1.main.12-P12", "d"), "k": ("E5.9K-9P", "d")}),
     ("sections/evidence.tex", r"which include the question section, also helped \(" + g("a") + r"\)",
      {"a": ("E1.main.ALL-original", "d")}),
-    ("sections/evidence.tex", r"set as plain \(" + g("w") + r"; replication " + g("wr") + r"\)",
-     {"w": ("E2a.main.9-9W", "d"), "wr": ("E2a.rep.9-9W", "d")}),
-    ("sections/evidence.tex", r"did not clearly beat the unedited page \(" + g("m") + r"; replication " + g("r")
-     + r"; shown without a verdict\)",
-     {"m": ("E2a.main.9P-original", "d"), "r": ("E2a.rep.9P-original", "d")}),
+    ("sections/evidence.tex", r"set as plain \(" + g("w") + r"\)", {"w": ("E2a.main.9-9W", "d")}),
     ("sections/evidence.tex", r"helped on the replication set \(" + g("r") + r"\) and was inconclusive on the main set \("
      + g("m") + r"\)",
      {"r": ("E2a.rep.9-9P", "d"), "m": ("E2a.main.9-9P", "d")}),
@@ -431,7 +429,7 @@ ANCHORS = [
      {"d12": ("E2b.12-P12", "d"), "n12": ("E2b.12-P12", "n")}),
     ("sections/evidence.tex", r"A follow-up added (?P<new>\d+) queries and one more editing attempt",
      {"new": ("q:e3.new", "n")}),
-    ("sections/evidence.tex", r"Over the (?P<pool>\d+), question headings", {"pool": ("q:e3.pooled", "n")}),
+    ("sections/evidence.tex", r"[Oo]ver the (?P<pool>\d+), question headings", {"pool": ("q:e3.pooled", "n")}),
     ("sections/evidence.tex", r"as did lists over the first (?P<q>\d+) and a candidate", {"q": ("q:e1.main", "n")}),
     ("sections/intro.tex", r"\((?P<q>\d+) GEO-bench queries, with (?P<r>\d+) from C-SEO Bench",
      {"q": ("q:e1.main", "n"), "r": ("q:e1.replication", "n")}),
@@ -442,16 +440,14 @@ ANCHORS = [
      {"a": ("E1.main.9-original|E1.main.12-P12|E5.gate", "approx")}),
     ("sections/conclusion.tex", r"on which the unedited page averages (?P<b>0\.\d+)", {"b": ("x:baseline", "x")}),
     # E5
-    ("sections/abstract.tex", r"On (?P<q>\d+) queries the first test never used, the gain held \(" + g("d") + r"\)",
-     {"q": ("q:e5.new", "n"), "d": ("E5.gate", "d")}),
-    ("sections/intro.tex", r"[Tt]he gain held on (?P<q>\d+) queries the first test never used", {"q": ("q:e5.new", "n")}),
-    ("sections/evidence.tex", r"reran the question section on those (?P<q>\d+) new queries", {"q": ("q:e5.new", "n")}),
+    ("sections/abstract.tex", r"On queries the first test never used, the gain held \(" + g("d") + r"\)", {"d": ("E5.gate", "d")}),
+    ("sections/intro.tex", r"On the (?P<q>\d+) new queries \((?P<n>\d+) where the edit applied\) the gain held",
+     {"q": ("q:e5.new", "n"), "n": ("E5.gate", "n")}),
+    ("sections/evidence.tex", r"reran the question section on (?P<q>\d+) new queries", {"q": ("q:e5.new", "n")}),
     ("sections/evidence.tex",
-     r"helped on the new queries \(" + g("d") + r", 95\\% CI \$\[(?P<lo>[+-][\d.]+), (?P<hi>[+-][\d.]+)\]\$, " + gn("n")
-     + r"; " + g("s5") + r" pooled with the first test's queries, " + gn("n5") + r"\)",
-     {"d": ("E5.gate", "d"), "lo": ("E5.gate", "lo"), "hi": ("E5.gate", "hi"), "n": ("E5.gate", "n"),
-      "s5": ("E5.step5", "d"), "n5": ("E5.step5", "n")}),
-    ("sections/evidence.tex", r"held there too \(" + g("d") + r" against their placebo, " + gn("n") + r", shown without a verdict\)",
+     r"helped on the new queries \(" + g("d") + r", 95\\% CI \$\[(?P<lo>[+-][\d.]+), (?P<hi>[+-][\d.]+)\]\$, " + gn("n") + r"\)",
+     {"d": ("E5.gate", "d"), "lo": ("E5.gate", "lo"), "hi": ("E5.gate", "hi"), "n": ("E5.gate", "n")}),
+    ("sections/evidence.tex", r"held there too \(" + g("d") + r" against their placebo, " + gn("n") + r", no verdict\)",
      {"d": ("E5.12-P12.new", "d"), "n": ("E5.12-P12.new", "n")}),
     ("sections/evidence.tex",
      r"Over all (?P<q>\d+) queries the keyword helped against the unedited page \(" + g("a")
@@ -461,19 +457,19 @@ ANCHORS = [
     ("sections/evidence.tex",
      r"the exact question beat it by " + g("rd") + r", 95\\% CI \$\[(?P<rlo>[+-][\d.]+), (?P<rhi>[+-][\d.]+)\]\$",
      {"rd": ("E5.9K-9", "rd"), "rlo": ("E5.9K-9", "rlo"), "rhi": ("E5.9K-9", "rhi")}),
-    ("sections/evidence.tex", r"the keyword kept about (?P<share>two thirds) of the gain",
-     {"share": ("E5.9K-9", "share")}),
+    ("sections/evidence.tex",
+     r"the keyword kept about (?P<share>two thirds) of the gain \(90\\% CI (?P<slo>0\.\d+) to (?P<shi>0\.\d+); no verdict\)",
+     {"share": ("E5.9K-9", "share"), "slo": ("E5.9K-9", "slo"), "shi": ("E5.9K-9", "shi")}),
     ("sections/evidence.tex", r"all its key words but not the string by " + g("x"), {"x": ("E5.9-9A", "d")}),
-    ("sections/evidence.tex", r"The model's question showed no effect larger than 0\.03 \(" + g("l") + r"\)",
-     {"l": ("E5.9L-original", "d")}),
-    ("sections/evidence.tex", r"keyword's missing words worked into the top \(" + g("k") + r" against their placebo\)",
-     {"k": ("E5.12K-P12K", "d")}),
-    ("sections/evidence.tex", r"On the (?P<q>\d+)-query replication set both guesses beat a section without the reader's words \("
-     + g("a") + r", " + g("b") + r"\)",
-     {"q": ("q:e5.replication", "n"), "a": ("E5.rep.9K-9P", "d"), "b": ("E5.rep.9L-9P", "d")}),
-    ("sections/conclusion.tex", r"The (?P<q>\d+) new queries avoid this", {"q": ("q:e5.new", "n")}),
+    ("sections/conclusion.tex", r"[Tt]he (?P<q>\d+) new queries avoid this", {"q": ("q:e5.new", "n")}),
     ("sections/conclusion.tex", r"at the first test's query lengths it is " + g("rw"), {"rw": ("x:reweighted", "x")}),
-    ("sections/system.tex", r"met the tool's covered rule on only (?P<c>\d+)\\% of pages", {"c": ("x:covers", "x")}),
+    ("sections/system.tex", r"met it on only (?P<c>\d+)\\% of pages", {"c": ("x:covers", "x")}),
+    # the example's recorded citation test (Section 4, Station 1): results/samples/espresso_test.json
+    ("sections/demo.tex",
+     r"cited in (?P<c0>\d+)\\% then (?P<c1>\d+)\\% of answers; share (?P<s0>0\.\d+) then (?P<s1>0\.\d+) against (?P<ch>0\.\d+), "
+     r"\$p = (?P<p>0\.\d+)\$",
+     {"c0": ("x:sample_cited_before", "x"), "c1": ("x:sample_cited_after", "x"), "s0": ("x:sample_share_before", "x"),
+      "s1": ("x:sample_share_after", "x"), "ch": ("x:sample_chance", "x"), "p": ("x:sample_p", "x")}),
     # the sensitivity test (second review round): Section 3's points and Section 6's shares, from results/sensitivity/
     ("sections/system.tex", r"rose by (?P<lo>\d+) to (?P<hi>\d+) points from about (?P<b>\d+) in an exploratory run",
      {"lo": ("x:sens_after_lo", "x"), "hi": ("x:sens_after_hi", "x"), "b": ("x:sens_before", "x")}),
@@ -503,12 +499,12 @@ LABEL_ANCHORS = [
      ["E1.main.9-original", "E1.main.12-P12"]),
     ("sections/evidence.tex", r"the question as a heading did no better than the same text set as plain",
      ["E2a.main.9-9W", "E2a.rep.9-9W"]),
-    ("sections/evidence.tex", r"Against that section the question section helped on the replication set",
+    ("sections/evidence.tex", r"the question section helped on the replication set",
      ["E2a.rep.9-9P", "E2a.main.9-9P"]),
     ("sections/evidence.tex", r"reader's-words gain kept its sign", ["E2b.12-P12"]),
     ("sections/evidence.tex", r"question headings, cited sources and a direct answer first showed no effect larger than 0\.03, as did lists over the first 80 and a candidate",
      ["E3.2-P2", "E3.7-P7", "E3.8-P8", "E1.main.3-P3", "E1.main.11-original"]),
-    ("sections/evidence.tex", r"Attributed quotes were inconclusive, and tables, statistics and comparisons still had too few pages",
+    ("sections/evidence.tex", r"quotes were inconclusive, and three checks still had too few pages",
      ["E3.6-P6", "E3.4-original", "E3.5-P5", "E3.10-P10"]),
     ("sections/evidence.tex", r"The exact question helped on the new queries", ["E5.gate", "E5.step5"]),
     ("sections/evidence.tex", r"held there too", ["E5.12-P12.new"]),
@@ -519,15 +515,14 @@ LABEL_ANCHORS = [
     ("main_www.tex", r"the bottom rows compare each guess, and a section with all key words, with the exact question",
      ["E5.9K-9", "E5.9L-9", "E5.9-9A"]),
     ("sections/evidence.tex", r"The model's question showed no effect larger than 0\.03", ["E5.9L-original"]),
-    ("sections/evidence.tex", r"and neither did the keyword's missing words", ["E5.12K-P12K"]),
-    ("sections/evidence.tex", r"both guesses beat a section without the reader's words",
+    ("sections/evidence.tex", r"and neither did the keyword's missing words up top against their placebo", ["E5.12K-P12K"]),
+    ("sections/evidence.tex", r"both guesses beat only the section without the reader's words",
      ["E5.rep.9K-9P", "E5.rep.9L-9P", "E5.rep.9K-original", "E5.rep.9L-original"]),
     ("sections/system.tex", r"The two question checks read Helped for the reader's own questions",
      ["E1.main.9-original", "E1.main.12-P12"]),
     ("sections/system.tex", r"Question headings, lists, cited sources and a direct answer first read No effect; the other five read Unclear",
      ["E3.2-P2", "E1.main.3-P3", "E3.7-P7", "E3.8-P8", "E3.6-P6", "E3.4-original", "E3.5-P5", "E3.10-P10",
       "E1.main.1-original"]),
-    ("sections/system.tex", r"found clear gains for only two checks", ["E1.main.9-original", "E1.main.12-P12"]),
     ("main_www.tex", r"only the reader's own words near the top clearly moved citation; the gain held on new queries, and a keyword helped less",
      ["E1.main.9-original", "E1.main.12-P12", "E5.gate", "E5.9K-original", "E5.9K-9"]),
 ]
@@ -821,11 +816,50 @@ def main(argv=None) -> int:
         "x:sens_af_hi": (f"{max(af):.3f}", "max answer-first-minus-before share (registered H2 contrast)"),
         "x:sens_bar": (f"{bar:.2f}", "H2 bar, thresholds.h2_min_gain (experiments/explorer/sensitivity.py)"),
     }
+    # The example's recorded citation test (Section 4): results/samples/espresso_test.json (scripts/derive_sample_test.py, from
+    # CE samples/espresso-bitterness/results/). Cited counts and mean shares are recomputed from the per-run rows and compared
+    # with the reports' summaries; the share's sign-flip p over the 4 questions is recomputed and compared with comparison.json.
+    ST = load_json("results/samples/espresso_test.json")
+    st_vals, st_q = {}, {}
+    for name in ("before", "after"):
+        runs = ST["drafts"][name]["runs"]
+        valid = [r for r in runs if not r["formatFailure"]]
+        summ = ST["drafts"][name]["summary"]
+        k, n = sum(1 for r in valid if r["draftCited"]), len(valid)
+        pawc = mean(r["draftPawc"] for r in valid)
+        if not (k == summ["citedAmongValid"]["k"] and n == summ["citedAmongValid"]["n"] == summ["validRuns"]
+                and abs(pawc - summ["pawcAmongValid"]["mean"]) < 1e-9 and summ["chanceShare"] == 0.125):
+            problems.append(f"sample test ({name}): per-run rows give cited {k} of {n}, mean share {pawc:.4f}; the summary "
+                            f"says {summ['citedAmongValid']['k']} of {summ['citedAmongValid']['n']}, {summ['pawcAmongValid']['mean']:.4f}")
+        st_vals[name] = (k, n, pawc)
+        st_q[name] = {}
+        for r in valid:
+            st_q[name].setdefault(r["queryId"], []).append(r["draftPawc"])
+    diffs = [mean(st_q["after"][q]) - mean(st_q["before"][q]) for q in sorted(st_q["before"]) if q in st_q["after"]]
+    t_obs = abs(sum(diffs))
+    flips = 0
+    for mask in range(2 ** len(diffs)):
+        t_perm = abs(sum(d if mask >> i & 1 else -d for i, d in enumerate(diffs)))
+        flips += t_perm >= t_obs - 1e-12
+    p_share = flips / 2 ** len(diffs)
+    if not (len(diffs) == ST["comparison"]["nQueries"] == 4 and abs(p_share - ST["comparison"]["pValue"]["pawcAmongValid"]) < 1e-9):
+        problems.append(f"sample test: recomputed share sign-flip p {p_share} over {len(diffs)} questions; comparison.json says "
+                        f"{ST['comparison']['pValue']['pawcAmongValid']} over {ST['comparison']['nQueries']}")
+    X_SAMPLE = {
+        "x:sample_cited_before": (f"{round(100 * st_vals['before'][0] / st_vals['before'][1])}",
+                                  f"cited among valid answers, before draft ({st_vals['before'][0]} of {st_vals['before'][1]})"),
+        "x:sample_cited_after": (f"{round(100 * st_vals['after'][0] / st_vals['after'][1])}",
+                                 f"cited among valid answers, after draft ({st_vals['after'][0]} of {st_vals['after'][1]})"),
+        "x:sample_share_before": (f"{st_vals['before'][2]:.2f}", f"mean share of citations, before draft ({st_vals['before'][2]:.4f})"),
+        "x:sample_share_after": (f"{st_vals['after'][2]:.2f}", f"mean share of citations, after draft ({st_vals['after'][2]:.4f})"),
+        "x:sample_chance": (f"{ST['drafts']['before']['summary']['chanceShare']:g}", "chanceShare in both reports (1 of 8 sources)"),
+        "x:sample_p": (f"{p_share:g}", f"sign-flip p of the share difference over {len(diffs)} questions (recomputed)"),
+    }
     X = {"x:baseline": (f"{baseline:.2f}", f"mean score of {len(base_cells)} E1 main-set cells of the unedited page "
                                            f"({baseline:.4f})"),
          "x:reweighted": (fmt(rw["estimate"]), f"analysis gate.reweighted_new ({rw['estimate']:.4f}, n {rw['n']})"),
          "x:covers": (f"{round(100 * cov['share'])}", f"analysis validity main 9 tool_covers_q ({cov['true']} of {cov['of']})"),
-         **X_SENS}
+         **X_SENS, **X_SAMPLE}
 
     # (c) the paper's prose
     print()
@@ -884,6 +918,9 @@ def main(argv=None) -> int:
                     ok_w = lo_w is not None and lo_w <= share["share"] <= hi_w
                     exp_s = val if ok_w else f"{share['share']:.2f}"
                     why = f"share_kept_new.9K.share {share['share']:.3f} (90% CI {share['ci90'][0]:.2f} to {share['ci90'][1]:.2f})"
+                elif field in ("slo", "shi"):
+                    exp_s = f"{share['ci90'][0 if field == 'slo' else 1]:.2f}"
+                    why = "analysis share_kept_new.9K.ci90"
                 else:
                     raise ValueError(field)
                 same = val == exp_s

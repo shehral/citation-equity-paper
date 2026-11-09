@@ -4,7 +4,7 @@ The withheld files listed in `manifests/` (pages, versions, prompts, answers) ar
 
 This folder holds every result the paper reports, in the form the experiments produced it, plus what you need to check or rerun them: the plans as written before each run, the cluster jobs and their compute, the software and model versions, and the sha256 of every input we cannot share.
 
-Everything except this README, `verify_numbers.py`, `VERIFY.txt` and `CLAIMS.md` is written by `scripts/build_results.py` from the tool repo ([shehral/citation-equity](https://github.com/shehral/citation-equity), "CE" below) and from the Explorer cluster, both read only. Rebuild it with
+Everything except this README, `verify_numbers.py`, `VERIFY.txt`, `CLAIMS.md` and `samples/` (written by `scripts/derive_sample_test.py`) is written by `scripts/build_results.py` from the tool repo ([shehral/citation-equity](https://github.com/shehral/citation-equity), "CE" below) and from the Explorer cluster, both read only. Rebuild it with
 
 ```sh
 .venv/bin/python -I -B scripts/build_results.py --fetch   # pulls logs, sacct, hashes and versions from Explorer first
@@ -27,6 +27,7 @@ Everything except this README, `verify_numbers.py`, `VERIFY.txt` and `CLAIMS.md`
 | `manifests/` | Path, line count, size and sha256 of every withheld file, on the owner's machine and on the cluster. |
 | `runs/` | Every cluster job of these experiments, its GPU, run time and GPU-hours, and the summary lines of its log. |
 | `env/` | Python, vLLM, torch and transformers versions on the cluster, Node and pnpm locally, and the exact revision of every model. |
+| `samples/` | The example's recorded laptop citation test (Section 4, Station 1): the espresso drafts' before and after reports and their paired comparison, summaries and per-run numbers only (no answer text), copied from CE `samples/espresso-bitterness/results/` by `scripts/derive_sample_test.py` with the sha256 of each input. |
 
 Per experiment, the files are:
 
@@ -57,6 +58,7 @@ Section and figure numbers are those of `main_www.pdf`. Every number in the LaTe
 | Section 2 (What we tested) | E1: arm 9 +0.027 [+0.010, +0.043], Holm 0.006, n 54, replication +0.036; arm 12 +0.035; E2a 9 vs 9W and 9W vs original per set; E2b 12 vs P12 +0.029, n 29; E3: 180 new queries, 260 pooled; E5: gate +0.039 [+0.023, +0.056], n 115; step 5 +0.035, n 169; 12 vs P12 on the new queries +0.036, n 74; 9K +0.016 and +0.018 (Holm 0.006); exact minus 9K +0.019 [+0.008, +0.031]; the share kept on the new queries (about two thirds, 0.65); 9 vs 9A +0.014; 9L +0.008; 12K vs P12K +0.004 | `e1/`, `e2/`, `e3/pooled/`, `e5/` (`RESULTS_*.md`, analysis JSONs); n per arm in each `validity_counts.md` |
 | Section 3 (Citation Equity) | the first version's checklist score 40 to 69 and 42 to 68 (+29, +26); citation share +0.014 to +0.031 ("1 to 3 points") in the sensitivity test; evidence grades; the label tally | not cluster results: `../data/scores.json` (`ce analyze` on the two sample drafts, at CE `c908431`); `sensitivity/sensitivity_*.json` (`summary.after_minus_before_exploratory`); `../data/evidence_grades_loose.json`, CE `docs/evidence.md` |
 | Section 3, the citation test | laptop runs on llama3.2:3b, the 0.125 p floor | CE `samples/README.md`; the model's Ollama digest is in `env/` |
+| Section 4, Station 1 | the recorded test: cited in 56% then 66% of answers, share 0.09 then 0.14 against 0.125, p 0.25 | `samples/espresso_test.json`; `verify_numbers.py` recomputes the counts, the mean shares and the share's sign-flip p from its per-run rows |
 | Section 3, Evidence (the matrix, old Figure 3, moved to the Research page) | grades per check and source | not a cluster result: `../data/grades.json`, `../data/evidence_matrix.csv`, `../data/evidence_grades_loose.json` |
 | Section 6 (Limitations and future work) | the sensitivity test's answer edit +0.007 to +0.034 against its +0.10 bar; 320 queries = 260 GEO-bench (E3 pooled, E5 main) + 60 C-SEO Bench (E1 and E5 replication) | `sensitivity/`, `plans/PREREG_sensitivity.md` (commit `3c86c02`, results `4d77fa0`), `../data/sensitivity_derived.json`; `e3/pooled/`, `e5/`, `e1/` |
 | Section 7 (Ethics and use of data) | only aggregates and hashes are shared | `plans/PREREG_E1.md` ("Data"), `plans/E5_freeze_MANIFEST.md`, `manifests/` |

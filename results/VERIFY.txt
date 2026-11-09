@@ -1,6 +1,3 @@
-# results/VERIFY.txt: output of verify_numbers.py
-# command: .venv/bin/python -I results/verify_numbers.py --claims results/CLAIMS.md
-# run: 2026-11-03 21:06:05 PST, paper repo at 1b4bda1 plus this commit's files (second review round: Figure 1b's local-model row, the takeaway's length-held tests, the sensitivity numbers), numpy 2.5.4
 verify_numbers: E1, E2, E3 and E5 headline contrasts recomputed from results/*/cells.jsonl
 d = mean over queries of the per-query mean over two judges of (arm score - reference score)
 E3 pool: e1 cells 634, e1 cells displaced by a retry 0, retry cells 12, new cells 1194, retry pairs 6, sets ['e3', 'e3-four', 'main']
@@ -59,113 +56,107 @@ queries with at least one cell: e1.main 80, e1.replication 60, e3.new 180, e3.po
 Paper numbers for these contrasts (sections/*.tex, rendered text):
 file:line                  contrast                                       field     paper expected  source of expected
 ----------------------------------------------------------------------------------------------------------------------
-sections/evidence.tex:50   E1.main.9-original                             d        +0.027   +0.027  recomputed from cells
-sections/evidence.tex:50   E1.main.9-original                             lo       +0.010   +0.010  analysis JSON ci95
-sections/evidence.tex:50   E1.main.9-original                             hi       +0.043   +0.043  analysis JSON ci95
-sections/evidence.tex:50   E1.main.9-original                             holm      0.006    0.006  analysis JSON p_holm
-sections/evidence.tex:50   E1.rep.9-original                              d        +0.036   +0.036  recomputed from cells
-sections/evidence.tex:49   E1.main.12-P12                                 d        +0.035   +0.035  recomputed from cells
-sections/evidence.tex:106  E1.main.12-P12                                 d        +0.035   +0.035  recomputed from cells
-sections/evidence.tex:106  E5.9K-9P                                       d        +0.018   +0.018  recomputed from cells
-sections/evidence.tex:51   E1.main.ALL-original                           d        +0.049   +0.049  recomputed from cells
-sections/evidence.tex:52   E2a.main.9-9W                                  d        +0.003   +0.003  recomputed from cells
-sections/evidence.tex:52   E2a.rep.9-9W                                   d        -0.001   -0.001  recomputed from cells
-sections/evidence.tex:53   E2a.main.9P-original                           d        +0.010   +0.010  recomputed from cells
-sections/evidence.tex:53   E2a.rep.9P-original                            d        -0.012   -0.012  recomputed from cells
-sections/evidence.tex:54   E2a.rep.9-9P                                   d        +0.048   +0.048  recomputed from cells
-sections/evidence.tex:54   E2a.main.9-9P                                  d        +0.017   +0.017  recomputed from cells
-sections/evidence.tex:55   E2b.12-P12                                     d        +0.029   +0.029  recomputed from cells
-sections/evidence.tex:55   E2b.12-P12                                     n            29       29  recomputed from cells
-sections/evidence.tex:56   q:e3.new                                       n           180      180  query count (cells)
-sections/evidence.tex:57   q:e3.pooled                                    n           260      260  query count (cells)
-sections/evidence.tex:57   q:e1.main                                      n            80       80  query count (cells)
-sections/intro.tex:41      q:e1.main                                      n            80       80  query count (cells)
-sections/intro.tex:41      q:e1.replication                               n            60       60  query count (cells)
-sections/conclusion.tex:38 q:all                                          n           320      320  query count (cells)
-sections/abstract.tex:11   about: E1.main.9-original, E1.main.12-P12      approx     0.03    ~0.03  within 0.01 of +0.027, +0.035
-sections/conclusion.tex:33 about: E1.main.9-original, E1.main.12-P12, E5.gate approx     0.03    ~0.03  within 0.01 of +0.027, +0.035, +0.039
-sections/conclusion.tex:33 x:baseline                                     x          0.54     0.54  mean score of 160 E1 main-set cells of the unedited page (0.5420)
-sections/abstract.tex:24   q:e5.new                                       n           180      180  query count (cells)
-sections/abstract.tex:24   E5.gate                                        d        +0.039   +0.039  recomputed from cells
-sections/intro.tex:46      q:e5.new                                       n           180      180  query count (cells)
-sections/evidence.tex:83   q:e5.new                                       n           180      180  query count (cells)
-sections/evidence.tex:85   E5.gate                                        d        +0.039   +0.039  recomputed from cells
-sections/evidence.tex:85   E5.gate                                        lo       +0.023   +0.023  analysis JSON ci95
-sections/evidence.tex:85   E5.gate                                        hi       +0.056   +0.056  analysis JSON ci95
-sections/evidence.tex:85   E5.gate                                        n           115      115  recomputed from cells
-sections/evidence.tex:85   E5.step5                                       d        +0.035   +0.035  recomputed from cells
-sections/evidence.tex:85   E5.step5                                       n           169      169  recomputed from cells
-sections/evidence.tex:85   E5.12-P12.new                                  d        +0.036   +0.036  recomputed from cells
-sections/evidence.tex:85   E5.12-P12.new                                  n            74       74  recomputed from cells
-sections/evidence.tex:86   q:e5.main                                      n           260      260  query count (cells)
-sections/evidence.tex:86   E5.9K-original                                 d        +0.016   +0.016  recomputed from cells
-sections/evidence.tex:86   E5.9K-9P                                       d        +0.018   +0.018  recomputed from cells
-sections/evidence.tex:86   E5.9K-original|E5.9K-9P                        holm      0.006    0.006  analysis JSON p_holm (each of E5.9K-original, E5.9K-9P)
-sections/evidence.tex:87   E5.9K-9                                        rd       +0.019   +0.019  analysis readings.retention (exact minus guess), 95% CI
-sections/evidence.tex:87   E5.9K-9                                        rlo      +0.008   +0.008  analysis readings.retention (exact minus guess), 95% CI
-sections/evidence.tex:87   E5.9K-9                                        rhi      +0.031   +0.031  analysis readings.retention (exact minus guess), 95% CI
-sections/evidence.tex:88   E5.9K-9                                        share  two thirds two thirds  share_kept_new.9K.share 0.647 (90% CI 0.41 to 0.93)
-sections/evidence.tex:89   E5.9-9A                                        d        +0.014   +0.014  recomputed from cells
-sections/evidence.tex:90   E5.9L-original                                 d        +0.008   +0.008  recomputed from cells
-sections/evidence.tex:90   E5.12K-P12K                                    d        +0.004   +0.004  recomputed from cells
-sections/evidence.tex:91   q:e5.replication                               n            60       60  query count (cells)
-sections/evidence.tex:91   E5.rep.9K-9P                                   d        +0.025   +0.025  recomputed from cells
-sections/evidence.tex:91   E5.rep.9L-9P                                   d        +0.028   +0.028  recomputed from cells
-sections/conclusion.tex:36 q:e5.new                                       n           180      180  query count (cells)
-sections/conclusion.tex:36 x:reweighted                                   x        +0.033   +0.033  analysis gate.reweighted_new (0.0329, n 115)
-sections/system.tex:93     x:covers                                       x            27       27  analysis validity main 9 tool_covers_q (46 of 169)
-sections/system.tex:25     x:sens_after_lo                                x             1        1  min after-minus-before share x 100 (0.0137)
-sections/system.tex:25     x:sens_after_hi                                x             3        3  max after-minus-before share x 100 (0.0307)
-sections/system.tex:25     x:sens_before                                  x            17       17  mean before share x 100 over 4 models (0.1690; 0.154 to 0.180)
-sections/conclusion.tex:37 x:sens_af_lo                                   x         0.007    0.007  min answer-first-minus-before share (registered H2 contrast)
-sections/conclusion.tex:37 x:sens_af_hi                                   x         0.034    0.034  max answer-first-minus-before share (registered H2 contrast)
-sections/conclusion.tex:37 x:sens_bar                                     x          0.10     0.10  H2 bar, thresholds.h2_min_gain (experiments/explorer/sensitivity.py)
-main_www.tex:113           q:e1.main                                      n            80       80  query count (cells)
-main_www.tex:113           q:e3.pooled                                    n           260      260  query count (cells)
-main_www.tex:113           q:e1.main                                      n            80       80  query count (cells)
-main_www.tex:114           q:e5.new                                       n           180      180  query count (cells)
-main_www.tex:114           q:e5.main                                      n           260      260  query count (cells)
-sections/abstract.tex:17   labels: E3.2-P2, E1.main.3-P3, E3.7-P7, E3.8-P8 label  (words)  analysis labels: E3.2-P2 'no effect larger than δ'; E1.main.3-P3 'no effect larger than δ'; E3.7-P7 'no effect larger than δ'; E3.8-P8 'no effect larger than δ'
-sections/abstract.tex:16   labels: E2a.main.9-9W, E2a.rep.9-9W            label  (words)  analysis labels: E2a.main.9-9W 'no effect larger than δ'; E2a.rep.9-9W 'no effect larger than δ'
-sections/abstract.tex:25   labels: E5.9K-original, E5.9K-9P, E5.9K-9      label  (words)  analysis labels: E5.9K-original 'helps, possibly through length or query-term overlap'; E5.9K-9P 'helps, possibly through length or query-term overlap'; E5.9K-9 'loses the gain'
-sections/abstract.tex:26   labels: E5.9L-original                         label  (words)  analysis labels: E5.9L-original 'no effect larger than δ'
-sections/intro.tex:47      labels: E5.9K-original, E5.9K-9P, E5.9K-9      label  (words)  analysis labels: E5.9K-original 'helps, possibly through length or query-term overlap'; E5.9K-9P 'helps, possibly through length or query-term overlap'; E5.9K-9 'loses the gain'
-sections/intro.tex:48      labels: E5.9L-original                         label  (words)  analysis labels: E5.9L-original 'no effect larger than δ'
-sections/intro.tex:44      labels: E2a.main.9-9W, E2a.rep.9-9W            label  (words)  analysis labels: E2a.main.9-9W 'no effect larger than δ'; E2a.rep.9-9W 'no effect larger than δ'
-sections/intro.tex:43      labels: E1.main.9-original, E1.main.12-P12     label  (words)  analysis labels: E1.main.9-original 'helps, possibly through length or query-term overlap'; E1.main.12-P12 'helps, possibly through length or query-term overlap'
-sections/evidence.tex:48   labels: E1.main.9-original, E1.main.12-P12     label  (words)  analysis labels: E1.main.9-original 'helps, possibly through length or query-term overlap'; E1.main.12-P12 'helps, possibly through length or query-term overlap'
-sections/evidence.tex:52   labels: E2a.main.9-9W, E2a.rep.9-9W            label  (words)  analysis labels: E2a.main.9-9W 'no effect larger than δ'; E2a.rep.9-9W 'no effect larger than δ'
-sections/evidence.tex:54   labels: E2a.rep.9-9P, E2a.main.9-9P            label  (words)  analysis labels: E2a.rep.9-9P 'helps'; E2a.main.9-9P 'inconclusive'
-sections/evidence.tex:55   labels: E2b.12-P12                             label  (words)  analysis labels: E2b.12-P12 'stands'
-sections/evidence.tex:57   labels: E3.2-P2, E3.7-P7, E3.8-P8, E1.main.3-P3, E1.main.11-original label  (words)  analysis labels: E3.2-P2 'no effect larger than δ'; E3.7-P7 'no effect larger than δ'; E3.8-P8 'no effect larger than δ'; E1.main.3-P3 'no effect larger than δ'; E1.main.11-original 'no effect larger than δ'
-sections/evidence.tex:58   labels: E3.6-P6, E3.4-original, E3.5-P5, E3.10-P10 label  (words)  analysis labels: E3.6-P6 'inconclusive'; E3.4-original 'insufficient n'; E3.5-P5 'insufficient n'; E3.10-P10 'insufficient n'
-sections/evidence.tex:85   labels: E5.gate, E5.step5                      label  (words)  analysis labels: E5.gate 'helps, possibly through length or query-term overlap'; E5.step5 'helps, possibly through length or query-term overlap'
-sections/evidence.tex:85   labels: E5.12-P12.new                          label  (words)  analysis labels: E5.12-P12.new 'reported without a verdict'
-sections/evidence.tex:86   labels: E5.9K-original, E5.9K-9P               label  (words)  analysis labels: E5.9K-original 'helps, possibly through length or query-term overlap'; E5.9K-9P 'helps, possibly through length or query-term overlap'
-sections/evidence.tex:87   labels: E5.9K-9                                label  (words)  analysis labels: E5.9K-9 'loses the gain'
-sections/evidence.tex:49   labels: E1.rep.12-P12                          label  (words)  analysis labels: E1.rep.12-P12 'insufficient n'
-sections/evidence.tex:106  labels: E1.main.12-P12, E5.9K-9P               label  (words)  analysis labels: E1.main.12-P12 'helps, possibly through length or query-term overlap'; E5.9K-9P 'helps, possibly through length or query-term overlap'
-main_www.tex:114           labels: E5.9K-9, E5.9L-9, E5.9-9A              label  (words)  analysis labels: E5.9K-9 'loses the gain'; E5.9L-9 'loses the gain'; E5.9-9A 'reported without a verdict'
-sections/evidence.tex:90   labels: E5.9L-original                         label  (words)  analysis labels: E5.9L-original 'no effect larger than δ'
-sections/evidence.tex:90   labels: E5.12K-P12K                            label  (words)  analysis labels: E5.12K-P12K 'no effect larger than δ'
-sections/evidence.tex:91   labels: E5.rep.9K-9P, E5.rep.9L-9P, E5.rep.9K-original, E5.rep.9L-original label  (words)  analysis labels: E5.rep.9K-9P 'helps'; E5.rep.9L-9P 'helps, possibly through length or query-term overlap'; E5.rep.9K-original 'no effect larger than δ'; E5.rep.9L-original 'no effect larger than δ'
-sections/system.tex:91     labels: E1.main.9-original, E1.main.12-P12     label  (words)  analysis labels: E1.main.9-original 'helps, possibly through length or query-term overlap'; E1.main.12-P12 'helps, possibly through length or query-term overlap'
-sections/system.tex:92     labels: E3.2-P2, E1.main.3-P3, E3.7-P7, E3.8-P8, E3.6-P6, E3.4-original, E3.5-P5, E3.10-P10, E1.main.1-original label  (words)  analysis labels: E3.2-P2 'no effect larger than δ'; E1.main.3-P3 'no effect larger than δ'; E3.7-P7 'no effect larger than δ'; E3.8-P8 'no effect larger than δ'; E3.6-P6 'inconclusive'; E3.4-original 'insufficient n'; E3.5-P5 'insufficient n'; E3.10-P10 'insufficient n'; E1.main.1-original 'descriptive'
-sections/system.tex:26     labels: E1.main.9-original, E1.main.12-P12     label  (words)  analysis labels: E1.main.9-original 'helps, possibly through length or query-term overlap'; E1.main.12-P12 'helps, possibly through length or query-term overlap'
-main_www.tex:111           labels: E1.main.9-original, E1.main.12-P12, E5.gate, E5.9K-original, E5.9K-9 label  (words)  analysis labels: E1.main.9-original 'helps, possibly through length or query-term overlap'; E1.main.12-P12 'helps, possibly through length or query-term overlap'; E5.gate 'helps, possibly through length or query-term overlap'; E5.9K-original 'helps, possibly through length or query-term overlap'; E5.9K-9 'loses the gain'
-sections/abstract.tex:17   setting: delta                                 set        0.03     same  settings.delta in the e1, e2, e3, e5 analysis JSONs
-sections/abstract.tex:26   setting: delta                                 set        0.03     same  settings.delta in the e1, e2, e3, e5 analysis JSONs
-sections/evidence.tex:25   setting: min_n                                 set          30     same  settings.min_n in the e1, e2, e3, e5 analysis JSONs
-sections/evidence.tex:26   setting: delta                                 set        0.03     same  settings.delta in the e1, e2, e3, e5 analysis JSONs
-sections/evidence.tex:57   setting: delta                                 set        0.03     same  settings.delta in the e1, e2, e3, e5 analysis JSONs
-sections/evidence.tex:90   setting: delta                                 set        0.03     same  settings.delta in the e1, e2, e3, e5 analysis JSONs
-sections/evidence.tex:91   setting: delta                                 set        0.03     same  settings.delta in the e1, e2, e3, e5 analysis JSONs
-sections/intro.tex:48      setting: delta                                 set        0.03     same  settings.delta in the e1, e2, e3, e5 analysis JSONs
+sections/evidence.tex:58   E1.main.9-original                             d        +0.027   +0.027  recomputed from cells
+sections/evidence.tex:58   E1.main.9-original                             lo       +0.010   +0.010  analysis JSON ci95
+sections/evidence.tex:58   E1.main.9-original                             hi       +0.043   +0.043  analysis JSON ci95
+sections/evidence.tex:58   E1.main.9-original                             holm      0.006    0.006  analysis JSON p_holm
+sections/evidence.tex:57   E1.main.12-P12                                 d        +0.035   +0.035  recomputed from cells
+sections/evidence.tex:111  E1.main.12-P12                                 d        +0.035   +0.035  recomputed from cells
+sections/evidence.tex:111  E5.9K-9P                                       d        +0.018   +0.018  recomputed from cells
+sections/evidence.tex:59   E1.main.ALL-original                           d        +0.049   +0.049  recomputed from cells
+sections/evidence.tex:60   E2a.main.9-9W                                  d        +0.003   +0.003  recomputed from cells
+sections/evidence.tex:61   E2a.rep.9-9P                                   d        +0.048   +0.048  recomputed from cells
+sections/evidence.tex:61   E2a.main.9-9P                                  d        +0.017   +0.017  recomputed from cells
+sections/evidence.tex:62   E2b.12-P12                                     d        +0.029   +0.029  recomputed from cells
+sections/evidence.tex:62   E2b.12-P12                                     n            29       29  recomputed from cells
+sections/evidence.tex:63   q:e3.new                                       n           180      180  query count (cells)
+sections/evidence.tex:63   q:e3.pooled                                    n           260      260  query count (cells)
+sections/evidence.tex:63   q:e1.main                                      n            80       80  query count (cells)
+sections/intro.tex:44      q:e1.main                                      n            80       80  query count (cells)
+sections/intro.tex:44      q:e1.replication                               n            60       60  query count (cells)
+sections/conclusion.tex:42 q:all                                          n           320      320  query count (cells)
+sections/abstract.tex:13   about: E1.main.9-original, E1.main.12-P12      approx     0.03    ~0.03  within 0.01 of +0.027, +0.035
+sections/conclusion.tex:38 about: E1.main.9-original, E1.main.12-P12, E5.gate approx     0.03    ~0.03  within 0.01 of +0.027, +0.035, +0.039
+sections/conclusion.tex:38 x:baseline                                     x          0.54     0.54  mean score of 160 E1 main-set cells of the unedited page (0.5420)
+sections/abstract.tex:27   E5.gate                                        d        +0.039   +0.039  recomputed from cells
+sections/intro.tex:48      q:e5.new                                       n           180      180  query count (cells)
+sections/intro.tex:48      E5.gate                                        n           115      115  recomputed from cells
+sections/evidence.tex:89   q:e5.new                                       n           180      180  query count (cells)
+sections/evidence.tex:90   E5.gate                                        d        +0.039   +0.039  recomputed from cells
+sections/evidence.tex:90   E5.gate                                        lo       +0.023   +0.023  analysis JSON ci95
+sections/evidence.tex:90   E5.gate                                        hi       +0.056   +0.056  analysis JSON ci95
+sections/evidence.tex:90   E5.gate                                        n           115      115  recomputed from cells
+sections/evidence.tex:90   E5.12-P12.new                                  d        +0.036   +0.036  recomputed from cells
+sections/evidence.tex:90   E5.12-P12.new                                  n            74       74  recomputed from cells
+sections/evidence.tex:91   q:e5.main                                      n           260      260  query count (cells)
+sections/evidence.tex:91   E5.9K-original                                 d        +0.016   +0.016  recomputed from cells
+sections/evidence.tex:91   E5.9K-9P                                       d        +0.018   +0.018  recomputed from cells
+sections/evidence.tex:91   E5.9K-original|E5.9K-9P                        holm      0.006    0.006  analysis JSON p_holm (each of E5.9K-original, E5.9K-9P)
+sections/evidence.tex:92   E5.9K-9                                        rd       +0.019   +0.019  analysis readings.retention (exact minus guess), 95% CI
+sections/evidence.tex:92   E5.9K-9                                        rlo      +0.008   +0.008  analysis readings.retention (exact minus guess), 95% CI
+sections/evidence.tex:92   E5.9K-9                                        rhi      +0.031   +0.031  analysis readings.retention (exact minus guess), 95% CI
+sections/evidence.tex:93   E5.9K-9                                        share  two thirds two thirds  share_kept_new.9K.share 0.647 (90% CI 0.41 to 0.93)
+sections/evidence.tex:93   E5.9K-9                                        slo        0.41     0.41  analysis share_kept_new.9K.ci90
+sections/evidence.tex:93   E5.9K-9                                        shi        0.93     0.93  analysis share_kept_new.9K.ci90
+sections/evidence.tex:94   E5.9-9A                                        d        +0.014   +0.014  recomputed from cells
+sections/conclusion.tex:40 q:e5.new                                       n           180      180  query count (cells)
+sections/conclusion.tex:40 x:reweighted                                   x        +0.033   +0.033  analysis gate.reweighted_new (0.0329, n 115)
+sections/system.tex:92     x:covers                                       x            27       27  analysis validity main 9 tool_covers_q (46 of 169)
+sections/demo.tex:30       x:sample_cited_before                          x            56       56  cited among valid answers, before draft (18 of 32)
+sections/demo.tex:30       x:sample_cited_after                           x            66       66  cited among valid answers, after draft (21 of 32)
+sections/demo.tex:30       x:sample_share_before                          x          0.09     0.09  mean share of citations, before draft (0.0874)
+sections/demo.tex:30       x:sample_share_after                           x          0.14     0.14  mean share of citations, after draft (0.1372)
+sections/demo.tex:30       x:sample_chance                                x         0.125    0.125  chanceShare in both reports (1 of 8 sources)
+sections/demo.tex:30       x:sample_p                                     x          0.25     0.25  sign-flip p of the share difference over 4 questions (recomputed)
+sections/system.tex:24     x:sens_after_lo                                x             1        1  min after-minus-before share x 100 (0.0137)
+sections/system.tex:24     x:sens_after_hi                                x             3        3  max after-minus-before share x 100 (0.0307)
+sections/system.tex:24     x:sens_before                                  x            17       17  mean before share x 100 over 4 models (0.1690; 0.154 to 0.180)
+sections/conclusion.tex:41 x:sens_af_lo                                   x         0.007    0.007  min answer-first-minus-before share (registered H2 contrast)
+sections/conclusion.tex:41 x:sens_af_hi                                   x         0.034    0.034  max answer-first-minus-before share (registered H2 contrast)
+sections/conclusion.tex:41 x:sens_bar                                     x          0.10     0.10  H2 bar, thresholds.h2_min_gain (experiments/explorer/sensitivity.py)
+main_www.tex:125           q:e1.main                                      n            80       80  query count (cells)
+main_www.tex:125           q:e3.pooled                                    n           260      260  query count (cells)
+main_www.tex:125           q:e1.main                                      n            80       80  query count (cells)
+main_www.tex:126           q:e5.new                                       n           180      180  query count (cells)
+main_www.tex:126           q:e5.main                                      n           260      260  query count (cells)
+sections/abstract.tex:19   labels: E3.2-P2, E1.main.3-P3, E3.7-P7, E3.8-P8 label  (words)  analysis labels: E3.2-P2 'no effect larger than δ'; E1.main.3-P3 'no effect larger than δ'; E3.7-P7 'no effect larger than δ'; E3.8-P8 'no effect larger than δ'
+sections/abstract.tex:18   labels: E2a.main.9-9W, E2a.rep.9-9W            label  (words)  analysis labels: E2a.main.9-9W 'no effect larger than δ'; E2a.rep.9-9W 'no effect larger than δ'
+sections/abstract.tex:28   labels: E5.9K-original, E5.9K-9P, E5.9K-9      label  (words)  analysis labels: E5.9K-original 'helps, possibly through length or query-term overlap'; E5.9K-9P 'helps, possibly through length or query-term overlap'; E5.9K-9 'loses the gain'
+sections/abstract.tex:29   labels: E5.9L-original                         label  (words)  analysis labels: E5.9L-original 'no effect larger than δ'
+sections/intro.tex:49      labels: E5.9K-original, E5.9K-9P, E5.9K-9      label  (words)  analysis labels: E5.9K-original 'helps, possibly through length or query-term overlap'; E5.9K-9P 'helps, possibly through length or query-term overlap'; E5.9K-9 'loses the gain'
+sections/intro.tex:50      labels: E5.9L-original                         label  (words)  analysis labels: E5.9L-original 'no effect larger than δ'
+sections/intro.tex:46      labels: E2a.main.9-9W, E2a.rep.9-9W            label  (words)  analysis labels: E2a.main.9-9W 'no effect larger than δ'; E2a.rep.9-9W 'no effect larger than δ'
+sections/intro.tex:45      labels: E1.main.9-original, E1.main.12-P12     label  (words)  analysis labels: E1.main.9-original 'helps, possibly through length or query-term overlap'; E1.main.12-P12 'helps, possibly through length or query-term overlap'
+sections/evidence.tex:56   labels: E1.main.9-original, E1.main.12-P12     label  (words)  analysis labels: E1.main.9-original 'helps, possibly through length or query-term overlap'; E1.main.12-P12 'helps, possibly through length or query-term overlap'
+sections/evidence.tex:60   labels: E2a.main.9-9W, E2a.rep.9-9W            label  (words)  analysis labels: E2a.main.9-9W 'no effect larger than δ'; E2a.rep.9-9W 'no effect larger than δ'
+sections/evidence.tex:61   labels: E2a.rep.9-9P, E2a.main.9-9P            label  (words)  analysis labels: E2a.rep.9-9P 'helps'; E2a.main.9-9P 'inconclusive'
+sections/evidence.tex:62   labels: E2b.12-P12                             label  (words)  analysis labels: E2b.12-P12 'stands'
+sections/evidence.tex:63   labels: E3.2-P2, E3.7-P7, E3.8-P8, E1.main.3-P3, E1.main.11-original label  (words)  analysis labels: E3.2-P2 'no effect larger than δ'; E3.7-P7 'no effect larger than δ'; E3.8-P8 'no effect larger than δ'; E1.main.3-P3 'no effect larger than δ'; E1.main.11-original 'no effect larger than δ'
+sections/evidence.tex:63   labels: E3.6-P6, E3.4-original, E3.5-P5, E3.10-P10 label  (words)  analysis labels: E3.6-P6 'inconclusive'; E3.4-original 'insufficient n'; E3.5-P5 'insufficient n'; E3.10-P10 'insufficient n'
+sections/evidence.tex:90   labels: E5.gate, E5.step5                      label  (words)  analysis labels: E5.gate 'helps, possibly through length or query-term overlap'; E5.step5 'helps, possibly through length or query-term overlap'
+sections/evidence.tex:90   labels: E5.12-P12.new                          label  (words)  analysis labels: E5.12-P12.new 'reported without a verdict'
+sections/evidence.tex:91   labels: E5.9K-original, E5.9K-9P               label  (words)  analysis labels: E5.9K-original 'helps, possibly through length or query-term overlap'; E5.9K-9P 'helps, possibly through length or query-term overlap'
+sections/evidence.tex:92   labels: E5.9K-9                                label  (words)  analysis labels: E5.9K-9 'loses the gain'
+sections/evidence.tex:57   labels: E1.rep.12-P12                          label  (words)  analysis labels: E1.rep.12-P12 'insufficient n'
+sections/evidence.tex:111  labels: E1.main.12-P12, E5.9K-9P               label  (words)  analysis labels: E1.main.12-P12 'helps, possibly through length or query-term overlap'; E5.9K-9P 'helps, possibly through length or query-term overlap'
+main_www.tex:126           labels: E5.9K-9, E5.9L-9, E5.9-9A              label  (words)  analysis labels: E5.9K-9 'loses the gain'; E5.9L-9 'loses the gain'; E5.9-9A 'reported without a verdict'
+sections/evidence.tex:95   labels: E5.9L-original                         label  (words)  analysis labels: E5.9L-original 'no effect larger than δ'
+sections/evidence.tex:95   labels: E5.12K-P12K                            label  (words)  analysis labels: E5.12K-P12K 'no effect larger than δ'
+sections/evidence.tex:96   labels: E5.rep.9K-9P, E5.rep.9L-9P, E5.rep.9K-original, E5.rep.9L-original label  (words)  analysis labels: E5.rep.9K-9P 'helps'; E5.rep.9L-9P 'helps, possibly through length or query-term overlap'; E5.rep.9K-original 'no effect larger than δ'; E5.rep.9L-original 'no effect larger than δ'
+sections/system.tex:90     labels: E1.main.9-original, E1.main.12-P12     label  (words)  analysis labels: E1.main.9-original 'helps, possibly through length or query-term overlap'; E1.main.12-P12 'helps, possibly through length or query-term overlap'
+sections/system.tex:91     labels: E3.2-P2, E1.main.3-P3, E3.7-P7, E3.8-P8, E3.6-P6, E3.4-original, E3.5-P5, E3.10-P10, E1.main.1-original label  (words)  analysis labels: E3.2-P2 'no effect larger than δ'; E1.main.3-P3 'no effect larger than δ'; E3.7-P7 'no effect larger than δ'; E3.8-P8 'no effect larger than δ'; E3.6-P6 'inconclusive'; E3.4-original 'insufficient n'; E3.5-P5 'insufficient n'; E3.10-P10 'insufficient n'; E1.main.1-original 'descriptive'
+main_www.tex:123           labels: E1.main.9-original, E1.main.12-P12, E5.gate, E5.9K-original, E5.9K-9 label  (words)  analysis labels: E1.main.9-original 'helps, possibly through length or query-term overlap'; E1.main.12-P12 'helps, possibly through length or query-term overlap'; E5.gate 'helps, possibly through length or query-term overlap'; E5.9K-original 'helps, possibly through length or query-term overlap'; E5.9K-9 'loses the gain'
+sections/abstract.tex:19   setting: delta                                 set        0.03     same  settings.delta in the e1, e2, e3, e5 analysis JSONs
+sections/abstract.tex:29   setting: delta                                 set        0.03     same  settings.delta in the e1, e2, e3, e5 analysis JSONs
+sections/evidence.tex:31   setting: min_n                                 set          30     same  settings.min_n in the e1, e2, e3, e5 analysis JSONs
+sections/evidence.tex:32   setting: delta                                 set        0.03     same  settings.delta in the e1, e2, e3, e5 analysis JSONs
+sections/evidence.tex:63   setting: delta                                 set        0.03     same  settings.delta in the e1, e2, e3, e5 analysis JSONs
+sections/evidence.tex:95   setting: delta                                 set        0.03     same  settings.delta in the e1, e2, e3, e5 analysis JSONs
+sections/intro.tex:50      setting: delta                                 set        0.03     same  settings.delta in the e1, e2, e3, e5 analysis JSONs
 sections/system.tex:88     setting: delta                                 set        0.03     same  settings.delta in the e1, e2, e3, e5 analysis JSONs
 
 Signed numbers in sections/*.tex prose not tied to an E1-E5 contrast (not checked here):
 
-wrote results/CLAIMS.md (71 lines with numbers)
+wrote results/CLAIMS.md (67 lines with numbers)
 
 All recomputed contrasts match the analysis JSONs (1e-9), data/e1_results.json and data/e5_results.json, and every paper number for them matches.
-# exit status: 0
