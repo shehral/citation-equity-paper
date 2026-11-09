@@ -3,7 +3,8 @@
     "producer": "scripts/capture_screens.mjs (Figure 2 per spec section 14 of the tool repo, docs/superpowers/specs/2026-11-03-question-first-design.md, local feat branch only); `what` and capture_plan are written in the script",
     "note": "ui_string values were read from the build in the same run (captured.strings), and so were the strings in callouts 1 and 2 `text` (the line the figure prints); xy anchors are measured from element boxes in that run; captured.edits are the two typed edits and draft_sha256 hashes the draft after them; captured.local_build (local URLs only) is the tool commit the build was made from.",
     "hand_synced": "2026-11-03, second review round: callouts 1 and 2 gained `text` and callout 2 its ui_string, and captured.strings gained quick_chip, to match scripts/capture_screens.mjs. The capture was not rerun (it needs a served build of the tool): quick_chip was read off data/screens/draft_view.png, whose Quick edit card shows the chip \"No effect in our test\"; the next capture reads and asserts it.",
-    "hand_measured": "2026-11-08, Figure 2 relaid for legibility (the card cropped at native resolution): callout 6 added by hand. Its ui_string is the first open row of question 3 as data/screens/draft_view.png prints it, and its xy was measured on that file with PIL (the row's circle is centred at pixel 1817, 831 of 2500 x 1800; the anchor sits at 1780, 831, left of the circle). The next capture should read the row and assert it."
+    "hand_measured": "2026-11-08, Figure 2 relaid for legibility (the card cropped at native resolution): callout 6 added by hand. Its ui_string is the first open row of question 3 as data/screens/draft_view.png prints it, and its xy was measured on that file with PIL (the row's circle is centred at pixel 1817, 831 of 2500 x 1800; the anchor sits at 1780, 831, left of the circle). The next capture should read the row and assert it.",
+    "re_measured": "2026-11-08, third round (RAIL_CROP tightened to x 1696..2486, y 150..1282): callouts 1 and 4 moved by hand with PIL, since their captured anchors sat on the new frame's edges. 1 at pixel 1740, 220: the card's left padding beside the heading (card border at x 1723, heading text x 1757 to 2132, y 209 to 231). 4 at pixel 2208, 221: the left cap of the chip (x 2214 to 2438, y 202 to 240; its text starts at 2230). 6 unchanged (1780, 831). The next capture should re-measure them."
   },
   "status": "captured",
   "screenshot": "data/screens/draft_view.png",
@@ -15,7 +16,7 @@
       "ui_string": "Each needs its key words up top and a section that answers it.",
       "text": "Questions covered: 2 of 4. Each needs its key words up top and a section that answers it.",
       "xy": [
-        0.6832,
+        0.696,
         0.1222
       ]
     },
@@ -43,8 +44,8 @@
       "what": "The card's label from our own tests",
       "ui_string": "Helped in our test",
       "xy": [
-        0.9308,
-        0.0939
+        0.8832,
+        0.1228
       ]
     },
     {

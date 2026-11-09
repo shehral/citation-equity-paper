@@ -4,7 +4,7 @@ and the old build's score card as the before.
 Layout (column width 3.33 in):
   * right: the right rail of data/screens/draft_view.png (captured by scripts/capture_screens.mjs, Task 16: the
     espresso example after the two typed edits, "Questions covered: 2 of 4") cropped to the Questions covered card
-    (RAIL_CROP, image pixels, with the draft sheet's right edge in view) and drawn about 2 in wide, so the card's UI
+    (RAIL_CROP, image pixels; the card's Edit questions button below is cut) and drawn about 2 in wide, so the card's UI
     text prints at 5 to 7 pt instead of the 2 pt it had at the full-window scale (review of 2026-11-08, Figure 2
     legibility). Numbered callouts sit at the anchors of data/fig2_callouts.json (`xy`, fractions of the full image);
     every one points to text a reader can read in the crop;
@@ -35,18 +35,21 @@ RAIL_W_IN = 2.02                        # the card crop's printed width; LEFT_W_
 LEFT_W_IN = W_IN - 2 * PAD - GAP - RAIL_W_IN
 BEFORE = "data/screens/draft_view_before.png"
 # The Questions covered card in the capture, in image pixels (2500 x 1800): the card spans x 1724 to 2471 and
-# y 162 to 1380; the draft sheet's right edge is at x 1664, kept in view (measured 2026-11-08 with PIL, logged in
-# the tool repo's .superpowers/sdd/2026-11-03-final-shape/final-paper-log.md).
-RAIL_CROP = (1616, 2496, 120, 1400)  # x0, x1, y0, y1
+# y 162 to 1380; its last text line ends at y 1254 and its Edit questions button starts at y 1284 (measured
+# 2026-11-08 with PIL, logged in the tool repo's .superpowers/sdd/2026-11-03-final-shape/final-paper-log.md).
+# Tightened in the third round (2026-11-08): the draft sheet's edge at x 1664 and the button left the crop.
+RAIL_CROP = (1696, 2486, 150, 1282)  # x0, x1, y0, y1
 # The old score card in BEFORE, in image pixels: the card ("37", "AI-ready score", "A writing checklist, not a
 # forecast. Why?") and the "0 of 29 handled" line under it. Callout 1 of fig2_callouts_before.json (xy 0.6832,
-# 0.1578, i.e. pixel 1708, 284) marks the card's left edge.
-BEFORE_CROP = (1708, 2484, 160, 540)  # x0, x1, y0, y1
+# 0.1578, i.e. pixel 1708, 284) marks the card's left edge; the right edge stops short of the card's border
+# (third round, 2026-11-08) so the inset stays short.
+BEFORE_CROP = (1708, 2350, 160, 540)  # x0, x1, y0, y1
 TEXT = fs.FS["small"] - 0.6   # 6.2 pt: the labels and the callout list (STYLE.md section 6; review S5)
 # Callouts drawn and listed, by their number in data/fig2_callouts.json, renumbered 1, 2, 3 in the figure: the count
 # (1), the card's label chip (4) and an open row that names the missing words (6, hand-measured on the committed
-# screenshot). The Quick edit (2) is below the card, outside the crop, so it is no longer called out (Section 4
-# describes it); the Show passage (3) and the privacy chip (5) stay in the data only.
+# screenshot; 1 and 4 re-measured by hand for the tightened crop, _provenance.re_measured). The Quick edit (2) is
+# below the card, outside the crop, so it is no longer called out (Section 4 describes it); the Show passage (3)
+# and the privacy chip (5) stay in the data only.
 KEEP = (1, 4, 6)
 N, S, C = fs.NEUTRAL, fs.SURFACE, fs.CONCEPT
 
@@ -125,8 +128,10 @@ def main():
     # ---- left, middle: the old build's score card
     bx0, bx1, by0, by1 = BEFORE_CROP
     before_h = LEFT_W_IN * (by1 - by0) / (bx1 - bx0)
-    y -= 0.10
-    label(fig, lx, y - LABEL_H / 2, fig_h, "Before: the old build's card")
+    # The two left-column gaps (0.10 and 0.14 in before the third round) shrank by 0.05 in each when the crops of
+    # 2026-11-08 made the before inset taller and the rail shorter; the list ran 0.08 in past the bottom check below.
+    y -= 0.05
+    label(fig, lx, y - LABEL_H / 2, fig_h, "Before: the old build’s card")
     y -= LABEL_H + before_h
     axb = axes_in(lx, y, LEFT_W_IN, before_h)
     axb.set_xlim(bx0, bx1)
@@ -138,11 +143,13 @@ def main():
     items = []
     for c in kept:
         text = c.get("text") or c["what"] + (f": “{c['ui_string']}”" if c.get("ui_string") else "")
+        text = text.replace("'", "\u2019")  # typographic apostrophes in the printed labels (the data keeps its own)
         if c["n"] == 1 and not (heading and text.startswith(heading)):
             raise SystemExit("fig_workspace: callout 1 must print the captured count (captured.strings.heading)")
-        items.append((shown[c["n"]], textwrap.wrap(text, 27)))
+        # callout 6 wraps at 25: at 27 its second line crossed the right panel's frame (third round, 2026-11-08)
+        items.append((shown[c["n"]], textwrap.wrap(text, 25 if c["n"] == 6 else 27)))
     line_h, gap, indent = 0.092, 0.035, 0.15
-    y -= 0.14
+    y -= 0.09
     for n, lines in items:
         fig.text((lx + 0.04) / W_IN, y / fig_h, str(n), ha="center", va="top", fontsize=TEXT - 0.4,
                  color="white", fontweight="bold", bbox=dict(boxstyle="circle,pad=0.18", fc=C["after"], ec="none"))
