@@ -312,3 +312,27 @@ Camera-ready: the "Camera-ready" note above is superseded. Measured on this buil
 4 pages, 0 overfull boxes, the references ending on the last line of page 4. The stray "2027." footer line is handled in
 `main_www.tex` (the copyright footnote macro now prints the conference line only); remove that block for TAPS, where ACM's
 rights data fill the footnote.
+
+## Final pass after the Fable re-score (2026-11-08, late evening)
+
+99. Cuts to pay for the review items below (about 13 column-lines; the first build after them ran to 5 pages, 12 reference
+    lines over). Section 2: "On the replication set both guesses beat only the section without the reader's words (Figure
+    1b)." cut (the diamonds in Figure 1b carry it); the exact-string sentence shortened to "Part of the edge is the query string
+    itself, which the judge's prompt also shows (Figure 1b, bottom row, no verdict)" (its +0.014 is Figure 1b's bottom row);
+    "a candidate that copied the page's definition under the title" -> "a candidate definition sentence under the title".
+    Section 5: "; geo-score keeps measured citation apart from its readiness score [geoscore]" cut (the bib entry stays,
+    uncited); the keyword-stuffing sentence shortened ("added query keywords anywhere in the page and did not help; our edit
+    adds only the missing words, to the title and opening"). Section 3: "Four screens follow the writer's work." cut; "Reports
+    separate retrieval, valid answers, citation and word share, show the chance level, and say" -> "Reports show the chance
+    level and say"; the score sentence tightened. Section 1: the four short last-test sentences merged into one; the
+    ownership claim keeps one source (draxler2024ghostwriter; dhillon2024scaffolding no longer cited, entry kept). Section 4:
+    Station 3's offline clause -> "pasted HTML and robots.txt stand in". Abstract: "It runs in the browser and offline." folded
+    into the sentence before it ("In the browser and offline, it starts from..."). Figure 1 caption: the new verdict-order
+    clause joined to the n sentence with a semicolon. Figure 2 caption: the "Right: ...; left: ..." sentence dropped (the
+    figure's own labels say it). References: the editor field of wan2024conflictingqa and the location fields of
+    vishwakarma2026cited and kim2026sageo dropped (optional in ACM-Reference-Format; the DOIs stay).
+100. Added in the same pass, which the cuts above paid for: the validity-exclusion sentence and the per-judge clause (Section
+    2, The test and When the writer has to guess), the prior-work sentence on what GEO-bench and C-SEO Bench did test
+    (Section 1), the Questions covered bridge (Section 3, Labels), the verdict-order clause (Figure 1 caption) and the relaid
+    Figure 2 (the card crop; 224.5 pt tall against 218.2). Build after: 4 pages, 0 overfull, 0 undefined; page 4's right
+    column ends about 4 lines above the margin.
