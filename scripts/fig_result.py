@@ -160,7 +160,9 @@ def draw_key(fig, x0, y0, step):
         t = fig.text(x + 0.014, y0, text, ha="left", va="center", fontsize=fsz, color=N["ink_soft"])
         w = t.get_window_extent(renderer).width / fig.bbox.width
         x += 0.014 + w + 0.018
-    lines = ["°  vs the unedited page; others vs a placebo that rewords the same spans, or the edit named",
+    # The first line must end inside the figure (WIDTH_IN * 72 pt): the longer wording "a placebo that rewords the
+    # same spans" ran past the right edge and the PDF cut the last word (second-round re-check, 2026-11-08).
+    lines = ["°  vs the unedited page; others vs a same-span placebo, or the edit named",
              "grey band ±0.03: the margin for no effect;  helps*: possibly length or query-word overlap",
              "falls short (black): the guess scored below the exact question, 95% interval below 0,",
              "by the rule set before the run"]
