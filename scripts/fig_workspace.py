@@ -36,7 +36,7 @@ LEFT_W_IN = W_IN - 2 * PAD - GAP - RAIL_W_IN
 BEFORE = "data/screens/draft_view_before.png"
 # The Questions covered card in the capture, in image pixels (2500 x 1800): the card spans x 1724 to 2471 and
 # y 162 to 1380; its last text line ends at y 1254 and its Edit questions button starts at y 1284 (measured
-# 2026-11-08 with PIL, logged in the tool repo's .superpowers/sdd/2026-11-03-final-shape/final-paper-log.md).
+# 2026-11-08 with PIL, logged in the private working log).
 # Tightened in the third round (2026-11-08): the draft sheet's edge at x 1664 and the button left the crop.
 RAIL_CROP = (1696, 2486, 150, 1282)  # x0, x1, y0, y1
 # The old score card in BEFORE, in image pixels: the card ("37", "AI-ready score", "A writing checklist, not a
