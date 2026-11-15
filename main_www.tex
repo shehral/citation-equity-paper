@@ -24,7 +24,7 @@
 %      data come from ACM after acceptance. The camera-ready needs printacmref=true, which today runs to 5 pages
 %      (about 4 reference lines over): notes/CUTS.md, "Camera-ready".
 \setcopyright{none}
-\settopmatter{printacmref=false}
+\settopmatter{printacmref=false,authorsperrow=2}
 % With \setcopyright{none}, acmart prints "\@copyrightyear." under the conference line (a stray "2027."). The review copy keeps the
 % conference line and drops that line (reviews ir:m8, demo:F10, geo:F15). Remove this block for the camera-ready, where ACM's
 % rights data fill the footnote. bash build.sh --final also fails while an OWNER mark is printed.
@@ -45,17 +45,36 @@
 % and it named no tool (pc-02). The owner may revert to "Testing GEO Writing Advice, and Keeping Only What Moved Citation".
 \title{Citation Equity: Which GEO Writing Advice Moves Citation? A Tool Built From the Answer}
 
-% Byline: four authors in the owner's order (owner update 2026-11-12: Pegah Zargarian is no longer an author).
-% All four authors share one affiliation, so it is printed once (acmart: consecutive authors before one affiliation).
+% Byline: four authors in the owner's order (owner update 2026-11-12: Pegah Zargarian is no longer an author),
+% two rows of two (authorsperrow=2 in settopmatter); one institution line each (Khoury College, Northeastern University) so each block is four lines.
 \author{Mohammad Ali Shehral}
 \email{shehral.m@northeastern.edu}
+\affiliation{%
+  \institution{Khoury College, Northeastern University}
+  \city{San Jose}
+  \state{CA}
+  \country{USA}}
+
 \author{Ishan Gupta}
 \email{gupta.i2@northeastern.edu}
+\affiliation{%
+  \institution{Khoury College, Northeastern University}
+  \city{San Jose}
+  \state{CA}
+  \country{USA}}
+
 \author{Akshay Prajapati}
 \email{prajapati.aksh@northeastern.edu}
-\author{Akram Bayat}
 \affiliation{%
-  \institution{Northeastern University, Khoury College of Computer Sciences}
+  \institution{Khoury College, Northeastern University}
+  \city{San Jose}
+  \state{CA}
+  \country{USA}}
+
+\author{Akram Bayat}
+\email{a.bayat@northeastern.edu}
+\affiliation{%
+  \institution{Khoury College, Northeastern University}
   \city{San Jose}
   \state{CA}
   \country{USA}}
