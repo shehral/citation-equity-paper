@@ -118,11 +118,11 @@ sections/system.tex:24     x:sens_before                                  x     
 sections/conclusion.tex:41 x:sens_af_lo                                   x         0.007    0.007  min answer-first-minus-before share (registered H2 contrast)
 sections/conclusion.tex:41 x:sens_af_hi                                   x         0.034    0.034  max answer-first-minus-before share (registered H2 contrast)
 sections/conclusion.tex:41 x:sens_bar                                     x          0.10     0.10  H2 bar, thresholds.h2_min_gain (experiments/explorer/sensitivity.py)
-main_www.tex:125           q:e1.main                                      n            80       80  query count (cells)
-main_www.tex:125           q:e3.pooled                                    n           260      260  query count (cells)
-main_www.tex:125           q:e1.main                                      n            80       80  query count (cells)
-main_www.tex:126           q:e5.new                                       n           180      180  query count (cells)
-main_www.tex:126           q:e5.main                                      n           260      260  query count (cells)
+main_www.tex:121           q:e1.main                                      n            80       80  query count (cells)
+main_www.tex:121           q:e3.pooled                                    n           260      260  query count (cells)
+main_www.tex:121           q:e1.main                                      n            80       80  query count (cells)
+main_www.tex:122           q:e5.new                                       n           180      180  query count (cells)
+main_www.tex:122           q:e5.main                                      n           260      260  query count (cells)
 sections/abstract.tex:19   labels: E3.2-P2, E1.main.3-P3, E3.7-P7, E3.8-P8 label  (words)  analysis labels: E3.2-P2 'no effect larger than δ'; E1.main.3-P3 'no effect larger than δ'; E3.7-P7 'no effect larger than δ'; E3.8-P8 'no effect larger than δ'
 sections/abstract.tex:18   labels: E2a.main.9-9W, E2a.rep.9-9W            label  (words)  analysis labels: E2a.main.9-9W 'no effect larger than δ'; E2a.rep.9-9W 'no effect larger than δ'
 sections/abstract.tex:28   labels: E5.9K-original, E5.9K-9P, E5.9K-9      label  (words)  analysis labels: E5.9K-original 'helps, possibly through length or query-term overlap'; E5.9K-9P 'helps, possibly through length or query-term overlap'; E5.9K-9 'loses the gain'
@@ -143,12 +143,12 @@ sections/evidence.tex:103  labels: E5.9K-original, E5.9K-9P               label 
 sections/evidence.tex:104  labels: E5.9K-9                                label  (words)  analysis labels: E5.9K-9 'loses the gain'
 sections/evidence.tex:65   labels: E1.rep.12-P12                          label  (words)  analysis labels: E1.rep.12-P12 'insufficient n'
 sections/evidence.tex:124  labels: E1.main.12-P12, E5.9K-9P               label  (words)  analysis labels: E1.main.12-P12 'helps, possibly through length or query-term overlap'; E5.9K-9P 'helps, possibly through length or query-term overlap'
-main_www.tex:126           labels: E5.9K-9, E5.9L-9, E5.9-9A              label  (words)  analysis labels: E5.9K-9 'loses the gain'; E5.9L-9 'loses the gain'; E5.9-9A 'reported without a verdict'
+main_www.tex:122           labels: E5.9K-9, E5.9L-9, E5.9-9A              label  (words)  analysis labels: E5.9K-9 'loses the gain'; E5.9L-9 'loses the gain'; E5.9-9A 'reported without a verdict'
 sections/evidence.tex:107  labels: E5.9L-original                         label  (words)  analysis labels: E5.9L-original 'no effect larger than δ'
 sections/evidence.tex:107  labels: E5.12K-P12K                            label  (words)  analysis labels: E5.12K-P12K 'no effect larger than δ'
 sections/system.tex:98     labels: E1.main.9-original, E1.main.12-P12     label  (words)  analysis labels: E1.main.9-original 'helps, possibly through length or query-term overlap'; E1.main.12-P12 'helps, possibly through length or query-term overlap'
 sections/system.tex:99     labels: E3.2-P2, E1.main.3-P3, E3.7-P7, E3.8-P8, E3.6-P6, E3.4-original, E3.5-P5, E3.10-P10, E1.main.1-original label  (words)  analysis labels: E3.2-P2 'no effect larger than δ'; E1.main.3-P3 'no effect larger than δ'; E3.7-P7 'no effect larger than δ'; E3.8-P8 'no effect larger than δ'; E3.6-P6 'inconclusive'; E3.4-original 'insufficient n'; E3.5-P5 'insufficient n'; E3.10-P10 'insufficient n'; E1.main.1-original 'descriptive'
-main_www.tex:123           labels: E1.main.9-original, E1.main.12-P12, E5.gate, E5.9K-original, E5.9K-9 label  (words)  analysis labels: E1.main.9-original 'helps, possibly through length or query-term overlap'; E1.main.12-P12 'helps, possibly through length or query-term overlap'; E5.gate 'helps, possibly through length or query-term overlap'; E5.9K-original 'helps, possibly through length or query-term overlap'; E5.9K-9 'loses the gain'
+main_www.tex:119           labels: E1.main.9-original, E1.main.12-P12, E5.gate, E5.9K-original, E5.9K-9 label  (words)  analysis labels: E1.main.9-original 'helps, possibly through length or query-term overlap'; E1.main.12-P12 'helps, possibly through length or query-term overlap'; E5.gate 'helps, possibly through length or query-term overlap'; E5.9K-original 'helps, possibly through length or query-term overlap'; E5.9K-9 'loses the gain'
 sections/abstract.tex:19   setting: delta                                 set        0.03     same  settings.delta in the e1, e2, e3, e5 analysis JSONs
 sections/abstract.tex:29   setting: delta                                 set        0.03     same  settings.delta in the e1, e2, e3, e5 analysis JSONs
 sections/evidence.tex:31   setting: min_n                                 set          30     same  settings.min_n in the e1, e2, e3, e5 analysis JSONs

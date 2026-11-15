@@ -61,18 +61,16 @@ A last test asked what a writer can know: on the 180 new queries (115 where it a
 % ---- What we built
 % src: the redesign: CE/docs/superpowers/specs/2026-11-03-question-first-design.md sections 2, 5 and 7 (local feat branch, not on
 %      public main); CE/README.md lines 3, 11 to 15 and 68 (CE 7b10ad3)
-% src: footnote links: demo, code, data and Research page (HTTP 200 on 2026-10-26); video https://youtu.be/kbU9t3ewVUk (2026-10-27,
-%      notes/REDESIGN-AND-E5-PLAN-2026-10-27.md Part 3). That upload shows the old score-based tool (Q26.6): re-record it from the
-%      question-first build and put the new URL here (YouTube gives a new video ID); if the new cut is not checked by submission
-%      day, delete the Video sentence and its mark (review pc-12). Never ship the old URL without the mark (review ir:B1 refuter).
-%      bash build.sh --final fails while an OWNER mark is printed.
+% src: footnote links: demo, code, data and Research page (HTTP 200 on 2026-10-26); video https://youtu.be/I4FC85tpSVQ
+%      (unlisted, the question-first tool, uploaded 2026-11-14; oEmbed title matches the paper). It replaces the 2026-10-27
+%      video of the old score-based tool (https://youtu.be/kbU9t3ewVUk), which must not be linked.
 % src: "Data (all tests)": the Hugging Face dataset at sha 4c0c7e4 (2026-11-09 01:43 UTC; HF tree API read 2026-11-08) holds
 %      analysis/e5, data/results_e5 and plans/PLAN_E5.md beside E1 to E3 (93 files), so the dataset covers every test; the code
 %      repo's public main (0dd41fa) also holds every test's aggregates under experiments/results
 % src: "ten GEO checks and one of our own": ten were the tool's and the eleventh a candidate of ours (the paragraph above)
 % src: contribution (2) "clearly": the hedge used in the abstract, Figure 1 and the takeaway box; four formatting checks (quotes,
 %      tables, statistics, comparisons) have no verdict, hence "any formatting check we could judge" (review geo:F4 refuter)
-We present \emph{Citation Equity}, an open-source writing tool rebuilt around these results (Figure~\ref{fig:workspace}).\footnote{Live demo: \url{https://shehral.github.io/citation-equity/}. Code (MIT): \url{https://github.com/shehral/citation-equity}. Data (all tests): \url{https://huggingface.co/datasets/Shehral/citation-equity-experiments}. Research page: \url{https://shehral.github.io/citation-equity/research/}.\label{fn:links} Video: \url{https://youtu.be/kbU9t3ewVUk}. \owner{Re-record for the question-first tool.}}
+We present \emph{Citation Equity}, an open-source writing tool rebuilt around these results (Figure~\ref{fig:workspace}).\footnote{Live demo: \url{https://shehral.github.io/citation-equity/}. Code (MIT): \url{https://github.com/shehral/citation-equity}. Data (all tests): \url{https://huggingface.co/datasets/Shehral/citation-equity-experiments}. Research page: \url{https://shehral.github.io/citation-equity/research/}.\label{fn:links} Video: \url{https://youtu.be/I4FC85tpSVQ}.}
 It starts from the questions readers ask, names the words a draft lacks near the top without inserting them, and labels the rest of the advice with what our tests found.
 The equity is of access, not of rankings: the tool is free, open and offline, so the evidence is not reserved for brands that pay for tracking tools.
 Our contributions are (1)~a controlled test of ten GEO checks and one of our own, with placebos, a replication set, an editor swap, new queries and guessed questions; (2)~the finding that the reader's vocabulary, not any formatting check we could judge, clearly moved citation; and (3)~an open, offline writing tool rebuilt from that finding, with a live demo, code and data.

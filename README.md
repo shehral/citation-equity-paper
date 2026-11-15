@@ -5,7 +5,7 @@ This repo holds the demo-track paper for The Web Conference 2027 (WWW '27), "Cit
 - **The tool, live:** https://shehral.github.io/citation-equity/
 - **The tool's code:** https://github.com/shehral/citation-equity (the experiments' code and pipeline READMEs are under `experiments/`)
 - **The paper:** `main_www.pdf` (4 pages including references, the venue's limit)
-- **Demo video (unlisted):** https://youtu.be/kbU9t3ewVUk
+- **Demo video (unlisted):** https://youtu.be/I4FC85tpSVQ
 - **Plan to submission (Nov 16 AoE):** `notes/REDESIGN-AND-E5-PLAN-2026-10-27.md` (redesign, the E5 plan, week by week)
 
 ## Working on it together
